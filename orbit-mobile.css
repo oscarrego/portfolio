@@ -1,0 +1,123 @@
+/* OSCAR REGO PORTFOLIO 2026 - ORBIT MOBILE STYLESHEET */
+
+@media (max-width: 1200px) {
+    .orbit-detail-row {
+        grid-template-columns: 1fr 400px;
+        gap: 60px;
+    }
+    .orbit-mobile-detail-row {
+        grid-template-columns: 1fr 400px;
+        gap: 60px;
+    }
+}
+
+@media (max-width: 900px) {
+    /* Prevent horizontal scrolling and handle overflow */
+    html, body {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+
+    .orbit-case-study {
+        padding-top: 0;
+    }
+
+    .orbit-title {
+        font-size: 72px;
+    }
+
+    .orbit-main-placeholder {
+        height: 70vh;
+        min-height: 500px;
+    }
+
+    .orbit-hero-content {
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 88%;
+    }
+
+    .orbit-details {
+        gap: 80px;
+        margin-top: 60px;
+        padding: 0 5%;
+    }
+
+    .orbit-detail-row,
+    .orbit-mobile-detail-row {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .orbit-sticky-card {
+        position: static;
+        width: 100%;
+        height: auto;
+    }
+
+    .orbit-mobile-sticky-card {
+        position: static;
+        width: 100%;
+        max-width: 450px;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .orbit-carousel-wrapper {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+    }
+
+    .orbit-mobile-carousel-wrapper {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 9 / 19.5;
+    }
+}
+
+@media (max-width: 600px) {
+    .orbit-title {
+        font-size: 14vw;
+    }
+
+    .orbit-main-placeholder {
+        height: 65vh;
+        min-height: 450px;
+    }
+
+    .orbit-hero-content {
+        bottom: 60px;
+    }
+
+    .orbit-content-block h2 {
+        font-size: 28px;
+    }
+
+    .orbit-content-block p {
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    .orbit-intro-text {
+        font-size: 16px;
+    }
+
+    /* Keep carousel navigation usable on small touch devices */
+    .carousel-nav {
+        width: 32px;
+        height: 32px;
+        font-size: 24px;
+        border-radius: 8px;
+        bottom: 10px;
+    }
+
+    .carousel-nav.prev {
+        right: 60px;
+    }
+
+    .carousel-nav.next {
+        right: 16px;
+    }
+}

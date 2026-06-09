@@ -1,0 +1,227 @@
+    <!DOCTYPE html>
+    <html lang="en">
+        
+
+    <head>
+
+        <meta charset="UTF-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Oscar's Portfolio</title>
+        <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="loader.css">
+
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+        <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="mobile.css">
+    </head>
+
+    <body>
+        <div id="loader">
+            <div class="loader-notice" id="mobile-notice">FOR THE BEST EXPERIENCE,
+<br>VIEW ON A DESKTOP SCREEN.</div>
+            <div class="loader-wave-container">
+                <div class="loader-wave"></div>
+            </div>
+            <div class="loader-label">LOADING</div>
+            <div class="loader-percent" id="loader-percent">0%</div>
+        </div>
+        <div class="mouse-glow"></div>
+
+
+    <!-- NAVBAR -->
+
+    <!-- FLOATING NAV -->
+
+    <div class="floating-nav">
+
+        <a href="index.html" class="active">
+            WORK
+        </a>
+
+        <a href="tools.html">
+            TOOLS
+        </a>
+
+        <a href="about.html">
+            ABOUT
+        </a>
+
+    </div>
+
+
+        <!-- HERO SECTION -->
+
+        <section class="hero" id="about">
+
+        <div class="hero-content">
+
+        <div class="hero-intro cinematic-intro">
+
+            <p class="intro-main">
+                CURIOUS ABOUT HOW SOFTWARE SYSTEMS WORK,
+FROM DEVELOPMENT AND TESTING TO AUTOMATION
+AND USER EXPERIENCE.
+            </p>
+
+            <p class="intro-sub">
+                
+                SOFTWARE QUALITY • SYSTEM CONFIGS • AUTOMATION • UI/UX
+            </p>
+
+        </div>
+
+        <h1 class="hero-title">Oscar Rego</h1>
+
+    </div>
+                
+
+
+
+                
+
+            
+
+            </div>
+
+        </section>
+
+        <!-- PROJECT SECTION: ORBIT -->
+        <section class="project-showcase" id="orbit">
+            <div class="project-container">
+                <!-- Media Left -->
+             <div class="project-media-wrapper" onclick="window.location.href='orbit.html';" role="link" tabindex="0"> 
+                <!-- <div class="project-media-wrapper"  role="link" tabindex="0"> -->
+                    <video id="orbit-video" class="project-video orbit-video-mobile" autoplay muted loop playsinline preload="metadata">
+                        <source id="orbit-video-src" src="videos/orbit_demo.mp4" type="video/mp4">
+                    </video>
+                    <button id="orbit-view-toggle" class="orbit-view-toggle" data-mobile-text="MOBILE MODE"><span>&gt;</span></button>
+                </div>
+
+                <!-- Content Right -->
+                <div class="project-info">
+                    <div class="project-category">REALTIME PRESENCE PLATFORM / 2026</div>
+                   <h2 class="project-title" onclick="window.location.href='orbit.html';" role="link" tabindex="0">Orbit — Realtime Presence & Spatial Collaboration Network</h2> 
+                   <!--   <h2 class="project-title"  role="link" tabindex="0">Orbit — Realtime Presence & Spatial Collaboration Network</h2> -->
+                    <p class="project-description">
+                        A realtime spatial communication platform focused on live presence, collaboration, immersive mapping, and cinematic interaction systems.
+                    </p>
+                    <ul class="project-features">
+                        <li>Realtime location tracking with MapLibre GL</li>
+                        <li>Live communication using Socket.IO & WebSockets</li>
+                        <li>Interactive Three.js landing experience</li>
+                        <li>Private rooms with secure passcode access     </li>
+                        <li>SOS alerts with Socket.IO & Firebase FCM notifications</li>
+                        <li> Real-time chat, presence tracking & read receipts</li>
+                        <li>Built with React, Flask, MongoDB & Python</li>
+                        <li>Mobile-first design with a dynamic and responsive interface</li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-showcase" id="autoshooter">
+            <div class="project-container">
+                <!-- Media Left -->
+                 <div class="project-media-wrapper" onclick="window.location.href='sentinel.html';" role="link" tabindex="0"> 
+                   <!--  <div class="project-media-wrapper"  role="link" tabindex="0"> -->
+                    <video class="project-video" autoplay muted loop playsinline preload="metadata">
+                        <source src="videos/sentinal_demo.mp4" type="video/mp4">
+                    </video>
+
+
+                </div>
+
+                <!-- Content Right -->
+                <div class="project-info">
+                    <div class="project-category">COMPUTER VISION SYSTEM / 2025</div>
+                     <h2 class="project-title"
+                    onclick="window.location.href='sentinel.html';"role="link" tabindex="0"> 
+    <!--    <h2 class="project-title"
+                   
+                        role="link"
+                        tabindex="0"> -->
+        Sentinel — Realtime Vehicle & ALPR System</h2>
+                    <p class="project-description">
+                        A desktop-based computer vision application built with Python, OpenCV, YOLOv8, and OCR for real-time vehicle and license plate detection. The system captures live camera feeds, extracts plate information, stores detection history in SQLite, and provides an interactive monitoring dashboard through a custom PyQt6 interface.
+                    </p>
+                    <ul class="project-features">
+                        <li>Real-time vehicle detection using YOLOv8</li>
+                        <li>Automatic license plate localization and OCR</li>
+                        <li>Multi-threaded processing for smooth performance</li>
+                        <li>Detection history with image and timestamp storage</li>
+                        <li>SQLite-powered record management system</li>
+                        <li>Modern PyQt6 desktop interface</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECT SECTION: JSMS -->
+        <section class="project-showcase" id="jsms">
+            <div class="project-container">
+                <!-- Media Left -->
+                 <div class="project-media-wrapper" 
+                onclick="window.location.href='jsms.html';" role="link" tabindex="0"> 
+              <!--  <div class="project-media-wrapper" 
+                role="link" tabindex="0"> -->
+                    <video class="project-video" autoplay muted loop playsinline preload="metadata">
+                        <source src="videos/jsms_demo.mp4" type="video/mp4">
+                    </video>
+
+                </div>
+                
+
+
+                <!-- Content Right -->
+                <div class="project-info">
+                    <div class="project-category">FULL STACK WEB APPLICATION / 2024</div>
+                   <h2 class="project-title" onclick="window.location.href='jsms.html';" role="link" tabindex="0">Jewellery Store Management System</h2>
+                  <!--     <h2 class="project-title" role="link" tabindex="0">Jewellery Store Management System</h2>  -->
+                    <p class="project-description">
+                        A full-stack jewellery e-commerce platform designed for product management, customer authentication, shopping cart operations, and administrative control through a PHP and MySQL backend architecture.
+                    </p>
+                    <ul class="project-features">
+                        <li>Full-stack e-commerce platform powered by PHP & MySQL</li>
+                        <li>Secure customer login, registration & session management</li>
+                        <li>Dynamic product catalog and inventory administration</li>
+                        <li>Shopping cart workflow with real-time item management</li>
+                        <li>Category-based product organization and navigation</li>
+                        <li>MySQL database integration for persistent data storage</li>
+                        <li>Responsive Bootstrap frontend optimized for multiple devices</li>
+                        <li>Built using PHP, MySQL, HTML, CSS, JavaScript & Bootstrap</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- TIMELINE SECTION -->
+<div id="footer-container"></div>
+
+<script>
+fetch('footer.html')
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById('footer-container').innerHTML = data;
+  });
+</script>
+        
+
+
+
+   
+
+    <script src="loader.js"></script>
+    <script src="script.js"></script>
+
+    </body>
+
+    </html>
