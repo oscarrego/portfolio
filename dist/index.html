@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+﻿    <!DOCTYPE html>
     <html lang="en">
         
 
@@ -10,14 +10,23 @@
 
         <title>Oscar's Portfolio</title>
         <link rel="icon" type="image/svg+xml" href="/portfolio-hosting/assets/favicon-BnlB9ra9.svg">
+
+        <!-- Google Analytics 4 — Replace G-DJ4QZG7D8B with your Measurement ID -->
+        <!-- HOW: analytics.google.com → Admin → Data Streams → copy Measurement ID -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ4QZG7D8B"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-DJ4QZG7D8B', { send_page_view: true });
+        </script>
 
 
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
         <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 
-      <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/main-BnDdxSgc.css">
-      <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/mobile-B7d8EX-Q.css">
+      <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/mobile-D4V4HAeV.css">
     </head>
 
     <body>
@@ -218,9 +227,11 @@ fetch('footer.html')
 
    
 
-    <script src="loader.js"></script>
+    <script src="loader-universal.js"></script>
     <script src="script.js"></script>
+    <script src="analytics.js"></script>
 
-    </body>
+    <script src="grain.js"></script>
+</body>
 
     </html>

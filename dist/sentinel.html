@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,17 +6,34 @@
     <title>Oscar | Sentinel </title>
     <link rel="icon" type="image/svg+xml" href="/portfolio-hosting/assets/favicon-BnlB9ra9.svg">
 
-    <!-- Base Styles (Inheriting visual identity) -->
+    <!-- Google Analytics 4 — Replace G-DJ4QZG7D8B with your Measurement ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ4QZG7D8B"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DJ4QZG7D8B', { send_page_view: true });
+    </script>
+
+    <!-- Base Styles (Inheriting visual identity) -->
     
     <!-- Dedicated Case Study Styles -->
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
-  <script type="module" crossorigin src="/portfolio-hosting/assets/script-C_I3FkMG.js"></script>
-  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/sentinel-BQPZwWbH.css">
-  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/mobile-B7d8EX-Q.css">
+  <script type="module" crossorigin src="/portfolio-hosting/assets/script-D9oRits5.js"></script>
+  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/sentinel-DEJc9Q_l.css">
+  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/mobile-D4V4HAeV.css">
 </head>
 <body>
+    <!-- LOADING SCREEN -->
+    <div id="loader">
+        <div class="loader-notice" id="mobile-notice">FOR THE BEST EXPERIENCE,<br>VIEW ON A DESKTOP SCREEN.</div>
+        <div class="loader-wave-container"><div class="loader-wave"></div></div>
+        <div class="loader-label">LOADING</div>
+        <div class="loader-percent" id="loader-percent">0%</div>
+    </div>
+
     <div class="mouse-glow"></div>
 
     <!-- FLOATING NAV -->
@@ -233,6 +250,8 @@ fetch('footer.html')
 </script>
 
     <!-- Scripts -->
+    <script src="loader-universal.js"></script>
+    <script src="analytics.js"></script>
     <script>
 document.addEventListener('DOMContentLoaded', () => {
     const carouselWrappers = document.querySelectorAll('.sentinel-carousel-wrapper');
@@ -308,5 +327,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
           
     </script>
+<script src="grain.js"></script>
 </body>
 </html>
