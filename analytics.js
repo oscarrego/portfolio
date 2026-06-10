@@ -8,8 +8,8 @@
  * │  1. Go to: https://analytics.google.com                                 │
  * │  2. Create a new Property → Web platform                                │
  * │  3. Enter your portfolio URL (e.g. https://oscarrego.github.io)         │
- * │  4. Copy the Measurement ID (format: G-DJ4QZG7D8B)                      │
- * │  5. Replace "G-DJ4QZG7D8B" in index.html (and all other HTML files)     │
+ * │  4. Copy the Measurement ID (format: G-7MTB5QH0GN)                      │
+ * │  5. Replace "G-7MTB5QH0GN" in index.html (and all other HTML files)     │
  * │     in the gtag('config', ...) call inside the GA4 script block         │
  * └─────────────────────────────────────────────────────────────────────────┘
  *

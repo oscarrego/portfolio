@@ -45,13 +45,13 @@ FILE: about.html
     <title>Oscar | About</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-    <!-- Google Analytics 4 — Replace G-DJ4QZG7D8B with your Measurement ID -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ4QZG7D8B"></script>
+    <!-- Google Analytics 4 — Replace G-7MTB5QH0GN with your Measurement ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7MTB5QH0GN"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-DJ4QZG7D8B', { send_page_view: true });
+        gtag('config', 'G-7MTB5QH0GN', { send_page_view: true });
     </script>
 
     <link rel="stylesheet" href="style.css">
@@ -385,8 +385,8 @@ FILE: analytics.js
  * │  1. Go to: https://analytics.google.com                                 │
  * │  2. Create a new Property → Web platform                                │
  * │  3. Enter your portfolio URL (e.g. https://oscarrego.github.io)         │
- * │  4. Copy the Measurement ID (format: G-DJ4QZG7D8B)                      │
- * │  5. Replace "G-DJ4QZG7D8B" in index.html (and all other HTML files)     │
+ * │  4. Copy the Measurement ID (format: G-7MTB5QH0GN)                      │
+ * │  5. Replace "G-7MTB5QH0GN" in index.html (and all other HTML files)     │
  * │     in the gtag('config', ...) call inside the GA4 script block         │
  * └─────────────────────────────────────────────────────────────────────────┘
  *
@@ -2820,14 +2820,14 @@ FILE: index.html
         <title>Oscar's Portfolio</title>
         <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-        <!-- Google Analytics 4 — Replace G-DJ4QZG7D8B with your Measurement ID -->
+        <!-- Google Analytics 4 — Replace G-7MTB5QH0GN with your Measurement ID -->
         <!-- HOW: analytics.google.com → Admin → Data Streams → copy Measurement ID -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ4QZG7D8B"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-7MTB5QH0GN"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-DJ4QZG7D8B', { send_page_view: true });
+            gtag('config', 'G-7MTB5QH0GN', { send_page_view: true });
         </script>
 
         <link rel="stylesheet" href="style.css">
@@ -3461,13 +3461,13 @@ FILE: jsms.html
     <title>Oscar | JSMS </title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-    <!-- Google Analytics 4 — Replace G-DJ4QZG7D8B with your Measurement ID -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ4QZG7D8B"></script>
+    <!-- Google Analytics 4 — Replace G-7MTB5QH0GN with your Measurement ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7MTB5QH0GN"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-DJ4QZG7D8B', { send_page_view: true });
+        gtag('config', 'G-7MTB5QH0GN', { send_page_view: true });
     </script>
 
     <!-- Base Styles (Inheriting visual identity) -->
@@ -5303,13 +5303,13 @@ FILE: orbit.html
     <title>Oscar | Orbit </title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-    <!-- Google Analytics 4 — Replace G-DJ4QZG7D8B with your Measurement ID -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ4QZG7D8B"></script>
+    <!-- Google Analytics 4 — Replace G-7MTB5QH0GN with your Measurement ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7MTB5QH0GN"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-DJ4QZG7D8B', { send_page_view: true });
+        gtag('config', 'G-7MTB5QH0GN', { send_page_view: true });
     </script>
 
     <!-- Base Styles (Inheriting visual identity) -->
@@ -7299,13 +7299,13 @@ FILE: sentinel.html
     <title>Oscar | Sentinel </title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-    <!-- Google Analytics 4 — Replace G-DJ4QZG7D8B with your Measurement ID -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ4QZG7D8B"></script>
+    <!-- Google Analytics 4 — Replace G-7MTB5QH0GN with your Measurement ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7MTB5QH0GN"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-DJ4QZG7D8B', { send_page_view: true });
+        gtag('config', 'G-7MTB5QH0GN', { send_page_view: true });
     </script>
 
     <!-- Base Styles (Inheriting visual identity) -->
@@ -8535,13 +8535,13 @@ FILE: tools.html
     <title>Oscar | Tools</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-    <!-- Google Analytics 4 — Replace G-DJ4QZG7D8B with your Measurement ID -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ4QZG7D8B"></script>
+    <!-- Google Analytics 4 — Replace G-7MTB5QH0GN with your Measurement ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7MTB5QH0GN"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-DJ4QZG7D8B', { send_page_view: true });
+        gtag('config', 'G-7MTB5QH0GN', { send_page_view: true });
     </script>
 
     <link rel="stylesheet" href="style.css">
