@@ -2,41 +2,9 @@
    OSCAR REGO PORTFOLIO 2026
    MASTER STYLESHEET 
 */
-
 /* 1. RESET & GLOBAL */
-body::after {
-    content: "";
-    position: fixed;
-    top: -100%;
-    left: -100%;
-    width: 300%;
-    height: 300%;
-
-    pointer-events: none;
-    z-index: 9999;
-
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-
-    background-size: 180px 180px;
-
-    opacity: 0.12;
-
-    animation: tvStatic 0.15s steps(8) infinite;
-}
-
-@keyframes tvStatic {
-    0%   { transform: translate(0,0); }
-    10%  { transform: translate(-5%,-5%); }
-    20%  { transform: translate(10%,5%); }
-    30%  { transform: translate(-15%,10%); }
-    40%  { transform: translate(15%,-10%); }
-    50%  { transform: translate(-10%,15%); }
-    60%  { transform: translate(10%,10%); }
-    70%  { transform: translate(-15%,-15%); }
-    80%  { transform: translate(15%,5%); }
-    90%  { transform: translate(-5%,15%); }
-    100% { transform: translate(0,0); }
-}
+/* Cinematic film grain is handled by grain.js — canvas-based, 18fps cinematic */
+/* The old body::after TV static (steps(8), opacity:0.12) has been removed    */
 
 *{
     margin: 0;
@@ -55,7 +23,7 @@ body::after {
 }
 
 html{
-    background: #131313;
+    background: #3f3f3f;
 }
 
 /* LENIS SMOOTH SCROLL BOILERPLATE */
@@ -151,7 +119,7 @@ a{
     color: inherit;
 }
 
-/* 4. FLOATING NAV (LIQUID GLASS) */
+/* 4. FLOATING NAV (PREMIUM LIQUID GLASS) */
 
 .floating-nav{
     position: fixed;
@@ -162,22 +130,29 @@ a{
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 4px;
 
-    padding: 6px 10px;
+    padding: 5px 8px;
     border-radius: 999px;
 
-    background: rgba(55, 55, 55, 0.642);
+    /* Premium multi-layer glass */
+    background: rgba(22, 22, 22, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.10);
 
-    border: 1px solid rgba(255,255,255,0.06);
+    /* Higher blur + saturation for glass depth */
+    backdrop-filter: blur(28px) saturate(180%) brightness(1.05);
+    -webkit-backdrop-filter: blur(28px) saturate(180%) brightness(1.05);
 
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-
+    /* Multi-layer shadow: depth + top specular highlight + bottom shadow */
     box-shadow:
-        0 4px 18px rgba(0,0,0,0.12);
+        0 8px 32px rgba(0, 0, 0, 0.45),
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.09),  /* top specular edge */
+        inset 0 -1px 0 rgba(0, 0, 0, 0.25);        /* bottom inner shadow */
 
     z-index: 2000;
+    transition: box-shadow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+                background 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 
@@ -188,24 +163,27 @@ a{
     justify-content: center;
     padding: 0 18px;
     height: 34px;
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255, 255, 255, 0.5);
     font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 1.5px;
+    font-weight: 600;
+    letter-spacing: 2px;
     border-radius: 999px;
-    transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative;
+    transition: color 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+                background 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .floating-nav a:hover{
     color: #ffffff;
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .floating-nav a.active{
     color: #ffffff;
+    
 }
 
-
-
+/* Active page indicator: subtle accent dot under text */
 
 /* 5. SOCIAL SIDEBAR */
 
@@ -569,6 +547,7 @@ a{
     width: min(1600px, 100%);
     margin: 0 auto;
     isolation: isolate;
+    z-index: 10;
 }
 
 .skills h2{ 
@@ -598,13 +577,13 @@ a{
     backdrop-filter: blur(10px); display: flex; flex-direction: column;
     justify-content: center; align-items: center; gap: 14px;
     transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); will-change: transform;
+    
 }
 
 .skill-card:hover {
     transform: translateY(-8px) scale(1.03);
     z-index: 100;
-    box-shadow: 0 12px 30px -10px rgba(215, 255, 63, 0.15),
-                inset 0 1px 12px rgba(215, 255, 63, 0.05);
+    
 }
 
 .skill-card img{ width: 42px; height: 42px; filter: grayscale(0.4) brightness(0.8); transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
@@ -629,7 +608,7 @@ a{
 
 /* 11. PIXEL CURSOR (ADAPTIVE) */
 
-.mouse-glow{
+    .mouse-glow{
     position: fixed;
     width: 12px; height: 12px;
     background: #d7ff3f;
@@ -697,7 +676,12 @@ a{
     
     .project-description{ margin: 0 auto; }
     .project-features{ align-items: center; }
-    .hero-content h1{ font-size: 180px; }
+    /* Fluid h1 scaling — no nowrap overflow at mid sizes */
+    .hero-content h1{ 
+        font-size: clamp(80px, 13vw, 180px);
+        white-space: normal;
+        word-break: keep-all;
+    }
 }
 
 @media(max-width: 900px){

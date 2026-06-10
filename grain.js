@@ -13,9 +13,15 @@
  *   - Debounced resize handler prevents thrashing during window drag
  *
  * Z-index hierarchy (non-interactive):
- *   grain canvas  : 9000  ← sits over content, nav, images, videos
- *   #loader       : 9998  ← above grain (correct)
+ *   grain canvas  : 2      ← texture layer, sits above raw bg, BELOW all UI
+ *   social-sidebar: 999    ← above grain
+ *   body::before  : 1500   ← liquid glass strip, above grain
+ *   .floating-nav : 2000   ← above grain (correct)
+ *   #loader       : 9998   ← above grain (correct)
+ *   .view-tooltip : 9999998 ← above grain (correct)
  *   .mouse-glow   : 9999999 ← above grain (correct)
+ *
+ * The grain MUST sit below readable UI — nav, footer, text, timeline, hero.
  *
  * Performance notes:
  *   - Only a 180×180 pixel tile is generated per frame (~130 KB/frame)
@@ -44,8 +50,8 @@
         width:          '100%',
         height:         '100%',
         pointerEvents:  'none',
-        zIndex:         '9000',
-        opacity:        '0.048',   /* Subtle: barely perceptible as texture */
+        zIndex:         '2',     /* Below all UI: nav(2000), footer(5), text — ABOVE only raw bg */
+        opacity:        '0.036', /* Slightly increased since it now sits lower — still very subtle */
         willChange:     'contents',
     });
 

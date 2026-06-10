@@ -4,7 +4,7 @@
 ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ── Touch / pointer capability detection ───────────────────────────────── */
-// Use both matchMedia AND maxTouchPoints for robust detection
+// Dual check: matchMedia for capability + maxTouchPoints for device flags
 const isTouchDevice = (
     window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
     (navigator.maxTouchPoints > 0 && !window.matchMedia('(pointer: fine)').matches)
@@ -29,31 +29,43 @@ if (!isTouchDevice && mouseGlow) {
         mouseGlow.style.opacity = '1';
     });
 
-    /* HOVER EFFECT */
-    const hoverItems = document.querySelectorAll("a, button:not(.orbit-view-toggle), input, textarea, select, [role='button'], .project-title");
+    /* ── HOVER ENLARGEMENT — standard interactive elements ─────────────── */
+    const hoverItems = document.querySelectorAll(
+        "a, button:not(.orbit-view-toggle), input, textarea, select, [role='button'], .project-title"
+    );
 
     hoverItems.forEach((item) => {
-        item.addEventListener('mouseenter', () => {
-            mouseGlow.classList.add('hovering');
-        });
-        item.addEventListener('mouseleave', () => {
-            mouseGlow.classList.remove('hovering');
-        });
+        item.addEventListener('mouseenter', () => mouseGlow.classList.add('hovering'));
+        item.addEventListener('mouseleave', () => mouseGlow.classList.remove('hovering'));
+    });
+
+    /* ── HOVER ENLARGEMENT — footer links (Issue 8) ─────────────────────
+     * Footer is injected via fetch() so we can't querySelector at load time.
+     * Use event delegation on document to catch mouseenter/leave on
+     * .footer-right a and footer-bottom h1 regardless of when they appear.
+    ─────────────────────────────────────────────────────────────────── */
+    document.addEventListener('mouseover', (e) => {
+        const footerLink = e.target.closest('.footer-right a, .footer-bottom h1');
+        if (footerLink) mouseGlow.classList.add('hovering');
+    });
+    document.addEventListener('mouseout', (e) => {
+        const footerLink = e.target.closest('.footer-right a, .footer-bottom h1');
+        if (footerLink) mouseGlow.classList.remove('hovering');
     });
 
 } else if (mouseGlow) {
-    // Touch device: remove cursor element entirely from DOM
+    // Touch device: remove cursor element entirely from DOM — no trace left
     mouseGlow.remove();
 }
 
 /* ── TIMELINE GLOW TRACKER (desktop) ───────────────────────────────────── */
 const timelineWrapper = document.querySelector('.timeline-wrapper');
-const timelineGlow = document.querySelector('.timeline-glow');
-const timelineLine = document.querySelector('.timeline-line');
+const timelineGlow    = document.querySelector('.timeline-glow');
+const timelineLine    = document.querySelector('.timeline-line');
 
 if (timelineWrapper && timelineGlow && timelineLine && !isTouchDevice) {
     let currentProgress = 0;
-    let targetProgress = 0;
+    let targetProgress  = 0;
 
     const updateGlow = () => {
         currentProgress += (targetProgress - currentProgress) * 0.08;
@@ -64,14 +76,11 @@ if (timelineWrapper && timelineGlow && timelineLine && !isTouchDevice) {
     };
 
     const onScroll = () => {
-        const rect = timelineWrapper.getBoundingClientRect();
+        const rect         = timelineWrapper.getBoundingClientRect();
         const wrapperHeight = timelineWrapper.offsetHeight;
-        const viewportHeight = window.innerHeight;
-        const startOffset = viewportHeight * 0.5;
-        const totalDistance = wrapperHeight;
-        const currentPos = startOffset - rect.top;
-        let progress = currentPos / totalDistance;
-        targetProgress = Math.max(0, Math.min(1, progress));
+        const startOffset  = window.innerHeight * 0.5;
+        const currentPos   = startOffset - rect.top;
+        targetProgress = Math.max(0, Math.min(1, currentPos / wrapperHeight));
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -79,8 +88,7 @@ if (timelineWrapper && timelineGlow && timelineLine && !isTouchDevice) {
     updateGlow();
 }
 
-/* ── TIMELINE SCROLL-REVEAL (mobile) ───────────────────────────────────── */
-// Reveals .timeline-item elements as user scrolls on touch/mobile
+/* ── TIMELINE SCROLL-REVEAL (mobile IntersectionObserver) ──────────────── */
 if (isTouchDevice) {
     const timelineItems = document.querySelectorAll('.timeline-item');
 
@@ -89,77 +97,68 @@ if (isTouchDevice) {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    // Once revealed, stop observing (animation runs once)
-                    revealObserver.unobserve(entry.target);
+                    revealObserver.unobserve(entry.target); // fire once
                 }
             });
         }, {
-            threshold: 0.15,
-            rootMargin: '0px 0px -40px 0px', // trigger slightly before fully in view
+            threshold: 0.12,
+            rootMargin: '0px 0px -30px 0px',
         });
 
         timelineItems.forEach((item) => revealObserver.observe(item));
     }
 
-    // Also animate timeline glow on mobile using scroll position
+    // Mobile timeline glow via scroll position
     if (timelineWrapper && timelineGlow && timelineLine) {
         const onMobileScroll = () => {
-            const rect = timelineWrapper.getBoundingClientRect();
+            const rect         = timelineWrapper.getBoundingClientRect();
             const wrapperHeight = timelineWrapper.offsetHeight;
-            const viewportHeight = window.innerHeight;
-            const currentPos = (viewportHeight * 0.5) - rect.top;
-            const progress = Math.max(0, Math.min(1, currentPos / wrapperHeight));
-            const movementRange = timelineLine.offsetHeight - timelineGlow.offsetHeight;
-            timelineGlow.style.transform = `translate(-50%, ${progress * movementRange}px)`;
+            const currentPos   = (window.innerHeight * 0.5) - rect.top;
+            const progress     = Math.max(0, Math.min(1, currentPos / wrapperHeight));
+            const range        = timelineLine.offsetHeight - timelineGlow.offsetHeight;
+            timelineGlow.style.transform = `translate(-50%, ${progress * range}px)`;
         };
         window.addEventListener('scroll', onMobileScroll, { passive: true });
         onMobileScroll();
     }
 }
 
-/* ── TRUE KINETIC INERTIAL SCROLLING ────────────────────────────────────── */
-class KineticScroll {
-    constructor() {
-        this.scrollY = window.scrollY;
-        this.targetY = window.scrollY;
-        this.velocity = 0;
-        this.friction = 0.94;
-        this.acceleration = 0.06;
-        this.spring = 0.04;
-        this.isTouch = false;
-        this.init();
-    }
+/* ── KINETIC INERTIAL SCROLLING (desktop mouse wheel only) ─────────────── */
+// Skip entirely on touch devices — native scroll is superior on mobile
+if (!isTouchDevice) {
+    class KineticScroll {
+        constructor() {
+            this.scrollY      = window.scrollY;
+            this.targetY      = window.scrollY;
+            this.velocity     = 0;
+            this.friction     = 0.94;
+            this.acceleration = 0.06;
+            this.spring       = 0.04;
+            this.init();
+        }
 
-    init() {
-        window.addEventListener('wheel', (e) => {
-            if (!this.isTouch) {
+        init() {
+            window.addEventListener('wheel', (e) => {
                 e.preventDefault();
-                let delta = e.deltaY;
-                this.velocity += delta * this.acceleration;
-            }
-        }, { passive: false });
+                this.velocity += e.deltaY * this.acceleration;
+            }, { passive: false });
 
-        window.addEventListener('scroll', () => {
-            if (Math.abs(this.velocity) < 0.1) {
-                this.scrollY = window.scrollY;
-                this.targetY = window.scrollY;
-            }
-        }, { passive: true });
+            window.addEventListener('scroll', () => {
+                if (Math.abs(this.velocity) < 0.1) {
+                    this.scrollY = window.scrollY;
+                    this.targetY = window.scrollY;
+                }
+            }, { passive: true });
 
-        window.addEventListener('touchstart', () => {
-            this.isTouch = true;
-        }, { passive: true });
+            this.update();
+        }
 
-        this.update();
-    }
-
-    update() {
-        if (!this.isTouch) {
+        update() {
             this.velocity *= this.friction;
-            this.targetY += this.velocity;
+            this.targetY  += this.velocity;
             const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-            this.targetY = Math.max(0, Math.min(this.targetY, maxScroll));
-            this.scrollY += (this.targetY - this.scrollY) * this.spring;
+            this.targetY    = Math.max(0, Math.min(this.targetY, maxScroll));
+            this.scrollY   += (this.targetY - this.scrollY) * this.spring;
 
             if (Math.abs(this.targetY - this.scrollY) > 0.05 || Math.abs(this.velocity) > 0.05) {
                 window.scrollTo(0, this.scrollY);
@@ -167,16 +166,16 @@ class KineticScroll {
                 this.scrollY = window.scrollY;
                 this.targetY = window.scrollY;
             }
-        }
-        requestAnimationFrame(() => this.update());
-    }
-}
 
-new KineticScroll();
+            requestAnimationFrame(() => this.update());
+        }
+    }
+
+    new KineticScroll();
+}
 
 /* ── Video IntersectionObserver (play/pause on scroll) ──────────────────── */
 const videos = document.querySelectorAll('.project-video');
-
 const videoObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -189,12 +188,12 @@ const videoObserver = new IntersectionObserver((entries) => {
 
 videos.forEach(video => videoObserver.observe(video));
 
-/* ── Protect project media from right-click & save ─────────────────────── */
+/* ── Protect project media from right-click & long-press save ───────────── */
 document.querySelectorAll('.project-media-wrapper, .project-video').forEach(media => {
     media.addEventListener('contextmenu', (e) => e.preventDefault());
 });
 
-/* ── VIEW TOOLTIP LOGIC (desktop only) ─────────────────────────────────── */
+/* ── VIEW TOOLTIP (desktop only) ────────────────────────────────────────── */
 if (!isTouchDevice) {
     const viewTooltip = document.createElement('div');
     viewTooltip.classList.add('view-tooltip');
@@ -203,7 +202,7 @@ if (!isTouchDevice) {
 
     document.addEventListener('mousemove', (e) => {
         viewTooltip.style.left = e.clientX + 'px';
-        viewTooltip.style.top = e.clientY + 'px';
+        viewTooltip.style.top  = e.clientY + 'px';
     });
 
     document.querySelectorAll('.project-media-wrapper').forEach(wrapper => {
@@ -217,10 +216,10 @@ if (!isTouchDevice) {
         });
     });
 
-    /* ── ORBIT VIDEO TOGGLE LOGIC ─────────────────────────────────────── */
+    /* ── ORBIT VIDEO TOGGLE (desktop with tooltip) ────────────────────── */
     const orbitToggleBtn = document.getElementById('orbit-view-toggle');
-    const orbitVideo = document.getElementById('orbit-video');
-    const orbitVideoSrc = document.getElementById('orbit-video-src');
+    const orbitVideo     = document.getElementById('orbit-video');
+    const orbitVideoSrc  = document.getElementById('orbit-video-src');
 
     if (orbitToggleBtn && orbitVideo && orbitVideoSrc) {
         let isDesktopView = false;
@@ -228,7 +227,6 @@ if (!isTouchDevice) {
         orbitToggleBtn.addEventListener('mouseenter', () => {
             viewTooltip.innerText = isDesktopView ? 'MOBILE MODE' : 'DESKTOP MODE';
         });
-
         orbitToggleBtn.addEventListener('mouseleave', () => {
             viewTooltip.innerText = 'VIEW';
         });
@@ -236,12 +234,11 @@ if (!isTouchDevice) {
         orbitToggleBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             e.preventDefault();
-
             isDesktopView = !isDesktopView;
             const span = orbitToggleBtn.querySelector('span');
 
             orbitVideo.style.transition = 'opacity 0.2s ease';
-            orbitVideo.style.opacity = '0.5';
+            orbitVideo.style.opacity    = '0.5';
 
             if (isDesktopView) {
                 orbitToggleBtn.classList.add('desktop-view');
@@ -261,18 +258,18 @@ if (!isTouchDevice) {
 
             setTimeout(() => {
                 orbitVideo.load();
-                orbitVideo.play().catch(e => console.log('Autoplay blocked:', e));
+                orbitVideo.play().catch(() => {});
                 orbitVideo.style.opacity = '1';
             }, 150);
         });
     }
 }
 
-/* ── Orbit toggle on touch devices (no tooltip needed) ─────────────────── */
+/* ── ORBIT VIDEO TOGGLE (touch, no tooltip) ─────────────────────────────── */
 if (isTouchDevice) {
     const orbitToggleBtn = document.getElementById('orbit-view-toggle');
-    const orbitVideo = document.getElementById('orbit-video');
-    const orbitVideoSrc = document.getElementById('orbit-video-src');
+    const orbitVideo     = document.getElementById('orbit-video');
+    const orbitVideoSrc  = document.getElementById('orbit-video-src');
 
     if (orbitToggleBtn && orbitVideo && orbitVideoSrc) {
         let isDesktopView = false;
@@ -280,11 +277,10 @@ if (isTouchDevice) {
         orbitToggleBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             e.preventDefault();
-
             isDesktopView = !isDesktopView;
 
             orbitVideo.style.transition = 'opacity 0.2s ease';
-            orbitVideo.style.opacity = '0.5';
+            orbitVideo.style.opacity    = '0.5';
 
             if (isDesktopView) {
                 orbitToggleBtn.classList.add('desktop-view');
@@ -300,7 +296,7 @@ if (isTouchDevice) {
 
             setTimeout(() => {
                 orbitVideo.load();
-                orbitVideo.play().catch(e => console.log('Autoplay blocked:', e));
+                orbitVideo.play().catch(() => {});
                 orbitVideo.style.opacity = '1';
             }, 150);
         });

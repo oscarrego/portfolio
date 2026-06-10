@@ -275,6 +275,149 @@
         letter-spacing: -2px;
         margin-bottom: 60px;
     }
+/* 2. Tablet Overrides */
+@media (max-width: 900px) {
+    .hero {
+        padding: 0 5%;
+        min-height: 100vh;
+        min-height: 100svh;
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: -100px; /* Separation before first project card */
+
+        
+    }
+
+    .hero-content {
+        width: 100%;
+        min-height: 100vh;
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 1vh; /* Pushes intro text higher */
+    }
+
+    .hero-intro {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        text-align: center;
+        align-items: center;
+        margin-bottom: 0;
+    }
+
+    .cinematic-intro {
+        transform: none;
+        padding: 0;
+        max-width: 100%;
+        margin-bottom: -220px;
+        margin-top: 220px;
+    }
+
+    .intro-main {
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .hero-content h1 {
+        font-size: 12vw;
+        margin-top: 290px; /* Pushes title down */
+        
+        white-space: normal;
+        word-break: keep-all;
+        line-height: 0.9;
+    }
+
+    .hero-status-line {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .status-dot {
+        display: none;
+    }
+
+    .project-showcase {
+        padding: 60px 6%; /* Enhanced breathing space on tablet */
+    }
+
+    .project-title {
+        font-size: 40px;
+    }
+
+    .social-sidebar {
+        display: none;
+    }
+
+    /* Skills Marquee */
+    .skills {
+        padding: 80px 0 60px;
+    }
+
+    .skills h2 {
+        font-size: 40px;
+    }
+
+    .skill-card {
+        width: 120px;
+        height: 110px;
+    }
+
+    /* Footer */
+    .footer-content {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+        align-items: center;
+        top: 24px;
+        left: 5%;
+        right: 5%;
+    }
+
+    .footer-right {
+        align-items: center;
+        gap: 10px;
+    }
+
+    .footer-bottom {
+        width: 100%;
+        left: 0;
+        bottom: 24px;
+        text-align: center;
+    }
+
+    .footer-bottom h1 {
+        text-align: center;
+        font-size: 32px;
+    }
+}
+
+/* 3. Mobile Phones Overrides */
+@media (max-width: 600px) {
+    .hero-content .hero-title {
+    font-size: 19vw !important;
+}
+    /* Flatter, cleaner top glass strip for mobile */
+    body::before {
+        bottom: auto;
+        top: 0;
+        height: calc(15px + env(safe-area-inset-top));
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 15%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 15%, transparent 100%);
+        mask-composite: source-over;
+        -webkit-mask-composite: source-over;
+    }
+
+    .hero {
+        padding-top: 140px;
+        
+    }
+
+    .hero-content h1 {
+        font-size: 14vw;
+        letter-spacing: -2px;
+        margin-bottom: 60px;
+    }
 
     .intro-main {
         font-size: 13px;
@@ -283,13 +426,15 @@
     .floating-nav {
         width: max-content;
         max-width: 90vw;
-        gap: 4px;
-        
-        padding: 4px 5px;
+        gap: 2px;
+        padding: 4px 4px;
         border-radius: 999px;
         bottom: auto;
         top: calc(20px + env(safe-area-inset-top));
         z-index: 2000;
+        /* Keep premium glass on mobile */
+        backdrop-filter: blur(24px) saturate(160%) brightness(1.05);
+        -webkit-backdrop-filter: blur(24px) saturate(160%) brightness(1.05);
     }
 
     .floating-nav a {
