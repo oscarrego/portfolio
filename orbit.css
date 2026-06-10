@@ -284,10 +284,10 @@ body {
 .orbit-mobile-sticky-card {
     position: sticky;
     top: 160px;
-    display: flex;
-    width: min(450px, 100%);
-    aspect-ratio: 9 / 19.5;
+
+    width: 320px;      /* control phone size here */
     height: auto;
+
     margin-left: auto;
     margin-right: auto;
 }
@@ -296,23 +296,21 @@ body {
 /* 4. CAROUSEL COMPONENTS */
 .orbit-mobile-carousel-wrapper {
     position: relative;
+
+    width: 320px;
+    aspect-ratio: 1763 / 3607;
+
     overflow: hidden;
-    width: 100%;
-    aspect-ratio: 9 / 19.5;
-    background: #0f0f0f;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.7);
+    background: transparent;
+    border: none;
+    box-shadow: none;
 }
 
 .orbit-mobile-sticky-image {
-    display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    border-radius: 16px;
+    object-fit: contain;
 }
-
 
 .orbit-mobile-carousel-wrapper .orbit-mobile-sticky-image {
     position: absolute;
