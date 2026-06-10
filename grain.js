@@ -51,7 +51,7 @@
         height:         '100%',
         pointerEvents:  'none',
         zIndex:         '2',     /* Below all UI: nav(2000), footer(5), text — ABOVE only raw bg */
-        opacity:        '0.036', /* Slightly increased since it now sits lower — still very subtle */
+        opacity:        '0.026', /* Slightly increased since it now sits lower — still very subtle */
         willChange:     'contents',
     });
 
