@@ -134,7 +134,7 @@ body {
 
 .jsms-detail-row {
     display: grid;
-    grid-template-columns: 1fr 720px;
+    grid-template-columns: 1fr minmax(min(720px, 100%), 720px);
     gap: 60px;
     align-items: flex-start;
 }
@@ -172,8 +172,9 @@ body {
     position: sticky;
     top: 160px;
     display: flex;
-    width: 720px;
-    height: 450px;
+    width: min(720px, 100%);
+    aspect-ratio: 16 / 10;
+    height: auto;
 }
 
 .jsms-sticky-image {
@@ -188,8 +189,8 @@ body {
 .jsms-carousel-wrapper {
     position: relative;
     overflow: hidden;
-    width: 720px;
-    height: 450px;
+    width: 100%;
+    aspect-ratio: 16 / 10;
     background: #0f0f0f;
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 16px;

@@ -1,54 +1,65 @@
-const mouseGlow = document.querySelector(".mouse-glow");
-const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+/* ═══════════════════════════════════════════════════════════════════════════
+   OSCAR REGO PORTFOLIO 2026 — SCRIPT.JS
+   Custom cursor, kinetic scroll, video observers, timeline animations
+═══════════════════════════════════════════════════════════════════════════ */
 
-if (!isTouchDevice) {
-    document.addEventListener("mousemove", (e) => {
-        if (mouseGlow) {
-            mouseGlow.style.opacity = "1";
-            mouseGlow.style.left = e.clientX + "px";
-            mouseGlow.style.top = e.clientY + "px";
-        }
+/* ── Touch / pointer capability detection ───────────────────────────────── */
+// Use both matchMedia AND maxTouchPoints for robust detection
+const isTouchDevice = (
+    window.matchMedia('(hover: none) and (pointer: coarse)').matches ||
+    (navigator.maxTouchPoints > 0 && !window.matchMedia('(pointer: fine)').matches)
+);
+
+const mouseGlow = document.querySelector('.mouse-glow');
+
+/* ── Custom Cursor (desktop fine-pointer ONLY) ──────────────────────────── */
+if (!isTouchDevice && mouseGlow) {
+
+    document.addEventListener('mousemove', (e) => {
+        mouseGlow.style.opacity = '1';
+        mouseGlow.style.left = e.clientX + 'px';
+        mouseGlow.style.top = e.clientY + 'px';
+    });
+
+    document.addEventListener('mouseleave', () => {
+        mouseGlow.style.opacity = '0';
+    });
+
+    document.addEventListener('mouseenter', () => {
+        mouseGlow.style.opacity = '1';
     });
 
     /* HOVER EFFECT */
     const hoverItems = document.querySelectorAll("a, button:not(.orbit-view-toggle), input, textarea, select, [role='button'], .project-title");
 
     hoverItems.forEach((item) => {
-        item.addEventListener("mouseenter", () => {
-            if (mouseGlow) {
-                mouseGlow.classList.add("hovering");
-            }
+        item.addEventListener('mouseenter', () => {
+            mouseGlow.classList.add('hovering');
         });
-
-        item.addEventListener("mouseleave", () => {
-            if (mouseGlow) {
-                mouseGlow.classList.remove("hovering");
-            }
+        item.addEventListener('mouseleave', () => {
+            mouseGlow.classList.remove('hovering');
         });
     });
+
+} else if (mouseGlow) {
+    // Touch device: remove cursor element entirely from DOM
+    mouseGlow.remove();
 }
 
-/* TIMELINE GLOW TRACKER */
+/* ── TIMELINE GLOW TRACKER (desktop) ───────────────────────────────────── */
+const timelineWrapper = document.querySelector('.timeline-wrapper');
+const timelineGlow = document.querySelector('.timeline-glow');
+const timelineLine = document.querySelector('.timeline-line');
 
-const timelineWrapper = document.querySelector(".timeline-wrapper");
-const timelineGlow = document.querySelector(".timeline-glow");
-const timelineLine = document.querySelector(".timeline-line");
-
-if (timelineWrapper && timelineGlow && timelineLine) {
+if (timelineWrapper && timelineGlow && timelineLine && !isTouchDevice) {
     let currentProgress = 0;
     let targetProgress = 0;
 
     const updateGlow = () => {
-        // Smooth interpolation
         currentProgress += (targetProgress - currentProgress) * 0.08;
-
-        // Calculate maximum movement range so glow doesn't overflow line
         const movementRange = timelineLine.offsetHeight - timelineGlow.offsetHeight;
         const newTop = currentProgress * movementRange;
-
-        // Apply position using transform for performance
         timelineGlow.style.transform = `translate(-50%, ${newTop}px)`;
-        
         requestAnimationFrame(updateGlow);
     };
 
@@ -56,227 +67,242 @@ if (timelineWrapper && timelineGlow && timelineLine) {
         const rect = timelineWrapper.getBoundingClientRect();
         const wrapperHeight = timelineWrapper.offsetHeight;
         const viewportHeight = window.innerHeight;
-
-        // Start tracking when top of wrapper enters middle of viewport
-        // Finish tracking when bottom of wrapper passes middle of viewport
         const startOffset = viewportHeight * 0.5;
         const totalDistance = wrapperHeight;
-        
         const currentPos = startOffset - rect.top;
         let progress = currentPos / totalDistance;
-        
-        // Clamp progress between 0 and 1
         targetProgress = Math.max(0, Math.min(1, progress));
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    
-    // Initialize
+    window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
     updateGlow();
 }
 
-if (!isTouchDevice) {
-    document.addEventListener("mouseleave", () => {
-        if (mouseGlow) {
-            mouseGlow.style.opacity = "0";
-        }
-    });
+/* ── TIMELINE SCROLL-REVEAL (mobile) ───────────────────────────────────── */
+// Reveals .timeline-item elements as user scrolls on touch/mobile
+if (isTouchDevice) {
+    const timelineItems = document.querySelectorAll('.timeline-item');
 
-    document.addEventListener("mouseenter", () => {
-        if (mouseGlow) {
-            mouseGlow.style.opacity = "1";
-        }
-    });
+    if (timelineItems.length > 0) {
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Once revealed, stop observing (animation runs once)
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -40px 0px', // trigger slightly before fully in view
+        });
+
+        timelineItems.forEach((item) => revealObserver.observe(item));
+    }
+
+    // Also animate timeline glow on mobile using scroll position
+    if (timelineWrapper && timelineGlow && timelineLine) {
+        const onMobileScroll = () => {
+            const rect = timelineWrapper.getBoundingClientRect();
+            const wrapperHeight = timelineWrapper.offsetHeight;
+            const viewportHeight = window.innerHeight;
+            const currentPos = (viewportHeight * 0.5) - rect.top;
+            const progress = Math.max(0, Math.min(1, currentPos / wrapperHeight));
+            const movementRange = timelineLine.offsetHeight - timelineGlow.offsetHeight;
+            timelineGlow.style.transform = `translate(-50%, ${progress * movementRange}px)`;
+        };
+        window.addEventListener('scroll', onMobileScroll, { passive: true });
+        onMobileScroll();
+    }
 }
 
-/* TRUE KINETIC INERTIAL SCROLLING */
+/* ── TRUE KINETIC INERTIAL SCROLLING ────────────────────────────────────── */
 class KineticScroll {
     constructor() {
         this.scrollY = window.scrollY;
         this.targetY = window.scrollY;
         this.velocity = 0;
-        
-        // Physics Tuning for Cinematic Weight
-       this.friction = 0.94;
-this.acceleration = 0.06; // Increased for more responsive scroll input
-this.spring = 0.04; // Soft interpolation to target
-        
+        this.friction = 0.94;
+        this.acceleration = 0.06;
+        this.spring = 0.04;
         this.isTouch = false;
-        
         this.init();
     }
-    
+
     init() {
-        // Intercept native wheel events
         window.addEventListener('wheel', (e) => {
             if (!this.isTouch) {
-                e.preventDefault(); // Take control of scroll
-                // Normalize delta to ensure consistency
+                e.preventDefault();
                 let delta = e.deltaY;
-                
-                // Add wheel input directly to velocity (momentum simulation)
                 this.velocity += delta * this.acceleration;
             }
         }, { passive: false });
-        
-        // Detect native scrolling (e.g. scrollbar drag, touch drag)
+
         window.addEventListener('scroll', () => {
             if (Math.abs(this.velocity) < 0.1) {
                 this.scrollY = window.scrollY;
                 this.targetY = window.scrollY;
             }
         }, { passive: true });
-        
-        // Disable intercepting on touch so mobile remains native
+
         window.addEventListener('touchstart', () => {
             this.isTouch = true;
         }, { passive: true });
-        
+
         this.update();
     }
-    
+
     update() {
         if (!this.isTouch) {
-            // Apply kinetic friction to velocity
             this.velocity *= this.friction;
-            
-            // Apply velocity to target position
             this.targetY += this.velocity;
-            
-            // Clamp target to bounds
             const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
             this.targetY = Math.max(0, Math.min(this.targetY, maxScroll));
-            
-            // Interpolate current scroll towards target
             this.scrollY += (this.targetY - this.scrollY) * this.spring;
-            
-            // Apply DOM scroll
+
             if (Math.abs(this.targetY - this.scrollY) > 0.05 || Math.abs(this.velocity) > 0.05) {
                 window.scrollTo(0, this.scrollY);
             } else {
-                // Settle
                 this.scrollY = window.scrollY;
                 this.targetY = window.scrollY;
             }
         }
-        
         requestAnimationFrame(() => this.update());
     }
 }
 
-// Initialize Custom Scroll Engine
 new KineticScroll();
 
+/* ── Video IntersectionObserver (play/pause on scroll) ──────────────────── */
 const videos = document.querySelectorAll('.project-video');
 
-const observer = new IntersectionObserver((entries) => {
+const videoObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        const video = entry.target;
-
         if (entry.isIntersecting) {
-            video.play();
+            entry.target.play();
         } else {
-            video.pause();
+            entry.target.pause();
         }
     });
-}, {
-    threshold: 0.6
-});
+}, { threshold: 0.6 });
 
-videos.forEach(video => {
-    observer.observe(video);
-});
+videos.forEach(video => videoObserver.observe(video));
 
-/* PROTECT PROJECT MEDIA FROM RIGHT-CLICK & SAVE */
+/* ── Protect project media from right-click & save ─────────────────────── */
 document.querySelectorAll('.project-media-wrapper, .project-video').forEach(media => {
-    media.addEventListener('contextmenu', (e) => {
-        e.preventDefault();
-    });
+    media.addEventListener('contextmenu', (e) => e.preventDefault());
 });
 
-/* VIEW TOOLTIP LOGIC */
-const viewTooltip = document.createElement("div");
-viewTooltip.classList.add("view-tooltip");
-viewTooltip.innerText = "VIEW";
-document.body.appendChild(viewTooltip);
-
+/* ── VIEW TOOLTIP LOGIC (desktop only) ─────────────────────────────────── */
 if (!isTouchDevice) {
-    document.addEventListener("mousemove", (e) => {
-        if (viewTooltip) {
-            viewTooltip.style.left = e.clientX + "px";
-            viewTooltip.style.top = e.clientY + "px";
-        }
+    const viewTooltip = document.createElement('div');
+    viewTooltip.classList.add('view-tooltip');
+    viewTooltip.innerText = 'VIEW';
+    document.body.appendChild(viewTooltip);
+
+    document.addEventListener('mousemove', (e) => {
+        viewTooltip.style.left = e.clientX + 'px';
+        viewTooltip.style.top = e.clientY + 'px';
     });
 
     document.querySelectorAll('.project-media-wrapper').forEach(wrapper => {
         wrapper.addEventListener('mouseenter', () => {
             if (mouseGlow) mouseGlow.classList.add('hovering');
-            if (viewTooltip) viewTooltip.classList.add('active');
+            viewTooltip.classList.add('active');
         });
         wrapper.addEventListener('mouseleave', () => {
             if (mouseGlow) mouseGlow.classList.remove('hovering');
-            if (viewTooltip) viewTooltip.classList.remove('active');
+            viewTooltip.classList.remove('active');
         });
     });
-}
 
-/* ORBIT VIDEO TOGGLE LOGIC */
-const orbitToggleBtn = document.getElementById('orbit-view-toggle');
-const orbitVideo = document.getElementById('orbit-video');
-const orbitVideoSrc = document.getElementById('orbit-video-src');
+    /* ── ORBIT VIDEO TOGGLE LOGIC ─────────────────────────────────────── */
+    const orbitToggleBtn = document.getElementById('orbit-view-toggle');
+    const orbitVideo = document.getElementById('orbit-video');
+    const orbitVideoSrc = document.getElementById('orbit-video-src');
 
-if (orbitToggleBtn && orbitVideo && orbitVideoSrc) {
-    let isDesktopView = false;
-    
-    orbitToggleBtn.addEventListener('mouseenter', () => {
-        if (viewTooltip) {
+    if (orbitToggleBtn && orbitVideo && orbitVideoSrc) {
+        let isDesktopView = false;
+
+        orbitToggleBtn.addEventListener('mouseenter', () => {
             viewTooltip.innerText = isDesktopView ? 'MOBILE MODE' : 'DESKTOP MODE';
-        }
-    });
+        });
 
-    orbitToggleBtn.addEventListener('mouseleave', () => {
-        if (viewTooltip) {
+        orbitToggleBtn.addEventListener('mouseleave', () => {
             viewTooltip.innerText = 'VIEW';
-        }
-    });
-    
-    orbitToggleBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent wrapper click if any
-        e.preventDefault();
-        
-        isDesktopView = !isDesktopView;
-        const span = orbitToggleBtn.querySelector('span');
-        
-        // Subtle video opacity transition
-        orbitVideo.style.transition = 'opacity 0.2s ease';
-        orbitVideo.style.opacity = '0.5';
-        
-        if (isDesktopView) {
-            orbitToggleBtn.classList.add('desktop-view');
-            if (span) span.innerHTML = '&lt;';
-            orbitVideoSrc.src = 'videos/orbit_demo_pc.mp4';
-            orbitToggleBtn.setAttribute('data-mobile-text', 'DESKTOP MODE');
-            orbitVideo.classList.remove('orbit-video-mobile');
-        } else {
-            orbitToggleBtn.classList.remove('desktop-view');
-            if (span) span.innerHTML = '&gt;';
-            orbitVideoSrc.src = 'videos/orbit_demo.mp4';
-            orbitToggleBtn.setAttribute('data-mobile-text', 'MOBILE MODE');
-            orbitVideo.classList.add('orbit-video-mobile');
-        }
-        
-        if (viewTooltip) {
+        });
+
+        orbitToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+
+            isDesktopView = !isDesktopView;
+            const span = orbitToggleBtn.querySelector('span');
+
+            orbitVideo.style.transition = 'opacity 0.2s ease';
+            orbitVideo.style.opacity = '0.5';
+
+            if (isDesktopView) {
+                orbitToggleBtn.classList.add('desktop-view');
+                if (span) span.innerHTML = '&lt;';
+                orbitVideoSrc.src = 'videos/orbit_demo_pc.mp4';
+                orbitToggleBtn.setAttribute('data-mobile-text', 'DESKTOP MODE');
+                orbitVideo.classList.remove('orbit-video-mobile');
+            } else {
+                orbitToggleBtn.classList.remove('desktop-view');
+                if (span) span.innerHTML = '&gt;';
+                orbitVideoSrc.src = 'videos/orbit_demo.mp4';
+                orbitToggleBtn.setAttribute('data-mobile-text', 'MOBILE MODE');
+                orbitVideo.classList.add('orbit-video-mobile');
+            }
+
             viewTooltip.innerText = isDesktopView ? 'MOBILE MODE' : 'DESKTOP MODE';
-        }
-        
-        setTimeout(() => {
-            orbitVideo.load();
-            orbitVideo.play().catch(e => console.log('Autoplay blocked:', e));
-            orbitVideo.style.opacity = '1';
-        }, 150);
-    });
+
+            setTimeout(() => {
+                orbitVideo.load();
+                orbitVideo.play().catch(e => console.log('Autoplay blocked:', e));
+                orbitVideo.style.opacity = '1';
+            }, 150);
+        });
+    }
 }
 
+/* ── Orbit toggle on touch devices (no tooltip needed) ─────────────────── */
+if (isTouchDevice) {
+    const orbitToggleBtn = document.getElementById('orbit-view-toggle');
+    const orbitVideo = document.getElementById('orbit-video');
+    const orbitVideoSrc = document.getElementById('orbit-video-src');
 
+    if (orbitToggleBtn && orbitVideo && orbitVideoSrc) {
+        let isDesktopView = false;
 
+        orbitToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+
+            isDesktopView = !isDesktopView;
+
+            orbitVideo.style.transition = 'opacity 0.2s ease';
+            orbitVideo.style.opacity = '0.5';
+
+            if (isDesktopView) {
+                orbitToggleBtn.classList.add('desktop-view');
+                orbitVideoSrc.src = 'videos/orbit_demo_pc.mp4';
+                orbitToggleBtn.setAttribute('data-mobile-text', 'DESKTOP MODE');
+                orbitVideo.classList.remove('orbit-video-mobile');
+            } else {
+                orbitToggleBtn.classList.remove('desktop-view');
+                orbitVideoSrc.src = 'videos/orbit_demo.mp4';
+                orbitToggleBtn.setAttribute('data-mobile-text', 'MOBILE MODE');
+                orbitVideo.classList.add('orbit-video-mobile');
+            }
+
+            setTimeout(() => {
+                orbitVideo.load();
+                orbitVideo.play().catch(e => console.log('Autoplay blocked:', e));
+                orbitVideo.style.opacity = '1';
+            }, 150);
+        });
+    }
+}

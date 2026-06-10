@@ -105,6 +105,7 @@ body::before{
 
 .mouse-glow{
     opacity: 0;
+    /* Hidden by default; made visible only on fine-pointer desktops via JS */
 }
 /* 3. BODY & FONTS */
 
@@ -122,11 +123,9 @@ body::before{
     font-style: normal;
 }
 
-body{
-    
+body {
     margin: 0;
     font-family: 'Mynor', sans-serif;
-    cursor: none !important;
     background: #000000bc;
     color: white;
     overflow-x: hidden;
@@ -136,8 +135,15 @@ body{
     position: relative;
 }
 
-a, button, input, textarea, select, [role="button"] {
-    cursor: none !important;
+/* Desktop-only: custom cursor (fine pointer / real mouse only) */
+@media (hover: hover) and (pointer: fine) {
+    body {
+        cursor: none !important;
+    }
+
+    a, button, input, textarea, select, [role="button"] {
+        cursor: none !important;
+    }
 }
 
 a{
@@ -336,8 +342,10 @@ a{
 
 .project-media-wrapper{
     position: relative;
-    width: 870px;
-    height: 670px;
+    /* Width is fluid: 870px removed — now fills grid column naturally */
+    width: 100%;
+    max-width: 870px;
+    aspect-ratio: 870 / 670;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.7);
@@ -755,9 +763,19 @@ a{
 }
 
 /* TOUCH DEVICE OVERRIDES (Cursor & Tooltip Disable) */
-@media (hover: none) and (pointer: coarse) {
+@media (hover: none), (pointer: coarse) {
     .mouse-glow, .view-tooltip {
         display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+
+    body {
+        cursor: auto !important;
+    }
+
+    a, button, input, textarea, select, [role="button"] {
+        cursor: pointer !important;
     }
 }
 

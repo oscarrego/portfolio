@@ -10,19 +10,23 @@
         max-width: 100vw;
         width: 100%;
     }
-    
-    * {
-        max-width: 100vw;
-    }
-    
-    img, video, iframe, canvas {
+
+    /* Target only actual overflow-causers, not everything */
+    img, canvas {
         max-width: 100%;
-        height: auto;
+    }
+
+    video {
+        max-width: 100%;
+    }
+
+    iframe {
+        max-width: 100%;
     }
 
     /* Small Landscape / Laptop Overrides */
     .project-showcase {
-        padding: 80px 5%; /* Added baseline breathing room for smaller laptops/tablets */
+        padding: 80px 5%;
     }
 
     .project-container {
@@ -33,17 +37,20 @@
     .project-media-wrapper {
         order: 1 !important;
         width: 100% !important;
+        max-width: 100% !important;
         height: auto !important;
         aspect-ratio: 16 / 10;
         max-height: 60vh;
-        border-radius: 12px; /* Ensure border-radius stays visually correct */
-        margin: 0 auto; /* Keep media centered */
+        border-radius: 12px;
+        margin: 0 auto;
     }
 
+    /* Fix: was scale(0.3) — incorrect, videos were tiny */
     .project-video {
         width: 100%;
         height: 100%;
-        transform: scale(0.3);
+        object-fit: cover;
+        transform: none;
     }
 
     .project-info {
@@ -422,10 +429,177 @@
     }
 }
 
+/* Fix: correct video display on tablet — no transform needed */
 @media (max-width: 900px) {
     .project-video {
-        transform: scale(1.2);
-        
+        transform: none;
+        object-fit: cover;
     }
 }
 
+
+
+/* =============================================================================
+   ABOUT PAGE — TIMELINE MOBILE REDESIGN
+   Scroll-triggered reveal, animated progress line, premium entrance effects
+============================================================================= */
+
+@media (max-width: 900px) {
+
+    .timeline-section {
+        padding: clamp(60px, 12vw, 120px) 0;
+        overflow: hidden;
+    }
+
+    .timeline-heading {
+        padding: 0 6%;
+        margin-bottom: clamp(40px, 8vw, 70px);
+        text-align: left;
+    }
+
+    .timeline-heading h1 {
+        font-size: clamp(32px, 10vw, 64px);
+        line-height: 1;
+        letter-spacing: -1px;
+    }
+
+    .timeline-wrapper {
+        padding: 0 6% 0 calc(6% + 32px);
+        max-width: 100%;
+        position: relative;
+    }
+
+    .timeline-line {
+        left: 6%;
+        top: 0;
+        transform: none;
+        width: 1px;
+        height: 100%;
+    }
+
+    .timeline-glow {
+        left: 6%;
+        transform: translate(-50%, 0);
+        width: 14px;
+        height: 14px;
+        box-shadow: 0 0 18px #d7ff3f, 0 0 40px rgba(215, 255, 63, 0.7);
+    }
+
+    .timeline-item {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(10px, 3vw, 18px);
+        padding-left: 24px;
+        padding-right: 0;
+        margin-bottom: clamp(48px, 10vw, 80px);
+        position: relative;
+        z-index: 2;
+        opacity: 0;
+        transform: translateX(-20px);
+        transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .timeline-item.visible {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .timeline-item:nth-child(2) { transition-delay: 0.05s; }
+    .timeline-item:nth-child(3) { transition-delay: 0.10s; }
+    .timeline-item:nth-child(4) { transition-delay: 0.15s; }
+    .timeline-item:nth-child(5) { transition-delay: 0.20s; }
+    .timeline-item:nth-child(6) { transition-delay: 0.25s; }
+    .timeline-item:nth-child(7) { transition-delay: 0.30s; }
+    .timeline-item:nth-child(8) { transition-delay: 0.35s; }
+
+    .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -5px;
+        top: 8px;
+        width: 9px;
+        height: 9px;
+        background: rgba(215, 255, 63, 0.35);
+        border-radius: 50%;
+        border: 1px solid rgba(215, 255, 63, 0.6);
+        box-shadow: 0 0 8px rgba(215, 255, 63, 0.2);
+        transition: background 0.4s, box-shadow 0.4s;
+    }
+
+    .timeline-item.visible::before {
+        background: #d7ff3f;
+        box-shadow: 0 0 14px rgba(215, 255, 63, 0.7);
+    }
+
+    .timeline-left {
+        text-align: left;
+        padding-right: 0;
+    }
+
+    .timeline-left h2 {
+        font-size: clamp(18px, 5vw, 26px);
+        line-height: 1.15;
+        color: #ffffff;
+        margin-bottom: 4px;
+        letter-spacing: 0.2px;
+    }
+
+    .timeline-left span {
+        font-size: clamp(10px, 3vw, 13px);
+        letter-spacing: 2px;
+        color: rgba(215, 255, 63, 0.8);
+    }
+
+    .timeline-year {
+        display: block;
+        position: static;
+        transform: none;
+        font-size: clamp(36px, 12vw, 60px);
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.04);
+        letter-spacing: -3px;
+        line-height: 0.85;
+        margin-top: -4px;
+        margin-left: -2px;
+        pointer-events: none;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    .timeline-right {
+        font-size: clamp(13px, 3.5vw, 16px);
+        line-height: 1.75;
+        color: rgba(255, 255, 255, 0.55);
+        padding-left: 0;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .timeline-wrapper {
+        padding-left: calc(8% + 28px);
+        padding-right: 6%;
+    }
+
+    .timeline-line,
+    .timeline-glow {
+        left: 8%;
+    }
+
+    .timeline-left h2 {
+        font-size: clamp(16px, 5.5vw, 22px);
+    }
+
+    .timeline-year {
+        font-size: clamp(32px, 14vw, 52px);
+    }
+
+    .timeline-right {
+        font-size: 14px;
+    }
+
+    .timeline-item {
+        margin-bottom: clamp(36px, 9vw, 60px);
+    }
+}

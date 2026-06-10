@@ -134,7 +134,7 @@ body {
 
 .sentinel-detail-row {
     display: grid;
-    grid-template-columns: 1fr 720px;
+    grid-template-columns: 1fr minmax(min(720px, 100%), 720px);
     gap: 60px;
     align-items: flex-start;
 }
@@ -172,8 +172,9 @@ body {
     position: sticky;
     top: 160px;
     display: flex;
-    width: 720px;
-    height: 386px;
+    width: min(720px, 100%);
+    aspect-ratio: 720 / 386;
+    height: auto;
 }
 
 .sentinel-sticky-image {
@@ -189,8 +190,8 @@ body {
 .sentinel-carousel-wrapper {
     position: relative;
     overflow: hidden;
-    width: 720px;
-    height: 386px;
+    width: 100%;
+    aspect-ratio: 720 / 386;
     background: #0f0f0f;
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 10px;

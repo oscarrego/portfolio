@@ -6,8 +6,18 @@
     <title>Oscar | Sentinel </title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
+    <!-- Google Analytics 4 — Replace G-XXXXXXXXXX with your Measurement ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX', { send_page_view: true });
+    </script>
+
     <!-- Base Styles (Inheriting visual identity) -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="loader.css">
     <link rel="stylesheet" href="mobile.css">
     
     <!-- Dedicated Case Study Styles -->
@@ -18,6 +28,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- LOADING SCREEN -->
+    <div id="loader">
+        <div class="loader-notice" id="mobile-notice">FOR THE BEST EXPERIENCE,<br>VIEW ON A DESKTOP SCREEN.</div>
+        <div class="loader-wave-container"><div class="loader-wave"></div></div>
+        <div class="loader-label">LOADING</div>
+        <div class="loader-percent" id="loader-percent">0%</div>
+    </div>
+
     <div class="mouse-glow"></div>
 
     <!-- FLOATING NAV -->
@@ -235,6 +253,8 @@ fetch('footer.html')
 
     <!-- Scripts -->
     <script type="module" src="script.js"></script>
+    <script src="loader-universal.js"></script>
+    <script src="analytics.js"></script>
     <script>
 document.addEventListener('DOMContentLoaded', () => {
     const carouselWrappers = document.querySelectorAll('.sentinel-carousel-wrapper');

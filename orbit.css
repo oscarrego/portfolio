@@ -242,7 +242,8 @@ body {
 
 .orbit-detail-row {
     display: grid;
-    grid-template-columns: 1fr 700px;
+    /* Fluid: content block gets remaining space, image gets up to 700px but shrinks */
+    grid-template-columns: 1fr minmax(min(700px, 100%), 700px);
     gap: 60px;
     align-items: flex-start;
 }
@@ -252,8 +253,9 @@ body {
     position: sticky;
     top: 160px;
     display: flex;
-    width: 720px;
-    height: 405px;
+    width: min(720px, 100%);
+    aspect-ratio: 16 / 9;
+    height: auto;
 }
 
 
@@ -261,8 +263,8 @@ body {
 .orbit-carousel-wrapper {
     position: relative;
     overflow: hidden;
-    width: 720px;
-    height: 405px;
+    width: 100%;
+    aspect-ratio: 16 / 9;
     background: #0f0f0f;
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 10px;
@@ -273,7 +275,7 @@ body {
 
 .orbit-mobile-detail-row {
     display: grid;
-    grid-template-columns: 1fr 600px;
+    grid-template-columns: 1fr minmax(min(600px, 100%), 600px);
     gap: 40px;
     align-items: flex-start;
 }
@@ -283,9 +285,9 @@ body {
     position: sticky;
     top: 160px;
     display: flex;
-    width: 450px;
-    height: 700px;
-
+    width: min(450px, 100%);
+    aspect-ratio: 9 / 19.5;
+    height: auto;
     margin-left: auto;
     margin-right: auto;
 }
@@ -295,8 +297,8 @@ body {
 .orbit-mobile-carousel-wrapper {
     position: relative;
     overflow: hidden;
-    width: 450px;
-    height: 700px;
+    width: 100%;
+    aspect-ratio: 9 / 19.5;
     background: #0f0f0f;
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 10px;
