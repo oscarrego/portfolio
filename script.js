@@ -12,14 +12,21 @@ const isTouchDevice = (
 
 const mouseGlow = document.querySelector('.mouse-glow');
 
+/* ── Performance Caching ────────────────────────────────────────────────── */
+let winW = window.innerWidth;
+let winH = window.innerHeight;
+window.addEventListener('resize', () => {
+    winW = window.innerWidth;
+    winH = window.innerHeight;
+}, { passive: true });
+
 /* ── Custom Cursor (desktop fine-pointer ONLY) ──────────────────────────── */
 if (!isTouchDevice && mouseGlow) {
-
     document.addEventListener('mousemove', (e) => {
+        // Direct 1:1 mapping for precision — no amplification or laggy lerping
+        mouseGlow.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
         mouseGlow.style.opacity = '1';
-        mouseGlow.style.left = e.clientX + 'px';
-        mouseGlow.style.top = e.clientY + 'px';
-    });
+    }, { passive: true });
 
     document.addEventListener('mouseleave', () => {
         mouseGlow.style.opacity = '0';
@@ -66,21 +73,40 @@ const timelineLine    = document.querySelector('.timeline-line');
 if (timelineWrapper && timelineGlow && timelineLine && !isTouchDevice) {
     let currentProgress = 0;
     let targetProgress  = 0;
+    let timelineVisible = false;
+    let wrapperH = timelineWrapper.offsetHeight;
+    let lineH = timelineLine.offsetHeight;
+    let glowH = timelineGlow.offsetHeight;
+
+    const tObserver = new IntersectionObserver((entries) => {
+        timelineVisible = entries[0].isIntersecting;
+    }, { threshold: 0.01 });
+    tObserver.observe(timelineWrapper);
+
+    window.addEventListener('resize', () => {
+        wrapperH = timelineWrapper.offsetHeight;
+        lineH = timelineLine.offsetHeight;
+        glowH = timelineGlow.offsetHeight;
+    }, { passive: true });
 
     const updateGlow = () => {
+        if (!timelineVisible) {
+            requestAnimationFrame(updateGlow);
+            return;
+        }
         currentProgress += (targetProgress - currentProgress) * 0.08;
-        const movementRange = timelineLine.offsetHeight - timelineGlow.offsetHeight;
+        const movementRange = lineH - glowH;
         const newTop = currentProgress * movementRange;
-        timelineGlow.style.transform = `translate(-50%, ${newTop}px)`;
+        timelineGlow.style.transform = `translate3d(-50%, ${newTop}px, 0)`;
         requestAnimationFrame(updateGlow);
     };
 
     const onScroll = () => {
+        if (!timelineVisible) return;
         const rect         = timelineWrapper.getBoundingClientRect();
-        const wrapperHeight = timelineWrapper.offsetHeight;
-        const startOffset  = window.innerHeight * 0.5;
+        const startOffset  = winH * 0.5;
         const currentPos   = startOffset - rect.top;
-        targetProgress = Math.max(0, Math.min(1, currentPos / wrapperHeight));
+        targetProgress = Math.max(0, Math.min(1, currentPos / wrapperH));
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -134,6 +160,7 @@ if (!isTouchDevice) {
             this.friction     = 0.94;
             this.acceleration = 0.06;
             this.spring       = 0.04;
+            this.lastScroll   = -1;
             this.init();
         }
 
@@ -156,12 +183,17 @@ if (!isTouchDevice) {
         update() {
             this.velocity *= this.friction;
             this.targetY  += this.velocity;
-            const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+            
+            const maxScroll = Math.max(0, document.documentElement.scrollHeight - winH);
             this.targetY    = Math.max(0, Math.min(this.targetY, maxScroll));
             this.scrollY   += (this.targetY - this.scrollY) * this.spring;
 
             if (Math.abs(this.targetY - this.scrollY) > 0.05 || Math.abs(this.velocity) > 0.05) {
-                window.scrollTo(0, this.scrollY);
+                const roundedScroll = Math.round(this.scrollY);
+                if (this.lastScroll !== roundedScroll) {
+                    window.scrollTo(0, roundedScroll);
+                    this.lastScroll = roundedScroll;
+                }
             } else {
                 this.scrollY = window.scrollY;
                 this.targetY = window.scrollY;
@@ -175,16 +207,28 @@ if (!isTouchDevice) {
 }
 
 /* ── Video IntersectionObserver (play/pause on scroll) ──────────────────── */
-const videos = document.querySelectorAll('.project-video');
+const videos = document.querySelectorAll('.project-video, .work-card video');
 const videoObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.play();
+        if (entry.isIntersecting && document.visibilityState === 'visible') {
+            entry.target.play().catch(() => {});
         } else {
             entry.target.pause();
         }
     });
-}, { threshold: 0.6 });
+}, { threshold: 0.1 }); // lower threshold for earlier play
+
+document.addEventListener('visibilitychange', () => {
+    videos.forEach(video => {
+        const rect = video.getBoundingClientRect();
+        const inView = rect.bottom > 0 && rect.top < winH;
+        if (document.visibilityState === 'visible' && inView) {
+            video.play().catch(() => {});
+        } else {
+            video.pause();
+        }
+    });
+});
 
 videos.forEach(video => videoObserver.observe(video));
 
@@ -200,10 +244,12 @@ if (!isTouchDevice) {
     viewTooltip.innerText = 'VIEW';
     document.body.appendChild(viewTooltip);
 
+    let tX = 0, tY = 0;
     document.addEventListener('mousemove', (e) => {
-        viewTooltip.style.left = e.clientX + 'px';
-        viewTooltip.style.top  = e.clientY + 'px';
-    });
+        tX = e.clientX;
+        tY = e.clientY;
+        viewTooltip.style.transform = `translate3d(${tX}px, ${tY}px, 0)`;
+    }, { passive: true });
 
     document.querySelectorAll('.project-media-wrapper').forEach(wrapper => {
         wrapper.addEventListener('mouseenter', () => {
@@ -340,11 +386,11 @@ if (isTouchDevice) {
     };
 
     /* ── Cylinder parameters ────────────────────────────────────────── */
-    const CARD_W    = 320;
-    const CARD_H    = 220;
-    const RADIUS    = 450;                           // cylinder radius (px) — large drum
+    const CARD_W    = 360;
+    const CARD_H    = 248;
+    const RADIUS    = 500;                           // cylinder radius (px) — large drum
     const AUTO_SPIN = reduceMotion ? 0 : 0.0007;    // radians/frame — noticeable drift
-    const SCROLL_K  = 0.010;                        // much higher wheel sensitivity
+    const SCROLL_K  = 0.002;                        // heavily reduced sensitivity for premium feel
     const FRICTION  = 0.88;
     /* Cards visible in front arc: cosA > FRONT_ARC means interactable */
     const FRONT_ARC = 0.50;                         // cos(60°)≈50% of cylinder arc
@@ -380,8 +426,19 @@ if (isTouchDevice) {
         hovered: null,
         audioReady:   false,
         audioContext: null,
-        masterGain:   null
+        masterGain:   null,
+        isVisible:    false,
+        width:        works.clientWidth || winW
     };
+
+    const worksObserver = new IntersectionObserver((entries) => {
+        spi.isVisible = entries[0].isIntersecting;
+    }, { threshold: 0.01 });
+    worksObserver.observe(works);
+
+    window.addEventListener('resize', () => {
+        spi.width = works.clientWidth || winW;
+    }, { passive: true });
 
     /* Per-card lerped 3D state */
     const cState = cards.map((card, i) => ({
@@ -390,7 +447,11 @@ if (isTouchDevice) {
         cx: 0, cy: 0, cz: 0,       // lerped world position
         cRX: 0,                     // lerped pitch (rotateX)
         cRY: 0,                     // lerped yaw   (rotateY)
-        cScale: 1
+        cScale: 1,
+        lastTransform: '',
+        lastOpacity: -1,
+        lastBackness: -1,
+        lastBrightness: -1
     }));
 
     /* ── Audio ─────────────────────────────────────────────────────────── */
@@ -521,8 +582,7 @@ if (isTouchDevice) {
     });
     /* Clamp wheel velocity tightly so fast scrollers don't cause wild spinning */
     window.addEventListener('wheel', e => {
-        const rect = works.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+        if (!spi.isVisible) return;
         spi.velocity += e.deltaY * SCROLL_K;
         spi.velocity  = clamp(spi.velocity, -0.05, 0.05);
     }, { passive: true });
@@ -582,55 +642,58 @@ if (isTouchDevice) {
 
     /* ── Main animation loop ───────────────────────────────────────────── */
     const animate = () => {
-        const rect    = works.getBoundingClientRect();
-        const width   = works.clientWidth  || window.innerWidth;
-        const visible = rect.bottom > 0 && rect.top < window.innerHeight;
+        if (!spi.isVisible) {
+            requestAnimationFrame(animate);
+            return;
+        }
 
+        const rect    = works.getBoundingClientRect();
+        
         document.body.classList.toggle(
             'works-in-view',
-            rect.top < window.innerHeight * 0.34 && rect.bottom > window.innerHeight * 0.2
+            rect.top < winH * 0.34 && rect.bottom > winH * 0.2
         );
 
-        if (visible && spi.mode === 'spiral') {
+        if (spi.mode === 'spiral' && !spi.hovered) {
             spi.rotation += spi.velocity + AUTO_SPIN;  // rotation accumulates — never resets
             spi.velocity *= FRICTION;
         }
 
-        /* Find single frontmost card — lowest backness → gets pointer-events */
-        let frontmostIdx = 0;
-        let minBackness  = Infinity;
-        if (spi.mode === 'spiral') {
-            cState.forEach((cs, i) => {
-                const angle  = cs.angleBase + spi.rotation;
-                const cosA   = Math.cos(angle);
-                const bness  = clamp((1 - cosA) / 2, 0, 1);
-                if (bness < minBackness) { minBackness = bness; frontmostIdx = i; }
-            });
-        }
-
         cState.forEach((cs, i) => {
-            const target = spi.mode === 'list' ? listCard(i, width) : orbitCard(cs);
+            const target = spi.mode === 'list' ? listCard(i, spi.width) : orbitCard(cs);
 
-            /* Lerp position + dual-axis rotation */
-            cs.cx    = lerp(cs.cx,     target.x,       0.06);
-            cs.cy    = lerp(cs.cy,     target.y,       0.06);
-            cs.cz    = lerp(cs.cz,     target.z,       0.06);
-            cs.cRX   = lerpAngle(cs.cRX, target.rotX, 0.06);
-            cs.cRY   = lerpAngle(cs.cRY, target.rotY, 0.06);
-            cs.cScale= lerp(cs.cScale,  target.scale,  0.08);
+            /* Lerp position + dual-axis rotation for heavy, smooth inertia */
+            cs.cx    = lerp(cs.cx,     target.x,       0.03);
+            cs.cy    = lerp(cs.cy,     target.y,       0.03);
+            cs.cz    = lerp(cs.cz,     target.z,       0.03);
+            cs.cRX   = lerpAngle(cs.cRX, target.rotX, 0.03);
+            cs.cRY   = lerpAngle(cs.cRY, target.rotY, 0.03);
+            cs.cScale= lerp(cs.cScale,  target.scale,  0.04);
 
-            /* Vintage hover scale: pull back slightly, no zoom */
-            const hoverScale = cs.card === spi.hovered ? 0.96 : 1;
+            /* Focused hover scale: zoom in slightly, no darkening */
+            const hoverScale = cs.card === spi.hovered ? 1.08 : 1;
             const finalScale = cs.cScale * hoverScale;
 
             /* CSS custom properties drive image fade + glass back + brightness */
-            cs.card.style.setProperty('--backness',   target.backness.toFixed(3));
-            cs.card.style.setProperty('--brightness', target.brightness.toFixed(3));
+            const bness = target.backness.toFixed(3);
+            if (cs.lastBackness !== bness) {
+                cs.card.style.setProperty('--backness', bness);
+                cs.lastBackness = bness;
+            }
+            
+            const bright = target.brightness.toFixed(3);
+            if (cs.lastBrightness !== bright) {
+                cs.card.style.setProperty('--brightness', bright);
+                cs.lastBrightness = bright;
+            }
 
             /* Clone visibility in list mode */
             const isClone = i >= baseCards.length;
             const opacity = (spi.mode === 'list' && isClone) ? 0 : 1;
-            cs.card.style.opacity = String(opacity);
+            if (cs.lastOpacity !== opacity) {
+                cs.card.style.opacity = String(opacity);
+                cs.lastOpacity = opacity;
+            }
 
             /* Interactivity gate: front arc (cosA > FRONT_ARC) is interactive
              * This allows multiple visible front cards to be hovered/clicked. */
@@ -649,16 +712,11 @@ if (isTouchDevice) {
             cs.card.style.zIndex = String(Math.round(500 + cs.cz / 2));
 
             /* 3D transform: translate → yaw (rotY) → pitch (rotX) → scale */
-            cs.card.style.transform = [
-                `translate3d(`,
-                    `${cs.cx - CARD_W / 2}px,`,
-                    `${cs.cy - CARD_H / 2}px,`,
-                    `${cs.cz}px`,
-                `)`,
-                ` rotateY(${cs.cRY}deg)`,
-                ` rotateX(${cs.cRX}deg)`,
-                ` scale(${finalScale})`
-            ].join('');
+            const transform = `translate3d(${cs.cx - CARD_W / 2}px, ${cs.cy - CARD_H / 2}px, ${cs.cz}px) rotateY(${cs.cRY}deg) rotateX(${cs.cRX}deg) scale(${finalScale})`;
+            if (cs.lastTransform !== transform) {
+                cs.card.style.transform = transform;
+                cs.lastTransform = transform;
+            }
         });
 
         requestAnimationFrame(animate);

@@ -22,11 +22,15 @@
         </script>
 
 
+        <!-- Preload critical local fonts -->
+        <link rel="preload" href="/portfolio-hosting/assets/MynorBookCondensed-6UZgmHZS.ttf" as="font" type="font/truetype" crossorigin>
+        <link rel="preload" href="/portfolio-hosting/assets/PixelOperator-BzBUv460.ttf" as="font" type="font/truetype" crossorigin>
+
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
         <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 
-      <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/mobile-BkkNDI5W.css">
+      <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/mobile-v7W0GzeA.css">
     </head>
 
     <body>
@@ -49,9 +53,19 @@
             <div class="works-logo-orb" aria-hidden="true"><span></span></div>
 
             <div class="works-mode-toggle" aria-label="Works view mode">
-                <button class="works-mode-btn active" type="button" data-mode="spiral">spiral</button>
+                <button class="works-mode-btn active" type="button" data-mode="spiral">
+                    <span class="mode-text-wrapper">
+                        <span class="mode-text-item">spiral</span>
+                        <span class="mode-text-item">spiral</span>
+                    </span>
+                </button>
                 <span>•</span>
-                <button class="works-mode-btn" type="button" data-mode="list">list</button>
+                <button class="works-mode-btn" type="button" data-mode="list">
+                    <span class="mode-text-wrapper">
+                        <span class="mode-text-item">list</span>
+                        <span class="mode-text-item">list</span>
+                    </span>
+                </button>
             </div>
 
             <button class="works-menu-button" type="button" aria-expanded="false" aria-controls="works-menu-panel">
@@ -119,7 +133,8 @@
                     <img class="works-corner-img"
                          src="/portfolio-hosting/assets/bottom_corner-Da8PWZR9.png"
                          alt="About"
-                         draggable="false">
+                         draggable="false"
+                         loading="lazy">
                 </div>
             </a>
 

@@ -24,6 +24,10 @@
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="loader.css">
 
+        <!-- Preload critical local fonts -->
+        <link rel="preload" href="fonts/MynorBookCondensed.ttf" as="font" type="font/truetype" crossorigin>
+        <link rel="preload" href="fonts/PixelOperator.ttf" as="font" type="font/truetype" crossorigin>
+
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
         <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
@@ -51,9 +55,19 @@
             <div class="works-logo-orb" aria-hidden="true"><span></span></div>
 
             <div class="works-mode-toggle" aria-label="Works view mode">
-                <button class="works-mode-btn active" type="button" data-mode="spiral">spiral</button>
+                <button class="works-mode-btn active" type="button" data-mode="spiral">
+                    <span class="mode-text-wrapper">
+                        <span class="mode-text-item">spiral</span>
+                        <span class="mode-text-item">spiral</span>
+                    </span>
+                </button>
                 <span>•</span>
-                <button class="works-mode-btn" type="button" data-mode="list">list</button>
+                <button class="works-mode-btn" type="button" data-mode="list">
+                    <span class="mode-text-wrapper">
+                        <span class="mode-text-item">list</span>
+                        <span class="mode-text-item">list</span>
+                    </span>
+                </button>
             </div>
 
             <button class="works-menu-button" type="button" aria-expanded="false" aria-controls="works-menu-panel">
@@ -121,7 +135,8 @@
                     <img class="works-corner-img"
                          src="images/bottom_corner.png"
                          alt="About"
-                         draggable="false">
+                         draggable="false"
+                         loading="lazy">
                 </div>
             </a>
 

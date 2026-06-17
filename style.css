@@ -883,6 +883,7 @@ transform: translateY(-80px);
     perspective: 1400px;
     perspective-origin: 50% 50%;
     z-index: 4;
+    contain: strict;
 }
 
 #works::before{
@@ -896,6 +897,7 @@ transform: translateY(-80px);
     filter: blur(12px);
     opacity: 0.9;
     pointer-events: none;
+    will-change: transform;
 }
 
 #works::after{
@@ -907,6 +909,7 @@ transform: translateY(-80px);
         linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.78));
     pointer-events: none;
     z-index: 2;
+    will-change: opacity;
 }
 
 .works-grid-bg{
@@ -922,6 +925,8 @@ transform: translateY(-80px);
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 84%, transparent 100%);
     opacity: 0.55;
     z-index: 0;
+    pointer-events: none;
+    will-change: opacity;
 }
 
 .works-ambient{
@@ -1000,7 +1005,7 @@ transform: translateY(-80px);
     gap: 18px;
     color: rgba(255,255,255,0.95);
     font-family: 'Mynor', sans-serif;
-    font-size: 25px;
+    font-size: 21px; /* Reduced by ~15% */
     line-height: 1;
     z-index: 12;
     text-shadow: 0 8px 28px rgba(0,0,0,0.55);
@@ -1013,14 +1018,31 @@ transform: translateY(-80px);
     color: rgba(255,255,255,0.32);
     font: inherit;
     padding: 0;
-    transition: color 0.35s ease, transform 0.35s ease, filter 0.35s ease;
+    transition: color 0.3s ease;
+    height: 21px; /* Match font-size */
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.mode-text-wrapper{
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mode-text-item{
+    display: block;
+    height: 21px;
+    line-height: 21px;
+}
+
+.works-mode-btn:hover .mode-text-wrapper{
+    transform: translateY(-21px);
 }
 
 .works-mode-btn.active,
 .works-mode-btn:hover{
     color: #fff;
-    transform: translateY(-1px);
-    filter: blur(0);
 }
 
 .works-menu-button{
@@ -1287,8 +1309,8 @@ transform: translateY(-80px);
 }
 
 .work-card{
-    --card-w: 320px;
-    --card-h: 220px;
+    --card-w: 360px;
+    --card-h: 248px;
     --backness: 0;
     --brightness: 1;
     position: absolute;
@@ -1396,13 +1418,10 @@ transform: translateY(-80px);
 }
 
 .work-card.is-hovered{
-    /* Vintage pull-back: subtle darkening, no glow, no neon */
-    filter: brightness(0.75) contrast(1.05) saturate(0.85);
-    /* No box-shadow glow — scale(0.96) is applied in JS */
+    /* Hover scale and pause handled in JS for unified motion */
 }
 
 .work-card.is-hovered::after{
-    /* Removed dark overlay on hover — darkening is done by filter above */
     background: transparent;
 }
 
@@ -1552,8 +1571,8 @@ transform: translateY(-80px);
     }
 
     .work-card{
-        --card-w: min(78vw, 380px);
-        --card-h: calc(var(--card-w) * 0.62);
+        --card-w: min(84vw, 430px);
+        --card-h: calc(var(--card-w) * 0.68);
     }
 
     .works-marquee{
@@ -1722,6 +1741,15 @@ body:has(#works){
     transform: translateY(-2px) scale(1.04);
 }
 
+.hero,
+.project-showcase,
+.timeline-section,
+.skills,
+.image-footer{
+    content-visibility: auto;
+    contain-intrinsic-size: 100vh;
+}
+
 /* ── Rotating SVG ring ── */
 .works-marquee-ring{
     position: absolute;
@@ -1732,6 +1760,8 @@ body:has(#works){
     /* Only the ring rotates — image is untouched */
     animation: cornerRingSpin 18s linear infinite;
     transform-origin: 50% 50%;
+    will-change: transform;
+    backface-visibility: hidden;
 }
 
 .works-marquee-ring text{
