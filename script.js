@@ -461,7 +461,7 @@ if (isTouchDevice) {
         if (!AC) return;
         spi.audioContext = new AC();
         spi.masterGain = spi.audioContext.createGain();
-        spi.masterGain.gain.value = 0.0585;
+        spi.masterGain.gain.value = 0.288; // 100% boost over current intended level
         spi.masterGain.connect(spi.audioContext.destination);
         spi.audioReady = true;
     };
@@ -490,6 +490,7 @@ if (isTouchDevice) {
     };
 
     document.addEventListener('pointerdown', ensureAudio, { once: true, passive: true });
+    window.addEventListener('wheel', ensureAudio, { once: true, passive: true });
 
     /* ── Menu ──────────────────────────────────────────────────────────── */
     const setMenuOpen = (open) => {
@@ -712,7 +713,9 @@ if (isTouchDevice) {
             cs.card.style.zIndex = String(Math.round(500 + cs.cz / 2));
 
             /* 3D transform: translate → yaw (rotY) → pitch (rotX) → scale */
-            const transform = `translate3d(${cs.cx - CARD_W / 2}px, ${cs.cy - CARD_H / 2}px, ${cs.cz}px) rotateY(${cs.cRY}deg) rotateX(${cs.cRX}deg) scale(${finalScale})`;
+            const tx = Math.round(cs.cx - CARD_W / 2);
+            const ty = Math.round(cs.cy - CARD_H / 2);
+            const transform = `translate3d(${tx}px, ${ty}px, ${cs.cz}px) rotateY(${cs.cRY}deg) rotateX(${cs.cRX}deg) scale(${finalScale})`;
             if (cs.lastTransform !== transform) {
                 cs.card.style.transform = transform;
                 cs.lastTransform = transform;
