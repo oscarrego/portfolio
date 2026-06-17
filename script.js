@@ -207,7 +207,7 @@ if (!isTouchDevice) {
 }
 
 /* ── Video IntersectionObserver (play/pause on scroll) ──────────────────── */
-const videos = document.querySelectorAll('.project-video, .work-card video');
+const videos = document.querySelectorAll('.project-video');
 const videoObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting && document.visibilityState === 'visible') {
@@ -219,11 +219,14 @@ const videoObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 }); // lower threshold for earlier play
 
 document.addEventListener('visibilitychange', () => {
-    videos.forEach(video => {
+    document.querySelectorAll('.project-video, .work-card video').forEach(video => {
         const rect = video.getBoundingClientRect();
         const inView = rect.bottom > 0 && rect.top < winH;
         if (document.visibilityState === 'visible' && inView) {
-            video.play().catch(() => {});
+            // For work-card videos, the animation loop will handle playing/pausing
+            if (!video.closest('.work-card')) {
+                video.play().catch(() => {});
+            }
         } else {
             video.pause();
         }
@@ -514,6 +517,20 @@ if (isTouchDevice) {
 
     menuScrim?.addEventListener('click', () => { setMenuOpen(false); playTone('menu'); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenuOpen(false); });
+    
+    // Close menu when clicking anywhere outside the menu panel
+    document.addEventListener('click', e => {
+        if (!works.classList.contains('menu-open')) return;
+        if (!menuPanel || !menuButton) return;
+
+        // If click is not inside the panel and not on the menu button itself
+        const isOutside = !menuPanel.contains(e.target) && !menuButton.contains(e.target);
+        if (isOutside) {
+            setMenuOpen(false);
+            playTone('menu');
+        }
+    });
+
     works.querySelectorAll('.works-menu-links a').forEach(a => {
         a.addEventListener('click', () => setMenuOpen(false));
     });
@@ -644,6 +661,11 @@ if (isTouchDevice) {
     /* ── Main animation loop ───────────────────────────────────────────── */
     const animate = () => {
         if (!spi.isVisible) {
+            // Pause all work-card videos when works section is not visible
+            cards.forEach(card => {
+                const v = card.querySelector('video');
+                if (v && !v.paused) v.pause();
+            });
             requestAnimationFrame(animate);
             return;
         }
@@ -658,6 +680,20 @@ if (isTouchDevice) {
         if (spi.mode === 'spiral' && !spi.hovered) {
             spi.rotation += spi.velocity + AUTO_SPIN;  // rotation accumulates — never resets
             spi.velocity *= FRICTION;
+        }
+
+        /* ── Identify Front-Facing Card for Smart Video Playback ────────── */
+        let activeCard = null;
+        let maxCosA = -2;
+        if (spi.mode === 'spiral') {
+            cState.forEach(cs => {
+                const angle = cs.angleBase + spi.rotation;
+                const cosA = Math.cos(angle);
+                if (cosA > maxCosA) {
+                    maxCosA = cosA;
+                    activeCard = cs.card;
+                }
+            });
         }
 
         cState.forEach((cs, i) => {
@@ -707,6 +743,17 @@ if (isTouchDevice) {
             } else {
                 cs.card.style.pointerEvents = isFront ? 'auto' : 'none';
                 cs.card.style.cursor        = isFront ? 'pointer' : 'default';
+            }
+
+            /* ── Smart Video Playback ───────────────────────────────────── */
+            const video = cs.card.querySelector('video');
+            if (video) {
+                const shouldPlay = (cs.card === activeCard) && (spi.mode === 'spiral') && (opacity > 0);
+                if (shouldPlay) {
+                    if (video.paused) video.play().catch(() => {});
+                } else {
+                    if (!video.paused) video.pause();
+                }
             }
 
             /* Z-index — front cards paint on top */
