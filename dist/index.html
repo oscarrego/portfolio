@@ -1,4 +1,4 @@
-﻿    <!DOCTYPE html>
+    <!DOCTYPE html>
     <html lang="en">
         
 
@@ -26,7 +26,7 @@
 
         <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 
-      <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/mobile-D4V4HAeV.css">
+      <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/mobile-DlA7xoAV.css">
     </head>
 
     <body>
@@ -41,193 +41,128 @@
         </div>
         <div class="mouse-glow"></div>
 
+        <section id="works" aria-label="Selected works">
+            <div class="works-grid-bg"></div>
+            <div class="works-ambient works-ambient-a"></div>
+            <div class="works-ambient works-ambient-b"></div>
 
-    <!-- NAVBAR -->
+            <div class="works-logo-orb" aria-hidden="true"><span></span></div>
 
-    <!-- FLOATING NAV -->
-
-    <div class="floating-nav">
-
-        <a href="index.html" class="active">
-            WORK
-        </a>
-
-        <a href="tools.html">
-            TOOLS
-        </a>
-
-        <a href="about.html">
-            ABOUT
-        </a>
-
-    </div>
-
-
-        <!-- HERO SECTION -->
-
-        <section class="hero" id="about">
-
-        <div class="hero-content">
-
-        <div class="hero-intro cinematic-intro">
-
-            <p class="intro-main">
-                CURIOUS ABOUT HOW SOFTWARE SYSTEMS WORK,
-FROM DEVELOPMENT AND TESTING TO AUTOMATION
-AND USER EXPERIENCE.
-            </p>
-
-            <p class="intro-sub">
-                
-                SOFTWARE QUALITY • SYSTEM CONFIGS • AUTOMATION • UI/UX
-            </p>
-
-        </div>
-
-        <h1 class="hero-title">Oscar Rego</h1>
-
-    </div>
-                
-
-
-
-                
-
-            
-
+            <div class="works-mode-toggle" aria-label="Works view mode">
+                <button class="works-mode-btn active" type="button" data-mode="spiral">spiral</button>
+                <span>•</span>
+                <button class="works-mode-btn" type="button" data-mode="list">list</button>
             </div>
 
-        </section>
+            <button class="works-menu-button" type="button" aria-expanded="false" aria-controls="works-menu-panel">
+                <span class="menu-open-text">menu</span>
+                <span class="menu-close-text">close</span>
+                <span class="works-menu-dot">•</span>
+                <span class="works-menu-x">×</span>
+            </button>
 
-        <!-- PROJECT SECTION: ORBIT -->
-        <section class="project-showcase" id="orbit">
-            <div class="project-container">
-                <!-- Media Left -->
-             <div class="project-media-wrapper" onclick="window.location.href='orbit.html';" role="link" tabindex="0"> 
-                <!-- <div class="project-media-wrapper"  role="link" tabindex="0"> -->
-                    <video id="orbit-video" class="project-video orbit-video-mobile" autoplay muted loop playsinline preload="metadata">
-                        <source id="orbit-video-src" src="/portfolio-hosting/assets/orbit_demo-W4Jf8NoQ.mp4" type="video/mp4">
-                    </video>
-                    <button id="orbit-view-toggle" class="orbit-view-toggle" data-mobile-text="MOBILE MODE"><span>&gt;</span></button>
+            <div class="works-menu-scrim" aria-hidden="true"></div>
+            <aside class="works-menu-panel" id="works-menu-panel" aria-hidden="true">
+                <nav class="works-menu-links" aria-label="Portfolio menu">
+                    <a href="#works">works</a>
+                    <a href="about.html">about</a>
+                    <a href="mailto:oscarrego789@gmail.com">contact</a>
+                </nav>
+
+                <!-- Currently I'm... blurb -->
+                <div class="works-menu-currently">
+                    <p class="works-menu-currently-label">CURRENTLY I'M…</p>
+                    <p>Curious on how software systems work</p>
+                    <p>Exploring development, automation, and AI</p>
+                    <p>Learning that exceptional software needs both great code and great UI/UX</p>
                 </div>
 
-                <!-- Content Right -->
-                <div class="project-info">
-                    <div class="project-category">REALTIME PRESENCE PLATFORM / 2026</div>
-                   <h2 class="project-title" onclick="window.location.href='orbit.html';" role="link" tabindex="0">Orbit — Realtime Presence & Spatial Collaboration Network</h2> 
-                   <!--   <h2 class="project-title"  role="link" tabindex="0">Orbit — Realtime Presence & Spatial Collaboration Network</h2> -->
-                    <p class="project-description">
-                        A realtime spatial communication platform focused on live presence, collaboration, immersive mapping, and cinematic interaction systems.
-                    </p>
-                    <ul class="project-features">
-                        <li>Realtime location tracking with MapLibre GL</li>
-                        <li>Live communication using Socket.IO & WebSockets</li>
-                        <li>Interactive Three.js landing experience</li>
-                        <li>Private rooms with secure passcode access     </li>
-                        <li>SOS alerts with Socket.IO & Firebase FCM notifications</li>
-                        <li> Real-time chat, presence tracking & read receipts</li>
-                        <li>Built with React, Flask, MongoDB & Python</li>
-                        <li>Mobile-first design with a dynamic and responsive interface</li>
-                        
-                        
-                    </ul>
+                <div class="works-menu-footer">
+                    <div class="works-menu-footer-email">
+                        <a href="mailto:oscarrego789@gmail.com">oscarrego789@gmail.com</a>
+                    </div>
+                    <div class="works-menu-footer-links">
+                        <a class="works-menu-social" href="https://linkedin.com/in/oscarrego789" target="_blank" data-track="linkedin" aria-label="LinkedIn">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.7 20.5H3.2V9h3.5v11.5ZM5 7.4A2 2 0 1 1 5 3.5a2 2 0 0 1 0 3.9Zm15.8 13.1h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.8V9h3.4v1.6h.1c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.2 2.4 4.2 5.4v6.4Z"/></svg>
+                        </a>
+                        <a class="works-menu-social" href="https://github.com/oscarrego" target="_blank" data-track="github" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .9a11.1 11.1 0 0 0-3.5 21.7c.6.1.8-.2.8-.6v-2.1c-3.3.7-4-1.4-4-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 .1.8 1.5 2.8 1.1.1-.8.4-1.3.7-1.6-2.6-.3-5.4-1.3-5.4-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.4 1.2a11.7 11.7 0 0 1 6.2 0c2.4-1.6 3.4-1.2 3.4-1.2.6 1.6.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.4 5.9.4.4.8 1.1.8 2.2V22c0 .4.2.7.8.6A11.1 11.1 0 0 0 12 .9Z"/></svg>
+                        </a>
+                        <a class="works-menu-social" href="resume/Oscar_Resume.pdf" target="_blank" data-track="resume" aria-label="Resume / CV">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2.5h8.2L20 8.3v13.2H6V2.5Zm7.2 1.9v5h5l-5-5ZM8.4 13h7.2v-1.7H8.4V13Zm0 3.4h7.2v-1.7H8.4v1.7Zm0 3.3h4.9V18H8.4v1.7Z"/></svg>
+                        </a>
+                        <a class="works-menu-social" href="mailto:oscarrego789@gmail.com" data-track="email" aria-label="Email">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4.25-8 5-8-5V6l8 5 8-5v2.25Z"/></svg>
+                        </a>
+                    </div>
                 </div>
+            </aside>
+
+            <!-- CORNER BADGE: artwork + rotating circular text ring → about.html -->
+            <a class="works-marquee" href="about.html" aria-label="About Oscar">
+
+                <!-- Rotating circular text ring — only this element spins -->
+                <svg class="works-marquee-ring" viewBox="0 0 260 260" aria-hidden="true">
+                    <defs>
+                        <!-- Perfect circle centred at (130,130) with r=104 — hugs the image tightly -->
+                        <path id="works-marquee-path"
+                              d="M 130,26
+                                 a 104,104 0 1,1 -0.001,0
+                                 Z" />
+                    </defs>
+                    <text>
+                        <textPath href="#works-marquee-path" startOffset="0%">
+                            Oscar © 2026 • About • Oscar © 2026 • About • Oscar © 2026 • About •
+                        </textPath>
+                    </text>
+                </svg>
+
+                <!-- Static artwork — bottom_corner.png, slightly tilted -->
+                <img class="works-corner-img"
+                     src="/portfolio-hosting/assets/bottom_corner-Da8PWZR9.png"
+                     alt="About"
+                     draggable="false">
+
+            </a>
+
+            <div class="works-stage" aria-live="polite">
+                <a class="work-card" href="orbit.html" data-title="Orbit — Realtime Presence & Spatial Collaboration Network" data-kicker="Realtime Presence Platform / 2026" data-image="images/orbit_main.png">
+                    <img src="/portfolio-hosting/assets/orbit_main-CJ3KFxmO.png" alt="Orbit project preview" draggable="false">
+                </a>
+                <a class="work-card" href="sentinel.html" data-title="Sentinel — Realtime Vehicle & ALPR System" data-kicker="Computer Vision System / 2025" data-image="images/sentinel_main.png">
+                    <img src="/portfolio-hosting/assets/sentinel_main-yf2B4elV.png" alt="Sentinel project preview" draggable="false">
+                </a>
+                <a class="work-card" href="jsms.html" data-title="Jewellery Store Management System" data-kicker="Full Stack Web Application / 2024" data-image="images/jsms_main.jpg">
+                    <img src="/portfolio-hosting/assets/jsms_main-DKT9s1pE.jpg" alt="Jewellery Store Management System preview" draggable="false">
+                </a>
+                <a class="work-card work-card-placeholder" href="#" data-title="Coming Soon" data-kicker="Project 05 — Stay Tuned" data-image="">
+                    <div class="work-card-placeholder-content">
+                        <span class="placeholder-label">Coming Soon</span>
+                        <span class="placeholder-sub">Project 05</span>
+                    </div>
+                </a>
             </div>
-        </section>
 
-        <section class="project-showcase" id="autoshooter">
-            <div class="project-container">
-                <!-- Media Left -->
-                 <div class="project-media-wrapper" onclick="window.location.href='sentinel.html';" role="link" tabindex="0"> 
-                   <!--  <div class="project-media-wrapper"  role="link" tabindex="0"> -->
-                    <video class="project-video" autoplay muted loop playsinline preload="metadata">
-                        <source src="/portfolio-hosting/assets/sentinal_demo-UvWSrx6U.mp4" type="video/mp4">
-                    </video>
+            <div class="works-list" aria-hidden="true">
+                <a href="orbit.html" data-title="Orbit — Realtime Presence & Spatial Collaboration Network" data-kicker="Realtime Presence Platform / 2026" data-image="images/orbit_main.png">Orbit</a>
+                <a href="sentinel.html" data-title="Sentinel — Realtime Vehicle & ALPR System" data-kicker="Computer Vision System / 2025" data-image="images/sentinel_main.png">Sentinel</a>
+                <a href="jsms.html" data-title="Jewellery Store Management System" data-kicker="Full Stack Web Application / 2024" data-image="images/jsms_main.jpg">Jewellery Store Management System</a>
+                <a href="#" data-title="Coming Soon" data-kicker="Project 05 — Stay Tuned" data-image="">Coming Soon</a>
+            </div>
 
+            <div class="works-list-preview" aria-hidden="true">
+                <img src="" alt="">
+            </div>
 
-                </div>
-
-                <!-- Content Right -->
-                <div class="project-info">
-                    <div class="project-category">COMPUTER VISION SYSTEM / 2025</div>
-                     <h2 class="project-title"
-                    onclick="window.location.href='sentinel.html';"role="link" tabindex="0"> 
-    <!--    <h2 class="project-title"
-                   
-                        role="link"
-                        tabindex="0"> -->
-        Sentinel — Realtime Vehicle & ALPR System</h2>
-                    <p class="project-description">
-                        A desktop-based computer vision application built with Python, OpenCV, YOLOv8, and OCR for real-time vehicle and license plate detection. The system captures live camera feeds, extracts plate information, stores detection history in SQLite, and provides an interactive monitoring dashboard through a custom PyQt6 interface.
-                    </p>
-                    <ul class="project-features">
-                        <li>Real-time vehicle detection using YOLOv8</li>
-                        <li>Automatic license plate localization and OCR</li>
-                        <li>Multi-threaded processing for smooth performance</li>
-                        <li>Detection history with image and timestamp storage</li>
-                        <li>SQLite-powered record management system</li>
-                        <li>Modern PyQt6 desktop interface</li>
-                    </ul>
+            <div class="works-hover-label" aria-hidden="true">
+                <img src="" alt="">
+                <div>
+                    <strong></strong>
+                    <span></span>
                 </div>
             </div>
         </section>
-
-        <!-- PROJECT SECTION: JSMS -->
-        <section class="project-showcase" id="jsms">
-            <div class="project-container">
-                <!-- Media Left -->
-                 <div class="project-media-wrapper" 
-                onclick="window.location.href='jsms.html';" role="link" tabindex="0"> 
-              <!--  <div class="project-media-wrapper" 
-                role="link" tabindex="0"> -->
-                    <video class="project-video" autoplay muted loop playsinline preload="metadata">
-                        <source src="/portfolio-hosting/assets/jsms_demo-DnJ2yq6s.mp4" type="video/mp4">
-                    </video>
-
-                </div>
-                
-
-
-                <!-- Content Right -->
-                <div class="project-info">
-                    <div class="project-category">FULL STACK WEB APPLICATION / 2024</div>
-                   <h2 class="project-title" onclick="window.location.href='jsms.html';" role="link" tabindex="0">Jewellery Store Management System</h2>
-                  <!--     <h2 class="project-title" role="link" tabindex="0">Jewellery Store Management System</h2>  -->
-                    <p class="project-description">
-                        A full-stack jewellery e-commerce platform designed for product management, customer authentication, shopping cart operations, and administrative control through a PHP and MySQL backend architecture.
-                    </p>
-                    <ul class="project-features">
-                        <li>Full-stack e-commerce platform powered by PHP & MySQL</li>
-                        <li>Secure customer login, registration & session management</li>
-                        <li>Dynamic product catalog and inventory administration</li>
-                        <li>Shopping cart workflow with real-time item management</li>
-                        <li>Category-based product organization and navigation</li>
-                        <li>MySQL database integration for persistent data storage</li>
-                        <li>Responsive Bootstrap frontend optimized for multiple devices</li>
-                        <li>Built using PHP, MySQL, HTML, CSS, JavaScript & Bootstrap</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- TIMELINE SECTION -->
-<div id="footer-container"></div>
-
-<script>
-fetch('footer.html')
-  .then(response => response.text())
-  .then(data => {
-    document.getElementById('footer-container').innerHTML = data;
-  });
-</script>
-        
-
-
-
-   
-
-    <script src="loader-universal.js"></script>
+<script src="loader-universal.js"></script>
     <script src="script.js"></script>
     <script src="analytics.js"></script>
 
