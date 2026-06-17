@@ -400,7 +400,7 @@ if (isTouchDevice) {
         if (!AC) return;
         spi.audioContext = new AC();
         spi.masterGain = spi.audioContext.createGain();
-        spi.masterGain.gain.value = 0.045;
+        spi.masterGain.gain.value = 0.0585;
         spi.masterGain.connect(spi.audioContext.destination);
         spi.audioReady = true;
     };
@@ -511,7 +511,7 @@ if (isTouchDevice) {
             listPreview.style.top = `${y}px`;
         });
         link.addEventListener('mouseleave', () => { listPreview?.classList.remove('active'); hideLabel(); });
-        link.addEventListener('focus',      () => {
+        link.addEventListener('focus', () => {
             if (listPreview && listPreviewImage) {
                 listPreviewImage.src = link.dataset.image || '';
                 listPreview.classList.add('active');
@@ -519,7 +519,6 @@ if (isTouchDevice) {
         });
         link.addEventListener('blur', () => listPreview?.classList.remove('active'));
     });
-
     /* Clamp wheel velocity tightly so fast scrollers don't cause wild spinning */
     window.addEventListener('wheel', e => {
         const rect = works.getBoundingClientRect();

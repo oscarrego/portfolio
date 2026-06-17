@@ -58,25 +58,23 @@
 
             <button class="works-menu-button" type="button" aria-expanded="false" aria-controls="works-menu-panel">
                 <span class="menu-open-text">menu</span>
-                <span class="menu-close-text">close</span>
                 <span class="works-menu-dot">•</span>
-                <span class="works-menu-x">×</span>
+                <div class="menu-close-controls">
+                    <span class="menu-close-text">close</span>
+                    <span class="works-menu-x">×</span>
+                </div>
             </button>
 
             <div class="works-menu-scrim" aria-hidden="true"></div>
             <aside class="works-menu-panel" id="works-menu-panel" aria-hidden="true">
-                <nav class="works-menu-links" aria-label="Portfolio menu">
-                    <a href="#works">works</a>
-                    <a href="about.html">about</a>
-                    <a href="mailto:oscarrego789@gmail.com">contact</a>
-                </nav>
-
                 <!-- Currently I'm... blurb -->
-                <div class="works-menu-currently">
-                    <p class="works-menu-currently-label">CURRENTLY I'M…</p>
-                    <p>Curious on how software systems work</p>
-                    <p>Exploring development, automation, and AI</p>
-                    <p>Learning that exceptional software needs both great code and great UI/UX</p>
+                <div class="works-menu-content">
+                    <div class="works-menu-currently">
+                        <p class="works-menu-currently-label">CURRENTLY I'M…</p>
+                        <p>Curious on how software systems work</p>
+                        <p>Exploring development, automation, and AI</p>
+                        <p>Learning that exceptional software needs both great code and great UI/UX</p>
+                    </div>
                 </div>
 
                 <div class="works-menu-footer">
@@ -102,46 +100,43 @@
 
             <!-- CORNER BADGE: artwork + rotating circular text ring → about.html -->
             <a class="works-marquee" href="about.html" aria-label="About Oscar">
+                <div class="works-marquee-inner">
+                    <!-- Rotating circular text ring — only this element spins -->
+                    <svg class="works-marquee-ring" viewBox="0 0 260 260" aria-hidden="true">
+                        <defs>
+                            <!-- Perfect circle centred at (130,130) with r=104 — hugs the image tightly -->
+                            <path id="works-marquee-path"
+                                  d="M 130,26
+                                     a 104,104 0 1,1 -0.001,0
+                                     Z" />
+                        </defs>
+                        <text>
+                            <textPath href="#works-marquee-path" startOffset="0%">
+                                Oscar © 2026 • About • Oscar © 2026 • About • Oscar © 2026 • About •
+                            </textPath>
+                        </text>
+                    </svg>
 
-                <!-- Rotating circular text ring — only this element spins -->
-                <svg class="works-marquee-ring" viewBox="0 0 260 260" aria-hidden="true">
-                    <defs>
-                        <!-- Perfect circle centred at (130,130) with r=104 — hugs the image tightly -->
-                        <path id="works-marquee-path"
-                              d="M 130,26
-                                 a 104,104 0 1,1 -0.001,0
-                                 Z" />
-                    </defs>
-                    <text>
-                        <textPath href="#works-marquee-path" startOffset="0%">
-                            Oscar © 2026 • About • Oscar © 2026 • About • Oscar © 2026 • About •
-                        </textPath>
-                    </text>
-                </svg>
-
-                <!-- Static artwork — bottom_corner.png, slightly tilted -->
-                <img class="works-corner-img"
-                     src="images/bottom_corner.png"
-                     alt="About"
-                     draggable="false">
-
+                    <!-- Static artwork — bottom_corner.png, slightly tilted -->
+                    <img class="works-corner-img"
+                         src="images/bottom_corner.png"
+                         alt="About"
+                         draggable="false">
+                </div>
             </a>
 
             <div class="works-stage" aria-live="polite">
                 <a class="work-card" href="orbit.html" data-title="Orbit — Realtime Presence & Spatial Collaboration Network" data-kicker="Realtime Presence Platform / 2026" data-image="images/orbit_main.png">
-                    <img src="images/orbit_main.png" alt="Orbit project preview" draggable="false">
+                    <video src="videos/orbit_demo.mp4" poster="images/orbit_main.png" autoplay loop muted playsinline preload="auto" draggable="false"></video>
                 </a>
                 <a class="work-card" href="sentinel.html" data-title="Sentinel — Realtime Vehicle & ALPR System" data-kicker="Computer Vision System / 2025" data-image="images/sentinel_main.png">
-                    <img src="images/sentinel_main.png" alt="Sentinel project preview" draggable="false">
+                    <video src="videos/sentinal_demo.mp4" poster="images/sentinel_main.png" autoplay loop muted playsinline preload="auto" draggable="false"></video>
                 </a>
                 <a class="work-card" href="jsms.html" data-title="Jewellery Store Management System" data-kicker="Full Stack Web Application / 2024" data-image="images/jsms_main.jpg">
-                    <img src="images/jsms_main.jpg" alt="Jewellery Store Management System preview" draggable="false">
+                    <video src="videos/jsms_demo.mp4" poster="images/jsms_main.jpg" autoplay loop muted playsinline preload="auto" draggable="false"></video>
                 </a>
-                <a class="work-card work-card-placeholder" href="#" data-title="Coming Soon" data-kicker="Project 05 — Stay Tuned" data-image="">
-                    <div class="work-card-placeholder-content">
-                        <span class="placeholder-label">Coming Soon</span>
-                        <span class="placeholder-sub">Project 05</span>
-                    </div>
+                <a class="work-card" href="orbit.html" data-title="Orbit Desktop — Spatial Client" data-kicker="Realtime Presence Platform / 2026" data-image="images/orbit_main.png">
+                    <video src="videos/orbit_demo_pc.mp4" poster="images/orbit_main.png" autoplay loop muted playsinline preload="auto" draggable="false"></video>
                 </a>
             </div>
 
@@ -149,7 +144,7 @@
                 <a href="orbit.html" data-title="Orbit — Realtime Presence & Spatial Collaboration Network" data-kicker="Realtime Presence Platform / 2026" data-image="images/orbit_main.png">Orbit</a>
                 <a href="sentinel.html" data-title="Sentinel — Realtime Vehicle & ALPR System" data-kicker="Computer Vision System / 2025" data-image="images/sentinel_main.png">Sentinel</a>
                 <a href="jsms.html" data-title="Jewellery Store Management System" data-kicker="Full Stack Web Application / 2024" data-image="images/jsms_main.jpg">Jewellery Store Management System</a>
-                <a href="#" data-title="Coming Soon" data-kicker="Project 05 — Stay Tuned" data-image="">Coming Soon</a>
+                <a href="orbit.html" data-title="Orbit Desktop — Spatial Client" data-kicker="Realtime Presence Platform / 2026" data-image="images/orbit_main.png">Orbit Desktop</a>
             </div>
 
             <div class="works-list-preview" aria-hidden="true">
