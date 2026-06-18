@@ -78,39 +78,44 @@
       osc.stop(dur);
     } 
     else if (type === 'menu-open') {
-      // Airy, soft expanding UI sound (upward tonal sweep with slow attack swell)
+      // Premium "open" — soft punchy pop + bright shimmer tail
+      // Layer 1: fast thump (low sine burst — the "pop" body)
       const osc1 = offlineCtx.createOscillator();
       const gain1 = offlineCtx.createGain();
+      // Layer 2: bright crystalline shimmer (high sine)
       const osc2 = offlineCtx.createOscillator();
       const gain2 = offlineCtx.createGain();
+      // Layer 3: mid harmonic fill
       const osc3 = offlineCtx.createOscillator();
       const gain3 = offlineCtx.createGain();
 
+      filt.type = 'highshelf';
+      filt.frequency.setValueAtTime(800, 0);
+      filt.gain.setValueAtTime(4, 0);
+
+      // Body pop: punchy low sine, fast decay
       osc1.type = 'sine';
-      osc2.type = 'sine';
-      osc3.type = 'sine';
-      filt.frequency.setValueAtTime(1600, 0);
-
-      // Harmonized perfect fifth intervals sweeping upward
-      osc1.frequency.setValueAtTime(290, 0);
-      osc1.frequency.exponentialRampToValueAtTime(520, dur);
-      osc2.frequency.setValueAtTime(435, 0);
-      osc2.frequency.exponentialRampToValueAtTime(780, dur);
-      osc3.frequency.setValueAtTime(580, 0);
-      osc3.frequency.exponentialRampToValueAtTime(1040, dur);
-
-      // Slow attack swell (0.04s) to sound airy and organic
+      osc1.frequency.setValueAtTime(180, 0);
+      osc1.frequency.exponentialRampToValueAtTime(90, 0.06);
       gain1.gain.setValueAtTime(0.0001, 0);
-      gain1.gain.linearRampToValueAtTime(0.08, 0.04);
-      gain1.gain.exponentialRampToValueAtTime(0.0001, dur);
+      gain1.gain.linearRampToValueAtTime(0.28, 0.003);
+      gain1.gain.exponentialRampToValueAtTime(0.0001, 0.08);
 
+      // Shimmer: bright high sine, delayed slightly, longer tail
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(1800, 0);
+      osc2.frequency.exponentialRampToValueAtTime(2600, dur);
       gain2.gain.setValueAtTime(0.0001, 0);
-      gain2.gain.linearRampToValueAtTime(0.08, 0.045);
+      gain2.gain.linearRampToValueAtTime(0.09, 0.015);
       gain2.gain.exponentialRampToValueAtTime(0.0001, dur);
 
+      // Mid harmonic warmth
+      osc3.type = 'sine';
+      osc3.frequency.setValueAtTime(720, 0);
+      osc3.frequency.exponentialRampToValueAtTime(960, dur * 0.7);
       gain3.gain.setValueAtTime(0.0001, 0);
-      gain3.gain.linearRampToValueAtTime(0.06, 0.05);
-      gain3.gain.exponentialRampToValueAtTime(0.0001, dur);
+      gain3.gain.linearRampToValueAtTime(0.07, 0.008);
+      gain3.gain.exponentialRampToValueAtTime(0.0001, dur * 0.8);
 
       osc1.connect(gain1); gain1.connect(filt);
       osc2.connect(gain2); gain2.connect(filt);
@@ -121,28 +126,31 @@
       osc3.start(0); osc3.stop(dur);
     } 
     else if (type === 'menu-close') {
-      // Collapsing UI sound (downward sweep with faster attack)
+      // Premium "close" — crisp bright tap + fast downward chime (like iOS dismiss)
       const osc1 = offlineCtx.createOscillator();
       const gain1 = offlineCtx.createGain();
       const osc2 = offlineCtx.createOscillator();
       const gain2 = offlineCtx.createGain();
 
+      filt.type = 'highshelf';
+      filt.frequency.setValueAtTime(1000, 0);
+      filt.gain.setValueAtTime(3, 0);
+
+      // Crisp tap: mid-high strike, fast decay
       osc1.type = 'sine';
-      osc2.type = 'sine';
-      filt.frequency.setValueAtTime(1200, 0);
-
-      osc1.frequency.setValueAtTime(520, 0);
-      osc1.frequency.exponentialRampToValueAtTime(290, dur);
-      osc2.frequency.setValueAtTime(780, 0);
-      osc2.frequency.exponentialRampToValueAtTime(435, dur);
-
+      osc1.frequency.setValueAtTime(1100, 0);
+      osc1.frequency.exponentialRampToValueAtTime(420, dur);
       gain1.gain.setValueAtTime(0.0001, 0);
-      gain1.gain.linearRampToValueAtTime(0.12, 0.008);
+      gain1.gain.linearRampToValueAtTime(0.22, 0.002);
       gain1.gain.exponentialRampToValueAtTime(0.0001, dur);
 
+      // Harmonic tail: softer secondary note
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(660, 0);
+      osc2.frequency.exponentialRampToValueAtTime(280, dur);
       gain2.gain.setValueAtTime(0.0001, 0);
-      gain2.gain.linearRampToValueAtTime(0.12, 0.012);
-      gain2.gain.exponentialRampToValueAtTime(0.0001, dur);
+      gain2.gain.linearRampToValueAtTime(0.12, 0.005);
+      gain2.gain.exponentialRampToValueAtTime(0.0001, dur * 0.85);
 
       osc1.connect(gain1); gain1.connect(filt);
       osc2.connect(gain2); gain2.connect(filt);
@@ -288,14 +296,9 @@
   // Global playTone function
   window.playTone = function (type = 'click') {
     resumeContext();
-    
-    // Disable hover sounds (legacy references)
     if (type === 'hover') return;
-
-    // Backward compatibility mappings
     let mappedType = type;
     if (type === 'menu') mappedType = 'click';
-
     const buf = buffers[mappedType];
     if (buf) {
       const source = ctx.createBufferSource();
@@ -304,6 +307,35 @@
       source.start(0);
     }
   };
+
+  // ── Volume toggle (mute/unmute all UI sounds) ────────────────────────────
+  window._soundsMuted = false;
+  window.toggleSoundMute = function () {
+    window._soundsMuted = !window._soundsMuted;
+    masterGain.gain.setTargetAtTime(
+      window._soundsMuted ? 0 : 0.25,
+      ctx.currentTime, 0.05
+    );
+    const btn = document.getElementById('vol-toggle');
+    if (!btn) return;
+    btn.classList.toggle('is-muted', window._soundsMuted);
+    btn.querySelector('.vol-icon--on').style.display  = window._soundsMuted ? 'none' : '';
+    btn.querySelector('.vol-icon--off').style.display = window._soundsMuted ? ''     : 'none';
+  };
+
+  function initVolToggle() {
+    const btn = document.getElementById('vol-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      window.toggleSoundMute();
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVolToggle);
+  } else {
+    initVolToggle();
+  }
 
   // ── Delegated Mouse Hover Event tracking for Project Card entry ──
   let activeHoveredCard = null;
@@ -374,10 +406,10 @@
       return;
     }
 
-    // 7. General links & buttons
+    // 7. General links & buttons (exclude vol-toggle)
     const link = target.closest('a');
     const btn = target.closest('button');
-    if (link || btn) {
+    if ((link || btn) && !target.closest('#vol-toggle')) {
       // Social circles and external contact links
       if (target.closest('.social-circle') || target.closest('.contact-link-item')) {
         window.playTone('nav-confirm');

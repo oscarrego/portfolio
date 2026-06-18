@@ -446,15 +446,13 @@
     const words = section.querySelectorAll('.narrative-word');
     if (!words.length) return;
 
-    // Pin section and stagger color reveal of each word
+    // Stagger color reveal of each word as user scrolls through the section
     gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: 'top top',
-        end: '+=120%', // Scroll distance to complete reveal
-        pin: true,
-        scrub: 0.7, // Apple premium smooth catch-up feel
-        anticipatePin: 1
+        start: 'top 80%',
+        end: 'bottom 20%',
+        scrub: 0.8,
       }
     })
     .to(words, {

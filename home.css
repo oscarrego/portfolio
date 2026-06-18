@@ -84,20 +84,21 @@ a { text-decoration: none; color: inherit; }
   pointer-events: auto;
   background: #000000;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 100px;
-  padding: 10px 10px 10px 36px;
+  border-radius: 24px;
+  padding: 12px 12px 12px 36px;
   display: flex;
   align-items: center;
-  gap: 28px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  justify-content: space-between;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  min-width: 320px;
 }
 
 .pill-nav-logo {
   font-family: var(--font-body);
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
   color: #ffffff;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
   text-decoration: none;
 }
 
@@ -105,9 +106,9 @@ a { text-decoration: none; color: inherit; }
   background: #ffffff;
   border: none;
   border-radius: 100px;
-  padding: 12px 22px;
+  padding: 10px 24px;
   display: flex;
-  gap: 6px;
+  gap: 5px;
   align-items: center;
   cursor: pointer;
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s;
@@ -1032,30 +1033,147 @@ a { text-decoration: none; color: inherit; }
   transform: translateX(0);
 }
 
-/* — Footer bar — */
+/* — Volume Toggle (Fixed) — */
 
-.home-footer {
+.vol-toggle {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 999;
+  background: rgba(10, 10, 10, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 100px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #ffffff;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s;
+}
+
+.vol-toggle:hover {
+  transform: scale(1.1);
+  background: rgba(30, 30, 30, 0.95);
+}
+
+.vol-toggle.is-muted {
+  opacity: 0.55;
+}
+
+/* — Footer redesign — */
+
+.home-footer {
+  background: #0a0a0a;
+  color: #ffffff;
+  padding: 80px var(--pad-x) 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.footer-top {
+  display: flex;
   justify-content: space-between;
-  padding: 48px var(--pad-x) 40px;
-  border-top: 1px solid var(--rule);
-  margin-top: auto;
+  align-items: flex-start;
+  gap: 60px;
+  padding-bottom: 80px;
+  flex-wrap: wrap;
 }
 
-.home-footer-sig {
+.footer-left {
+  flex: 1;
+  min-width: 220px;
+}
+
+.footer-tagline {
   font-family: var(--font-display);
-  font-size: clamp(28px, 4vw, 60px);
-  letter-spacing: -0.01em;
-  font-weight: 400;
-  color: rgba(255,255,255,0.08);
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  margin: 0;
 }
 
-.home-footer-copy {
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: var(--muted);
-  text-transform: uppercase;
+.footer-right {
+  display: flex;
+  gap: 80px;
+  flex-wrap: wrap;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 160px;
+}
+
+.footer-col-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.footer-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 280px;
+}
+
+.footer-pill {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 100px;
+  padding: 6px 16px;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.footer-pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+}
+
+.footer-contact-link {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.2s;
+  display: block;
+}
+
+.footer-contact-link:hover {
+  color: #ffffff;
+}
+
+/* Giant name at the bottom — half cut off */
+.footer-name-wrap {
+  display: flex;
+  overflow: hidden;
+  /* Show only top ~50% of the letters */
+  height: 0.6em;
+  line-height: 1;
+}
+
+.footer-name {
+  font-family: var(--font-display);
+  font-size: clamp(120px, 20vw, 260px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: rgba(255, 255, 255, 0.06);
+  white-space: nowrap;
+  user-select: none;
+  line-height: 1;
+  display: block;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1183,11 +1301,11 @@ a { text-decoration: none; color: inherit; }
 
 .narrative-paragraph {
   font-family: var(--font-body);
-  font-size: clamp(24px, 4.5vw, 44px);
-  font-weight: 500;
-  line-height: 1.45;
-  letter-spacing: -0.025em;
-  margin-bottom: 2.2rem;
+  font-size: clamp(22px, 3.8vw, 40px);
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.6rem;
   text-align: center;
 }
 
@@ -1197,9 +1315,9 @@ a { text-decoration: none; color: inherit; }
 
 .narrative-word {
   display: inline-block;
-  color: rgba(0, 0, 0, 0.12); /* Very light gray inactive */
+  color: rgba(0, 0, 0, 0.1); /* Very light gray inactive */
   will-change: color;
-  margin-right: 0.18em;
+  margin-right: 0.2em;
 }
 
 @media (max-width: 600px) {
