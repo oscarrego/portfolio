@@ -3,6 +3,115 @@
    Custom cursor, kinetic scroll, video observers, timeline animations
 ═══════════════════════════════════════════════════════════════════════════ */
 
+/* ── Global Audio System (Pre-rendered / Ccached) ───────────────────────── */
+(() => {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+    if (!AC || !OAC) return;
+
+    const ctx = new AC();
+    const masterGain = ctx.createGain();
+    masterGain.gain.value = 0.288;
+    masterGain.connect(ctx.destination);
+
+    const buffers = {
+        hover: null,
+        menu: null
+    };
+
+    const renderToneBuffer = (type, sampleRate = 44100) => {
+        const dur = type === 'menu' ? 0.18 : 0.105;
+        const length = Math.ceil(sampleRate * (dur + 0.025));
+        const offlineCtx = new OAC(1, length, sampleRate);
+
+        const osc = offlineCtx.createOscillator();
+        const gain = offlineCtx.createGain();
+        const filt = offlineCtx.createBiquadFilter();
+
+        const sf = type === 'menu' ? 280 : 520;
+        const ef = type === 'menu' ? 760 : 840;
+
+        osc.type = 'sine';
+        filt.type = 'lowpass';
+        filt.frequency.setValueAtTime(type === 'menu' ? 1600 : 2200, 0);
+
+        osc.frequency.setValueAtTime(sf, 0);
+        osc.frequency.exponentialRampToValueAtTime(ef, dur);
+
+        gain.gain.setValueAtTime(0.0001, 0);
+        gain.gain.exponentialRampToValueAtTime(type === 'menu' ? 0.16 : 0.09, 0.018);
+        gain.gain.exponentialRampToValueAtTime(0.0001, dur);
+
+        osc.connect(filt);
+        filt.connect(gain);
+        gain.connect(offlineCtx.destination);
+
+        osc.start(0);
+        osc.stop(dur + 0.025);
+
+        return offlineCtx.startRendering();
+    };
+
+    const preloadSounds = () => {
+        const sr = ctx.sampleRate || 44100;
+        Promise.all([
+            renderToneBuffer('hover', sr).then(buf => buffers.hover = buf),
+            renderToneBuffer('menu', sr).then(buf => buffers.menu = buf)
+        ]).catch(err => {
+            console.error('Failed to pre-render UI sounds:', err);
+        });
+    };
+
+    preloadSounds();
+
+    const resumeContext = () => {
+        if (ctx.state === 'suspended') {
+            ctx.resume().catch(() => {});
+        }
+    };
+
+    ['pointerdown', 'touchstart', 'click', 'wheel', 'pointermove', 'mouseenter'].forEach(evt => {
+        window.addEventListener(evt, resumeContext, { once: true, capture: true, passive: true });
+    });
+
+    window.playTone = (type = 'hover') => {
+        resumeContext();
+
+        const buf = buffers[type];
+        if (buf) {
+            const source = ctx.createBufferSource();
+            source.buffer = buf;
+            source.connect(masterGain);
+            source.start(0);
+        } else {
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            const filt = ctx.createBiquadFilter();
+            const sf = type === 'menu' ? 280 : 520;
+            const ef = type === 'menu' ? 760 : 840;
+            const dur = type === 'menu' ? 0.18 : 0.105;
+
+            osc.type = 'sine';
+            filt.type = 'lowpass';
+            filt.frequency.setValueAtTime(type === 'menu' ? 1600 : 2200, now);
+            osc.frequency.setValueAtTime(sf, now);
+            osc.frequency.exponentialRampToValueAtTime(ef, now + dur);
+
+            gain.gain.setValueAtTime(0.0001, now);
+            gain.gain.exponentialRampToValueAtTime(type === 'menu' ? 0.16 : 0.09, now + 0.018);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+
+            osc.connect(filt);
+            filt.connect(gain);
+            gain.connect(masterGain);
+
+            osc.start(now);
+            osc.stop(now + dur + 0.025);
+        }
+    };
+})();
+
 /* ── Touch / pointer capability detection ───────────────────────────────── */
 // Dual check: matchMedia for capability + maxTouchPoints for device flags
 const isTouchDevice = (
@@ -43,6 +152,65 @@ window.addEventListener('resize', () => {
             } else {
                 localStorage.setItem('portfolio-theme', 'dark');
             }
+        });
+
+        let bubbleTimeout = null;
+        let emotionIndex = 0;
+        const emotions = ['squint', 'neutral', 'sad'];
+
+        orb.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Play menu/interaction sound
+            if (window.playTone) window.playTone('menu');
+
+            // Trigger jelly bounce/squish animation on the orb itself
+            orb.classList.remove('orb-bounce');
+            void orb.offsetWidth; // Trigger reflow
+            orb.classList.add('orb-bounce');
+
+            // Remove any previous emotion class
+            emotions.forEach(em => orb.classList.remove(`emotion-${em}`));
+
+            // Get next emotion and apply it
+            const currentEmotion = emotions[emotionIndex];
+            orb.classList.add(`emotion-${currentEmotion}`);
+            emotionIndex = (emotionIndex + 1) % emotions.length;
+
+            // Find or create speech bubble next to the orb
+            let bubble = orb.querySelector('.logo-speech-bubble');
+            if (!bubble) {
+                bubble = document.createElement('div');
+                bubble.className = 'logo-speech-bubble';
+                bubble.innerHTML = `
+                    click!!
+                    <svg class="bubble-sparkle" viewBox="0 0 24 24">
+                        <path d="M12,3 L12,8 M12,16 L12,21 M4,12 L9,12 M15,12 L20,12 M6.3,6.3 L9.9,9.9 M14.1,14.1 L17.7,17.7 M17.7,6.3 L14.1,9.9 M9.9,14.1 L6.3,17.7" stroke="#1ad1a5" stroke-width="2.5" stroke-linecap="round" />
+                    </svg>
+                `;
+                orb.appendChild(bubble);
+            } else {
+                // If bubble exists, reset the animation state
+                bubble.classList.remove('bubble-pop-anim');
+                void bubble.offsetWidth; // Trigger reflow
+                bubble.classList.add('bubble-pop-anim');
+                bubble.classList.remove('bubble-fade-out');
+            }
+
+            // Clear any active timeout
+            if (bubbleTimeout) clearTimeout(bubbleTimeout);
+
+            // Automatically animate and remove bubble after 2 seconds
+            bubbleTimeout = setTimeout(() => {
+                bubble.classList.add('bubble-fade-out');
+                setTimeout(() => {
+                    if (bubble.parentNode === orb) {
+                        bubble.remove();
+                    }
+                    // Revert face back to normal when bubble is fully gone
+                    emotions.forEach(em => orb.classList.remove(`emotion-${em}`));
+                }, 350); // Match CSS fade-out animation length
+            }, 2000);
         });
     });
 })();
@@ -511,9 +679,6 @@ if (isTouchDevice) {
         velocity: 0,      // inertia from scroll
         mode:    'spiral',
         hovered: null,
-        audioReady:   false,
-        audioContext: null,
-        masterGain:   null,
         isVisible:    false,
         width:        works.clientWidth || winW
     };
@@ -541,43 +706,7 @@ if (isTouchDevice) {
         lastBrightness: -1
     }));
 
-    /* ── Audio ─────────────────────────────────────────────────────────── */
-    const ensureAudio = () => {
-        if (spi.audioReady) return;
-        const AC = window.AudioContext || window.webkitAudioContext;
-        if (!AC) return;
-        spi.audioContext = new AC();
-        spi.masterGain = spi.audioContext.createGain();
-        spi.masterGain.gain.value = 0.288; // 100% boost over current intended level
-        spi.masterGain.connect(spi.audioContext.destination);
-        spi.audioReady = true;
-    };
-
-    window.playTone = (type = 'hover') => {
-        ensureAudio();
-        if (!spi.audioContext || !spi.masterGain) return;
-        if (spi.audioContext.state === 'suspended') spi.audioContext.resume();
-        const now  = spi.audioContext.currentTime;
-        const osc  = spi.audioContext.createOscillator();
-        const gain = spi.audioContext.createGain();
-        const filt = spi.audioContext.createBiquadFilter();
-        const sf   = type === 'menu' ? 280  : 520;
-        const ef   = type === 'menu' ? 760  : 840;
-        const dur  = type === 'menu' ? 0.18 : 0.105;
-        osc.type = 'sine';
-        filt.type = 'lowpass';
-        filt.frequency.setValueAtTime(type === 'menu' ? 1600 : 2200, now);
-        osc.frequency.setValueAtTime(sf, now);
-        osc.frequency.exponentialRampToValueAtTime(ef, now + dur);
-        gain.gain.setValueAtTime(0.0001, now);
-        gain.gain.exponentialRampToValueAtTime(type === 'menu' ? 0.16 : 0.09, now + 0.018);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
-        osc.connect(filt); filt.connect(gain); gain.connect(spi.masterGain);
-        osc.start(now); osc.stop(now + dur + 0.025);
-    };
-
-    document.addEventListener('pointerdown', ensureAudio, { once: true, passive: true });
-    window.addEventListener('wheel', ensureAudio, { once: true, passive: true });
+    // Audio is handled globally at the top of the file
 
     /* ── Mode toggle ───────────────────────────────────────────────────── */
     const setMode = (mode) => {
@@ -721,7 +850,7 @@ if (isTouchDevice) {
             rect.top < winH * 0.34 && rect.bottom > winH * 0.2
         );
 
-        if (spi.mode === 'spiral' && !spi.hovered) {
+        if (spi.mode === 'spiral') {
             spi.rotation += spi.velocity + AUTO_SPIN;  // rotation accumulates — never resets
             spi.velocity *= FRICTION;
         }

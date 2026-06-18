@@ -262,6 +262,33 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+*::before, *::after {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Exceptions: Allow selection inside inputs, textareas, forms, code blocks, or elements explicitly marked selectable */
+input, 
+textarea, 
+select, 
+pre, 
+code, 
+kbd, 
+samp, 
+[contenteditable="true"], 
+.selectable {
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
 }
 
 ::selection {
@@ -1233,26 +1260,56 @@ transform: translateY(-80px);
     cursor: pointer;
 }
 
-.works-logo-orb span{
+.works-logo-orb .orb-face {
     position: absolute;
-    inset: 23px 17px 18px;
-    border-bottom: 4px solid #050505;
-    border-radius: 50%;
+    top: 16%;
+    left: 28%;
+    right: 12%;
+    bottom: 20%;
+    width: 60%;
+    height: 64%;
+    pointer-events: none;
+    transform: rotate(-10deg); /* Tilt towards top-right */
 }
 
-.works-logo-orb span::before,
-.works-logo-orb span::after{
-    content: "";
-    position: absolute;
-    top: 7px;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: #050505;
+/* Hide all face states by default */
+.works-logo-orb .orb-face .face-state {
+    display: none;
 }
 
-.works-logo-orb span::before{ left: 8px; }
-.works-logo-orb span::after{ right: 8px; }
+/* Toggle active states */
+.works-logo-orb:not(.emotion-squint):not(.emotion-neutral):not(.emotion-sad) .state-normal {
+    display: block;
+}
+.works-logo-orb.emotion-squint .state-squint {
+    display: block;
+}
+.works-logo-orb.emotion-neutral .state-neutral {
+    display: block;
+}
+.works-logo-orb.emotion-sad .state-sad {
+    display: block;
+}
+
+/* Style SVG face elements */
+.works-logo-orb .orb-face .eye {
+    fill: #e6fffb;
+    filter: drop-shadow(0 0 3px #1ad1a5) drop-shadow(0 0 6px #1ad1a5);
+}
+
+.works-logo-orb .orb-face .mouth-line {
+    fill: none;
+    stroke: #e6fffb;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 3px #1ad1a5) drop-shadow(0 0 6px #1ad1a5);
+}
+
+.works-logo-orb .orb-face .mouth-line-flat {
+    fill: #e6fffb;
+    filter: drop-shadow(0 0 3px #1ad1a5) drop-shadow(0 0 6px #1ad1a5);
+}
+
+
 
 .works-mode-toggle{
     position: absolute;
@@ -1413,6 +1470,7 @@ body.menu-open .works-menu-scrim{
     opacity: 1;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    pointer-events: auto;
 }
 
 .works-menu-panel{
@@ -1430,17 +1488,20 @@ body.menu-open .works-menu-scrim{
     justify-content: space-between; /* Space content and footer */
     padding: 70px 44px 28px 56px;
     pointer-events: none;
+    visibility: hidden;
     
     /* Unified entry/exit state */
     opacity: 0;
     transform: translate3d(0, 20px, 0) scale(0.98);
     transition: 
         opacity 0.65s ease, 
+        visibility 0s linear 0.65s,
         transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 body.menu-open .works-menu-panel{
     opacity: 1;
+    visibility: visible;
     transform: translate3d(0,0,0) scale(1);
     /* Tiny delay to let button expand slightly first */
     transition-delay: 0.15s;
@@ -1575,7 +1636,7 @@ body.menu-open .works-menu-footer{
     height: 280px;
     z-index: 20;
     display: block;
-    cursor: pointer;
+    pointer-events: none; /* click events pass through transparent areas and text ring */
     text-decoration: none;
     outline: none;
     -webkit-tap-highlight-color: transparent;
@@ -1586,9 +1647,14 @@ body.menu-open .works-menu-footer{
     inset: 0;
     width: 100%;
     height: 100%;
-    transform: rotate(-8deg);
+    transform: rotate(-4deg);
     transform-style: preserve-3d;
     will-change: transform;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.works-marquee-inner:has(.works-corner-link:hover) {
+    transform: rotate(-4deg) scale(1.06);
 }
 
 
@@ -1999,8 +2065,16 @@ body.menu-open .works-menu-panel{
 }
 
 .works-menu-links,
+.works-menu-links a,
 .works-menu-footer,
 .works-menu-footer a{
+    pointer-events: none;
+}
+
+body.menu-open .works-menu-links,
+body.menu-open .works-menu-links a,
+body.menu-open .works-menu-footer,
+body.menu-open .works-menu-footer a{
     pointer-events: auto;
 }
 
@@ -2055,33 +2129,44 @@ body.menu-open .works-menu-panel{
     transform-origin: 50% 50%;
     will-change: transform;
     backface-visibility: hidden;
+    pointer-events: none; /* text ring is purely decorative and not clickable */
 }
 
 .works-marquee-ring text{
     fill: rgba(255,255,255,0.82);
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 13.5px;
+    font-size: 10px;
     font-weight: 600;
-    letter-spacing: 1.8px;
+    letter-spacing: 1.4px;
     text-transform: uppercase;
 }
 
-/* ── Static artwork image ── */
-/* Centred inside the text ring; slightly smaller than ring diameter (236px)
-   so circular text is fully visible around it. border-radius matches reference. */
-.works-corner-img{
+/* ── Clickable Link wrapper for static artwork ── */
+.works-corner-link{
     position: absolute;
     left:   50%;
     top:    50%;
     transform: translate(-50%, -50%);
-    width:  196px;          /* inside ring diameter 208px — 6px gap each side */
-    height: auto;
+    width:  176px;          /* concentric diameter to sit further inside the text ring */
+    height: 176px;
     display: block;
-    border-radius: 22px;
-    pointer-events: none;
+    border-radius: 50%;     /* circular badge, matching reference contour */
+    overflow: hidden;       /* clips clickable area strictly to the circle */
+    pointer-events: auto;   /* triggers navigation on click */
+    cursor: pointer;        /* shows hand pointer on hover */
+    z-index: 2;             /* sits above text ring */
+}
+
+/* ── Static artwork image ── */
+.works-corner-img{
+    width:  100%;           /* fills the parent link container */
+    height: 100%;           /* fills the parent link container */
+    display: block;
+    border-radius: 50%;     /* matches the circle shape */
+    pointer-events: none;   /* mouse events pass directly to the link wrapper */
     user-select: none;
     -webkit-user-drag: none;
-    object-fit: cover;
+    object-fit: cover;      /* crops landscape artwork into a clean circle */
 }
 
 /* ring spin — counterclockwise, matching reference direction */
@@ -2194,8 +2279,9 @@ body.menu-open .works-menu-panel{
         height: 260px;
     }
 
-    .works-corner-img{
-        width: 172px;
+    .works-corner-link{
+        width:  162px;
+        height: 162px;
     }
 }
 
@@ -2209,4 +2295,115 @@ body {
 body.page-leaving {
     opacity: 0;
     pointer-events: none;
+}
+
+/* ── Smiley Orb Speech Bubble & Animations ───────────────────────────────── */
+.logo-speech-bubble {
+    position: absolute;
+    top: 5px;
+    left: calc(100% + 16px);
+    background: #ffffff;
+    color: #000000;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: 900;
+    padding: 10px 22px;
+    border-radius: 18px 18px 18px 2px; /* Bottom-left point shape */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+    z-index: 100;
+    pointer-events: none;
+    white-space: nowrap;
+    transform-origin: bottom left;
+    animation: bubblePop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Tail/beak triangle */
+.logo-speech-bubble::before {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 10px;
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    transform: rotate(45deg);
+    z-index: -1;
+}
+
+/* Sparkle SVG */
+.bubble-sparkle {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    width: 28px;
+    height: 28px;
+    animation: sparkleSpin 3s linear infinite;
+}
+
+/* Re-trigger pop animation class */
+.bubble-pop-anim {
+    animation: none;
+    animation: bubblePop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Fade out animation class */
+.bubble-fade-out {
+    animation: bubbleFade 0.35s ease forwards;
+}
+
+/* Bounce squish animation for the smiley orb logo */
+.orb-bounce {
+    animation: orbSquish 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes bubblePop {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes bubbleFade {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.85);
+        opacity: 0;
+    }
+}
+
+@keyframes sparkleSpin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes orbSquish {
+    0% {
+        transform: scale(1);
+    }
+    15% {
+        transform: scale(0.85, 1.15) translateY(-5px);
+    }
+    30% {
+        transform: scale(1.15, 0.85) translateY(2px);
+    }
+    45% {
+        transform: scale(0.95, 1.05) translateY(-1px);
+    }
+    70% {
+        transform: scale(1.02, 0.98);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
