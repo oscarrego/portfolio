@@ -1,171 +1,558 @@
-    <!DOCTYPE html>
-    <html lang="en">
-        
+<!DOCTYPE html>
+<html lang="en">
 
-    <head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <meta charset="UTF-8">
+  <title>Oscar Rego — Software Engineer</title>
+  <meta name="description" content="Oscar Rego — Software engineer building systems, automation tools, and AI-powered experiences. Portfolio of selected work including Orbit, Sentinel, and JSMS.">
+  <meta name="author" content="Oscar Rego">
+  <meta property="og:title" content="Oscar Rego — Software Engineer">
+  <meta property="og:description" content="Building software systems, automation tools, and AI-powered experiences.">
+  <meta property="og:type" content="website">
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/portfolio-hosting/assets/favicon-BnlB9ra9.svg">
 
-        <title>Oscar's Portfolio</title>
-        <link rel="icon" type="image/svg+xml" href="/portfolio-hosting/assets/favicon-BnlB9ra9.svg">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7MTB5QH0GN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7MTB5QH0GN', { send_page_view: true });
+  </script>
 
-        <!-- Google Analytics 4 — Replace G-7MTB5QH0GN with your Measurement ID -->
-        <!-- HOW: analytics.google.com → Admin → Data Streams → copy Measurement ID -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-7MTB5QH0GN"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-7MTB5QH0GN', { send_page_view: true });
-        </script>
-
+  <!-- Fonts: Bebas Neue (display) + Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-        <!-- Preload critical local fonts -->
-        <link rel="preload" href="/portfolio-hosting/assets/MynorBookCondensed-6UZgmHZS.ttf" as="font" type="font/truetype" crossorigin>
-        <link rel="preload" href="/portfolio-hosting/assets/PixelOperator-BzBUv460.ttf" as="font" type="font/truetype" crossorigin>
+  <!-- Local fonts (PixelOperator, Mynor) -->
+  <link rel="preload" href="/portfolio-hosting/assets/MynorBookCondensed-6UZgmHZS.ttf" as="font" type="font/truetype" crossorigin>
+  <link rel="preload" href="/portfolio-hosting/assets/PixelOperator-BzBUv460.ttf" as="font" type="font/truetype" crossorigin>
 
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-        <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
-
-      <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/mobile-DOUEbF-F.css">
-    </head>
+  <!-- Lenis smooth scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 
-    <body>
-        <div id="loader">
-            <div class="loader-notice" id="mobile-notice">FOR THE BEST EXPERIENCE,
-<br>VIEW ON A DESKTOP SCREEN.</div>
-            <div class="loader-wave-container">
-                <div class="loader-wave"></div>
-            </div>
-            <div class="loader-label">LOADING</div>
-            <div class="loader-percent" id="loader-percent">0%</div>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/main-B8QDf9Ge.css">
+  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/loader-BnDdxSgc.css">
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════ LOADER ══════════════════════════════════ -->
+  <div id="loader">
+    <div class="loader-notice" id="mobile-notice">FOR THE BEST EXPERIENCE,<br>VIEW ON A DESKTOP SCREEN.</div>
+    <div class="loader-wave-container">
+      <div class="loader-wave"></div>
+    </div>
+    <div class="loader-label">LOADING</div>
+    <div class="loader-percent" id="loader-percent">0%</div>
+  </div>
+
+  <!-- ═══════════════════════════ NAV ═════════════════════════════════════ -->
+  <div class="pill-nav-container">
+    <nav class="pill-nav" aria-label="Main navigation">
+      <a href="#hero" class="pill-nav-logo">Oscar</a>
+      <button class="pill-nav-trigger" id="pill-nav-trigger" aria-label="Open Menu">
+        <span class="menu-dot"></span>
+        <span class="menu-dot"></span>
+        <span class="menu-dot"></span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Menu Overlay -->
+  <div class="menu-overlay" id="menu-overlay" aria-hidden="true">
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-close-text">close</span>
+        <button class="menu-close-btn" id="menu-close-btn" aria-label="Close Menu">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="menu-card-links">
+        <a href="#work" class="menu-link">works</a>
+        <a href="#experience" class="menu-link">experience</a>
+        <a href="#about" class="menu-link">about</a>
+        <a href="#contact" class="menu-link">contact</a>
+      </div>
+      
+      <div class="menu-card-footer">
+        <a href="mailto:oscarrego789@gmail.com" class="menu-email">oscarrego789@gmail.com</a>
+        <div class="menu-socials">
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="Twitter">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+          <a href="https://github.com/oscarrego" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="GitHub">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+            </svg>
+          </a>
+          <a href="https://linkedin.com/in/oscarrego789" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+          </a>
         </div>
-        <div class="mouse-glow"></div>
+      </div>
+    </div>
+  </div>
 
-        <section id="works" aria-label="Selected works">
-            <div class="works-grid-bg"></div>
-            <div class="works-ambient works-ambient-a"></div>
-            <div class="works-ambient works-ambient-b"></div>
+  <!-- ═══════════════════════════ § 1 — HERO ══════════════════════════════ -->
+  <section id="hero" class="hero" aria-label="Introduction">
 
-            <div class="works-logo-orb" aria-hidden="true">
-                <svg class="orb-face" viewBox="0 0 100 120">
-                    <!-- Normal Smile State -->
-                    <g class="face-state state-normal">
-                        <circle class="eye" cx="35" cy="32" r="13" />
-                        <circle class="eye" cx="65" cy="32" r="13" />
-                        <path class="mouth-line" d="M 20,80 L 20,90 Q 50,110 80,84" stroke-width="8" stroke-linecap="round" />
-                    </g>
-                    <!-- Squinty Smile State -->
-                    <g class="face-state state-squint">
-                        <rect class="eye" x="18" y="27" width="30" height="10" rx="5" ry="5" />
-                        <rect class="eye" x="52" y="27" width="30" height="10" rx="5" ry="5" />
-                        <path class="mouth-line" d="M 20,80 L 20,90 Q 50,110 80,84" stroke-width="8" stroke-linecap="round" />
-                    </g>
-                    <!-- Neutral State -->
-                    <g class="face-state state-neutral">
-                        <circle class="eye" cx="35" cy="32" r="13" />
-                        <circle class="eye" cx="65" cy="32" r="13" />
-                        <rect class="mouth-line-flat" x="30" y="96" width="40" height="8" rx="4" ry="4" />
-                    </g>
-                    <!-- Sad State -->
-                    <g class="face-state state-sad">
-                        <circle class="eye" cx="35" cy="32" r="13" />
-                        <circle class="eye" cx="65" cy="32" r="13" />
-                        <path class="mouth-line" d="M 20,112 L 20,102 Q 50,82 80,108" stroke-width="8" stroke-linecap="round" />
-                    </g>
-                </svg>
-            </div>
+    <!-- Oversized editorial headline — portrait sits between lines -->
+    <div class="hero-headline" aria-label="Software Engineer">
 
-            <div class="works-mode-toggle" aria-label="Works view mode">
-                <button class="works-mode-btn active" type="button" data-mode="spiral">
-                    <span class="mode-text-wrapper">
-                        <span class="mode-text-item">spiral</span>
-                        <span class="mode-text-item">spiral</span>
-                    </span>
-                </button>
-                <span>•</span>
-                <button class="works-mode-btn" type="button" data-mode="list">
-                    <span class="mode-text-wrapper">
-                        <span class="mode-text-item">list</span>
-                        <span class="mode-text-item">list</span>
-                    </span>
-                </button>
-            </div>
+      <div class="hero-headline-line">
+        <span class="hero-text-reveal">SOFTWARE</span>
+      </div>
 
-            <div id="global-menu-container"></div>
+      <!-- Second line: ENGINEER with portrait nestled inside -->
+      <div class="hero-headline-line hero-headline-line--flex">
+        <span class="hero-text-reveal">ENGINEER</span>
+        <!-- Portrait floated into composition between words -->
+        <span class="hero-portrait-wrap" aria-hidden="true">
+          <img
+            src="/portfolio-hosting/assets/oscar_portrait-B7LVUuek.png"
+            alt="Oscar Rego"
+            draggable="false"
+            loading="eager"
+          >
+        </span>
+      </div>
 
-            <!-- CORNER BADGE: artwork + rotating circular text ring → about.html -->
-            <div class="works-marquee" aria-label="About Oscar">
-                <div class="works-marquee-inner">
-                    <!-- Rotating circular text ring — only this element spins -->
-                    <svg class="works-marquee-ring" viewBox="0 0 260 260" aria-hidden="true">
-                        <defs>
-                            <!-- Perfect circle centred at (130,130) with r=86 — hugs the image tightly -->
-                            <path id="works-marquee-path"
-                                  d="M 130,44
-                                     a 86,86 0 1,1 -0.001,0
-                                     Z" />
-                        </defs>
-                        <text>
-                            <textPath href="#works-marquee-path" startOffset="0%">
-                                © OSCAR REGO • 2026 • ABOUT&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;© OSCAR REGO • 2026 • ABOUT&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-                            </textPath>
-                        </text>
-                    </svg>
+    </div>
 
-                    <!-- Static artwork — bottom_corner.png, slightly tilted, clickable -->
-                    <a class="works-corner-link" href="about.html" aria-label="About Oscar">
-                        <img class="works-corner-img"
-                             src="/portfolio-hosting/assets/bottom_corner-Da8PWZR9.png"
-                             alt="About"
-                             draggable="false"
-                             loading="lazy">
-                    </a>
-                </div>
-            </div>
+    <!-- Bottom bar: © 2026 · intro · scroll -->
+    <div class="hero-bottom">
 
-            <div class="works-stage" aria-live="polite">
-                <a class="work-card" href="orbit.html" data-title="Orbit — Realtime Presence & Spatial Collaboration Network" data-kicker="Realtime Presence Platform / 2026" data-image="images/orbit_main.png">
-                    <video src="/portfolio-hosting/assets/orbit_demo-W4Jf8NoQ.mp4" poster="/portfolio-hosting/assets/orbit_main-CJ3KFxmO.png" autoplay loop muted playsinline preload="auto" draggable="false"></video>
-                </a>
-                <a class="work-card" href="sentinel.html" data-title="Sentinel — Realtime Vehicle & ALPR System" data-kicker="Computer Vision System / 2025" data-image="images/sentinel_main.png">
-                    <video src="/portfolio-hosting/assets/sentinal_demo-UvWSrx6U.mp4" poster="/portfolio-hosting/assets/sentinel_main-yf2B4elV.png" autoplay loop muted playsinline preload="auto" draggable="false"></video>
-                </a>
-                <a class="work-card" href="jsms.html" data-title="Jewellery Store Management System" data-kicker="Full Stack Web Application / 2024" data-image="images/jsms_main.jpg">
-                    <video src="/portfolio-hosting/assets/jsms_demo-DnJ2yq6s.mp4" poster="/portfolio-hosting/assets/jsms_main-DKT9s1pE.jpg" autoplay loop muted playsinline preload="auto" draggable="false"></video>
-                </a>
-                <a class="work-card" href="orbit.html" data-title="Orbit Desktop — Spatial Client" data-kicker="Realtime Presence Platform / 2026" data-image="images/orbit_main.png">
-                    <video src="/portfolio-hosting/assets/orbit_demo_pc-BcQfp8uB.mp4" poster="/portfolio-hosting/assets/orbit_main-CJ3KFxmO.png" autoplay loop muted playsinline preload="auto" draggable="false"></video>
-                </a>
-            </div>
+      <div class="hero-copyright" aria-label="Copyright 2026">© 2026</div>
 
-            <div class="works-list" aria-hidden="true">
-                <a href="orbit.html" data-title="Orbit — Realtime Presence & Spatial Collaboration Network" data-kicker="Realtime Presence Platform / 2026" data-image="images/orbit_main.png">Orbit</a>
-                <a href="sentinel.html" data-title="Sentinel — Realtime Vehicle & ALPR System" data-kicker="Computer Vision System / 2025" data-image="images/sentinel_main.png">Sentinel</a>
-                <a href="jsms.html" data-title="Jewellery Store Management System" data-kicker="Full Stack Web Application / 2024" data-image="images/jsms_main.jpg">Jewellery Store Management System</a>
-                <a href="orbit.html" data-title="Orbit Desktop — Spatial Client" data-kicker="Realtime Presence Platform / 2026" data-image="images/orbit_main.png">Orbit Desktop</a>
-            </div>
+      <div class="hero-intro">
+        <span class="hero-intro-name">Oscar Rego</span>
+        <span class="hero-intro-desc">Building software systems,<br>automation tools, and<br>AI-powered experiences.</span>
+      </div>
 
-            <div class="works-list-preview" aria-hidden="true">
-                <img src="" alt="">
-            </div>
+      <div class="hero-scroll-cue" aria-hidden="true">
+        <div class="hero-scroll-line"></div>
+        <span>SCROLL</span>
+      </div>
 
-            <div class="works-hover-label" aria-hidden="true">
-                <img src="" alt="">
-                <div>
-                    <strong></strong>
-                    <span></span>
-                </div>
-            </div>
-        </section>
-<script src="loader-universal.js"></script>
-    <script src="script.js"></script>
-    <script src="analytics.js"></script>
-    <script src="page-transition.js"></script>
-    <script src="grain.js"></script>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════ § NARRATIVE ═════════════════════════════ -->
+  <section id="narrative" class="narrative-section" aria-label="Narrative">
+    <div class="narrative-inner">
+      <p class="narrative-paragraph">
+        <span class="narrative-word">Curious</span>
+        <span class="narrative-word">about</span>
+        <span class="narrative-word">software</span>
+        <span class="narrative-word">systems.</span>
+      </p>
+      <p class="narrative-paragraph">
+        <span class="narrative-word">Exploring</span>
+        <span class="narrative-word">development,</span>
+        <br>
+        <span class="narrative-word">automation,</span>
+        <span class="narrative-word">and</span>
+        <span class="narrative-word">AI.</span>
+      </p>
+      <p class="narrative-paragraph">
+        <span class="narrative-word">Learning</span>
+        <span class="narrative-word">that</span>
+        <span class="narrative-word">exceptional</span>
+        <span class="narrative-word">software</span>
+        <br>
+        <span class="narrative-word">needs</span>
+        <span class="narrative-word">both</span>
+        <span class="narrative-word">great</span>
+        <span class="narrative-word">code</span>
+        <span class="narrative-word">and</span>
+        <span class="narrative-word">great</span>
+        <span class="narrative-word">UI/UX.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ § 2 — SELECTED WORK ════════════════════ -->
+  <section id="work" class="sw-section" aria-label="Selected work">
+
+    <!-- Editorial heading -->
+    <div class="sw-heading-wrap">
+      <h2 class="sw-heading">
+        <span class="sw-heading-line sw-reveal">SELECTED</span>
+        <span class="sw-heading-line sw-reveal">WORK</span>
+      </h2>
+      <span class="sw-count sw-reveal-fade">04 Projects</span>
+    </div>
+
+    <!-- Grid -->
+    <div class="sw-grid">
+
+      <!-- Row 1: Orbit (with toggle) + Sentinel -->
+      <!-- ── Orbit ─────────────────────────────────────────── -->
+      <div class="sw-card sw-card--orbit sw-reveal-up" data-href="orbit.html" role="link" tabindex="0" aria-label="View Orbit project">
+        <div class="sw-card-media">
+          <video
+            id="orbit-video"
+            class="sw-card-video"
+            src="/portfolio-hosting/assets/orbit_demo-W4Jf8NoQ.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+          ></video>
+          <!-- Mobile/Desktop toggle -->
+          <div class="sw-orbit-toggle" id="orbit-toggle" role="group" aria-label="Preview mode">
+            <button class="sw-toggle-btn active" data-mode="mobile" aria-pressed="true">Mobile</button>
+            <button class="sw-toggle-btn" data-mode="desktop" aria-pressed="false">Desktop</button>
+          </div>
+        </div>
+        <div class="sw-card-info">
+          <div class="sw-card-text">
+            <p class="sw-card-title">Orbit</p>
+            <p class="sw-card-category">Realtime Presence &amp; Spatial Collaboration Platform</p>
+          </div>
+          <a href="orbit.html" class="sw-card-cta" tabindex="-1" aria-hidden="true">View Project ↗</a>
+        </div>
+      </div>
+
+      <!-- ── Sentinel ──────────────────────────────────────── -->
+      <div class="sw-card sw-card--sentinel sw-reveal-up" data-href="sentinel.html" role="link" tabindex="0" aria-label="View Sentinel project">
+        <div class="sw-card-media">
+          <video
+            class="sw-card-video"
+            src="/portfolio-hosting/assets/sentinal_demo-UvWSrx6U.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+          ></video>
+        </div>
+        <div class="sw-card-info">
+          <div class="sw-card-text">
+            <p class="sw-card-title">Sentinel</p>
+            <p class="sw-card-category">Realtime Vehicle &amp; ALPR System</p>
+          </div>
+          <a href="sentinel.html" class="sw-card-cta" tabindex="-1" aria-hidden="true">View Project ↗</a>
+        </div>
+      </div>
+
+      <!-- Row 2: Placeholder + JSMS -->
+      <!-- ── Project V (Coming Soon) ──────────────────────── -->
+      <div class="sw-card sw-card--soon sw-reveal-up" role="presentation" aria-label="Future project, coming soon">
+        <div class="sw-card-media sw-card-media--soon">
+          <div class="sw-soon-inner">
+            <span class="sw-soon-label">Coming Soon</span>
+            <div class="sw-soon-glow"></div>
+          </div>
+        </div>
+        <div class="sw-card-info">
+          <div class="sw-card-text">
+            <p class="sw-card-title">Project V</p>
+            <p class="sw-card-category">Future Project</p>
+          </div>
+          <span class="sw-card-cta sw-card-cta--disabled">Coming Soon ↗</span>
+        </div>
+      </div>
+
+      <!-- ── JSMS ─────────────────────────────────────────── -->
+      <div class="sw-card sw-card--jsms sw-reveal-up" data-href="jsms.html" role="link" tabindex="0" aria-label="View JSMS project">
+        <div class="sw-card-media">
+          <video
+            class="sw-card-video"
+            src="/portfolio-hosting/assets/jsms_demo-DnJ2yq6s.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+          ></video>
+        </div>
+        <div class="sw-card-info">
+          <div class="sw-card-text">
+            <p class="sw-card-title">Jewellery Store Management System</p>
+            <p class="sw-card-category">Full Stack Web Application</p>
+          </div>
+          <a href="jsms.html" class="sw-card-cta" tabindex="-1" aria-hidden="true">View Project ↗</a>
+        </div>
+      </div>
+
+    </div><!-- /.sw-grid -->
+
+  </section>
+
+  <!-- ═══════════════════════════ § 3 — ABOUT ═════════════════════════════ -->
+  <section id="about" class="section-about" aria-label="About">
+
+    <div class="section-label">
+      <span class="section-label-num">03</span>
+      <span class="section-label-line"></span>
+      <span>About</span>
+    </div>
+
+    <div class="about-grid">
+
+      <!-- Bio -->
+      <div class="about-bio">
+        <p class="about-bio-text">
+          I'm a <strong>software engineer</strong> focused on building
+          systems that are reliable, fast, and thoughtfully designed —
+          from realtime networks and computer vision pipelines
+          to full-stack web applications.
+        </p>
+        <p class="about-bio-sub">
+          I approach engineering as both a craft and a discipline.
+          Every system I build is a balance between technical
+          depth and purposeful design — whether it's a distributed
+          realtime platform, an AI surveillance pipeline, or a
+          web application serving real users.
+        </p>
+      </div>
+
+      <!-- Skills & Tech -->
+      <div class="about-columns">
+
+        <div>
+          <p class="about-col-label">Focus Areas</p>
+          <ul class="about-col-list">
+            <li>Systems Engineering</li>
+            <li>Realtime Software</li>
+            <li>AI &amp; Computer Vision</li>
+            <li>Automation &amp; Scripting</li>
+            <li>Full-Stack Web</li>
+            <li>Software Quality</li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="about-col-label">Technologies</p>
+          <ul class="about-col-list">
+            <li>Python · JavaScript</li>
+            <li>C++ · PHP · SQL</li>
+            <li>Node.js · WebSockets</li>
+            <li>OpenCV · YOLO · OCR</li>
+            <li>React · HTML · CSS</li>
+            <li>Git · Linux · CUDA</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════ § 4 — EXPERIENCE ════════════════════════ -->
+  <section id="experience" class="section-experience" aria-label="Experience">
+
+    <div class="exp-header">
+      <div class="section-label">
+        <span class="section-label-num">04</span>
+        <span class="section-label-line"></span>
+        <span>Experience</span>
+      </div>
+      <div class="exp-title">TIMELINE</div>
+    </div>
+
+    <div class="exp-list">
+
+      <div class="exp-item">
+        <span class="exp-year">NOW</span>
+        <div class="exp-body">
+          <span class="exp-role">Learning Something New</span>
+          <span class="exp-desc">Exploring system engineering, automation, and software quality assurance</span>
+        </div>
+        <span class="exp-type">Self Development</span>
+      </div>
+
+      <div class="exp-item">
+        <span class="exp-year">2026</span>
+        <div class="exp-body">
+          <span class="exp-role">Orbit</span>
+          <span class="exp-desc">Realtime location sharing &amp; communication platform — WebSockets, live maps, SOS</span>
+        </div>
+        <span class="exp-type">Personal Project</span>
+      </div>
+
+      <div class="exp-item">
+        <span class="exp-year">2025</span>
+        <div class="exp-body">
+          <span class="exp-role">Sentinel</span>
+          <span class="exp-desc">Vehicle &amp; license plate recognition using YOLO, OCR pipelines, OpenCV</span>
+        </div>
+        <span class="exp-type">AI / ML System</span>
+      </div>
+
+      <div class="exp-item">
+        <span class="exp-year">2024</span>
+        <div class="exp-body">
+          <span class="exp-role">Jewellery Store System</span>
+          <span class="exp-desc">Inventory, product management &amp; sales system — PHP, MySQL</span>
+        </div>
+        <span class="exp-type">Full-Stack Web</span>
+      </div>
+
+      <div class="exp-item">
+        <span class="exp-year">2023</span>
+        <div class="exp-body">
+          <span class="exp-role">Python Developer</span>
+          <span class="exp-desc">Automation scripting, backend programming, problem solving</span>
+        </div>
+        <span class="exp-type">Engineering</span>
+      </div>
+
+      <div class="exp-item">
+        <span class="exp-year">2022</span>
+        <div class="exp-body">
+          <span class="exp-role">Graphic Designer</span>
+          <span class="exp-desc">Video editing, digital content production, promotional visual assets</span>
+        </div>
+        <span class="exp-type">Freelance</span>
+      </div>
+
+      <div class="exp-item">
+        <span class="exp-year">2019</span>
+        <div class="exp-body">
+          <span class="exp-role">C++ Programming</span>
+          <span class="exp-desc">First exposure — coding logic, algorithms, fundamental programming concepts</span>
+        </div>
+        <span class="exp-type">Education</span>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════ § 5 — CONTACT ═══════════════════════════ -->
+  <section id="contact" class="section-contact" aria-label="Contact">
+
+    <div class="section-label">
+      <span class="section-label-num">05</span>
+      <span class="section-label-line"></span>
+      <span>Contact</span>
+    </div>
+
+    <div class="contact-top">
+      <h1 class="contact-headline">
+        <span>LET'S</span>
+        <span>WORK</span>
+        <span>TOGETHER.</span>
+      </h1>
+      <p class="contact-sub">
+        Open to collaborations,<br>
+        interesting projects,<br>
+        and new opportunities.
+      </p>
+    </div>
+
+    <div class="contact-links">
+
+      <a
+        class="contact-link-item"
+        href="mailto:oscarrego789@gmail.com"
+        data-track="email"
+        aria-label="Send email"
+      >
+        <div>
+          <span class="contact-link-label">Email</span>
+          <div style="font-size:16px; font-weight:400; margin-top:4px; color:rgba(255,255,255,0.75);">
+            oscarrego789@gmail.com
+          </div>
+        </div>
+        <span class="contact-arrow">↗</span>
+      </a>
+
+      <a
+        class="contact-link-item"
+        href="https://github.com/oscarrego"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-track="github"
+        aria-label="GitHub profile"
+      >
+        <div>
+          <span class="contact-link-label">GitHub</span>
+          <div style="font-size:16px; font-weight:400; margin-top:4px; color:rgba(255,255,255,0.75);">
+            github.com/oscarrego
+          </div>
+        </div>
+        <span class="contact-arrow">↗</span>
+      </a>
+
+      <a
+        class="contact-link-item"
+        href="https://linkedin.com/in/oscarrego789"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-track="linkedin"
+        aria-label="LinkedIn profile"
+      >
+        <div>
+          <span class="contact-link-label">LinkedIn</span>
+          <div style="font-size:16px; font-weight:400; margin-top:4px; color:rgba(255,255,255,0.75);">
+            linkedin.com/in/oscarrego789
+          </div>
+        </div>
+        <span class="contact-arrow">↗</span>
+      </a>
+
+      <a
+        class="contact-link-item"
+        href="resume/Oscar_Resume.pdf"
+        target="_blank"
+        data-track="resume"
+        aria-label="Download Resume"
+      >
+        <div>
+          <span class="contact-link-label">Resume</span>
+          <div style="font-size:16px; font-weight:400; margin-top:4px; color:rgba(255,255,255,0.75);">
+            Oscar_Resume.pdf
+          </div>
+        </div>
+        <span class="contact-arrow">↓</span>
+      </a>
+
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════ FOOTER ══════════════════════════════════ -->
+  <footer class="home-footer" aria-label="Footer">
+    <span class="home-footer-sig">OSCAR REGO</span>
+    <span class="home-footer-copy">© 2026 — All rights reserved</span>
+  </footer>
+
+  <!-- ═══════════════════════════ SCRIPTS ═════════════════════════════════ -->
+  <script src="loader-universal.js"></script>
+  <script src="analytics.js"></script>
+  <script src="grain.js"></script>
+  <script src="sounds.js"></script>
+  <script src="home-scroll.js"></script>
+
 </body>
-
-    </html>
+</html>
