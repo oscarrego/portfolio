@@ -1,0 +1,41 @@
+/* ─── About Intro Section ─── */
+
+.about-intro-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100%;
+    background: #050505;
+    padding: 40px 24px;
+    box-sizing: border-box;
+}
+
+/* ─── Bio Text ─── */
+
+.about-intro-text {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 700px;
+    text-align: center;
+    margin: 0;
+    animation: aboutFadeIn 1.2s ease forwards;
+    opacity: 0;
+}
+
+/* ─── Fade-In Animation ─── */
+
+@keyframes aboutFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

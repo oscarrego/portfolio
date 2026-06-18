@@ -561,6 +561,7 @@
         color: rgba(255,255,255,0.6);
     }
 
+/* CUSTOM CURSOR SYSTEM - DISABLED
     body {
         cursor: auto !important;
     }
@@ -572,6 +573,7 @@
     .mouse-glow, .view-tooltip {
         display: none !important;
     }
+*/
 }
 
 /* Fix: correct video display on tablet — no transform needed */

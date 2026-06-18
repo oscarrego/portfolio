@@ -10,6 +10,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         about: resolve(__dirname, 'about.html'),
+        aboutIntro: resolve(__dirname, 'about-intro.html'),
         orbit: resolve(__dirname, 'orbit.html'),
         sentinel: resolve(__dirname, 'sentinel.html'),
         jsms: resolve(__dirname, 'jsms.html'),

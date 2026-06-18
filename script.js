@@ -20,7 +20,35 @@ window.addEventListener('resize', () => {
     winH = window.innerHeight;
 }, { passive: true });
 
+/* ── Theme System ───────────────────────────────────────────────────────── */
+(function() {
+    const root = document.documentElement;
+    const body = document.body;
+    
+    // Load persisted theme
+    const savedTheme = localStorage.getItem('portfolio-theme');
+    if (savedTheme === 'light') {
+        root.classList.add('theme-light');
+    }
+
+    // Attach double-click listener to all orb logos
+    const orbs = document.querySelectorAll('.works-logo-orb');
+    orbs.forEach(orb => {
+        orb.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            root.classList.toggle('theme-light');
+            
+            if (root.classList.contains('theme-light')) {
+                localStorage.setItem('portfolio-theme', 'light');
+            } else {
+                localStorage.setItem('portfolio-theme', 'dark');
+            }
+        });
+    });
+})();
+
 /* ── Custom Cursor (desktop fine-pointer ONLY) ──────────────────────────── */
+/* CUSTOM CURSOR SYSTEM - DISABLED
 if (!isTouchDevice && mouseGlow) {
     document.addEventListener('mousemove', (e) => {
         // Direct 1:1 mapping for precision — no amplification or laggy lerping
@@ -36,7 +64,6 @@ if (!isTouchDevice && mouseGlow) {
         mouseGlow.style.opacity = '1';
     });
 
-    /* ── HOVER ENLARGEMENT — standard interactive elements ─────────────── */
     const hoverItems = document.querySelectorAll(
         "a, button:not(.orbit-view-toggle), input, textarea, select, [role='button'], .project-title"
     );
@@ -46,11 +73,6 @@ if (!isTouchDevice && mouseGlow) {
         item.addEventListener('mouseleave', () => mouseGlow.classList.remove('hovering'));
     });
 
-    /* ── HOVER ENLARGEMENT — footer links (Issue 8) ─────────────────────
-     * Footer is injected via fetch() so we can't querySelector at load time.
-     * Use event delegation on document to catch mouseenter/leave on
-     * .footer-right a and footer-bottom h1 regardless of when they appear.
-    ─────────────────────────────────────────────────────────────────── */
     document.addEventListener('mouseover', (e) => {
         const footerLink = e.target.closest('.footer-right a, .footer-bottom h1');
         if (footerLink) mouseGlow.classList.add('hovering');
@@ -64,6 +86,7 @@ if (!isTouchDevice && mouseGlow) {
     // Touch device: remove cursor element entirely from DOM — no trace left
     mouseGlow.remove();
 }
+*/
 
 /* ── TIMELINE GLOW TRACKER (desktop) ───────────────────────────────────── */
 const timelineWrapper = document.querySelector('.timeline-wrapper');
@@ -242,6 +265,7 @@ document.querySelectorAll('.project-media-wrapper, .project-video').forEach(medi
 
 /* ── VIEW TOOLTIP (desktop only) ────────────────────────────────────────── */
 if (!isTouchDevice) {
+/* CUSTOM CURSOR SYSTEM - DISABLED
     const viewTooltip = document.createElement('div');
     viewTooltip.classList.add('view-tooltip');
     viewTooltip.innerText = 'VIEW';
@@ -264,7 +288,7 @@ if (!isTouchDevice) {
             viewTooltip.classList.remove('active');
         });
     });
-
+*/
     /* ── ORBIT VIDEO TOGGLE (desktop with tooltip) ────────────────────── */
     const orbitToggleBtn = document.getElementById('orbit-view-toggle');
     const orbitVideo     = document.getElementById('orbit-video');
@@ -273,12 +297,14 @@ if (!isTouchDevice) {
     if (orbitToggleBtn && orbitVideo && orbitVideoSrc) {
         let isDesktopView = false;
 
+/* CUSTOM CURSOR SYSTEM - DISABLED
         orbitToggleBtn.addEventListener('mouseenter', () => {
             viewTooltip.innerText = isDesktopView ? 'MOBILE MODE' : 'DESKTOP MODE';
         });
         orbitToggleBtn.addEventListener('mouseleave', () => {
             viewTooltip.innerText = 'VIEW';
         });
+*/
 
         orbitToggleBtn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -303,7 +329,8 @@ if (!isTouchDevice) {
                 orbitVideo.classList.add('orbit-video-mobile');
             }
 
-            viewTooltip.innerText = isDesktopView ? 'MOBILE MODE' : 'DESKTOP MODE';
+            // CUSTOM CURSOR SYSTEM - DISABLED
+            // viewTooltip.innerText = isDesktopView ? 'MOBILE MODE' : 'DESKTOP MODE';
 
             setTimeout(() => {
                 orbitVideo.load();
@@ -352,7 +379,68 @@ if (isTouchDevice) {
     }
 }
 
-/* ═══ HORIZONTAL CYLINDER CAROUSEL ═══════════════════════════════════════ */
+/* ── GLOBAL MENU SYSTEM ─────────────────────────────────────────────────── */
+(() => {
+    const menuContainer = document.getElementById('global-menu-container');
+    if (!menuContainer) return;
+
+    fetch('menu.html')
+        .then(res => res.text())
+        .then(html => {
+            menuContainer.innerHTML = html;
+            
+            const menuButton = menuContainer.querySelector('.works-menu-button');
+            const menuPanel = menuContainer.querySelector('.works-menu-panel');
+            const menuScrim = menuContainer.querySelector('.works-menu-scrim');
+            const menuXBtn = menuContainer.querySelector('.works-menu-x');
+
+            // All links are interactive — bullet only shows on hover
+            const links = menuContainer.querySelectorAll('.works-menu-links a');
+
+            const setMenuOpen = (open) => {
+                document.body.classList.toggle('menu-open', open);
+                menuButton?.setAttribute('aria-expanded', String(open));
+                menuPanel?.setAttribute('aria-hidden', String(!open));
+            };
+
+            menuButton?.addEventListener('click', e => {
+                e.stopPropagation();
+                const opening = !document.body.classList.contains('menu-open');
+                setMenuOpen(opening);
+                if (window.playTone) window.playTone('menu');
+            });
+
+            menuXBtn?.addEventListener('click', e => {
+                e.stopPropagation();
+                setMenuOpen(false);
+                if (window.playTone) window.playTone('menu');
+            });
+
+            menuScrim?.addEventListener('click', () => { 
+                setMenuOpen(false); 
+                if (window.playTone) window.playTone('menu'); 
+            });
+            
+            document.addEventListener('keydown', e => { 
+                if (e.key === 'Escape') setMenuOpen(false); 
+            });
+            
+            document.addEventListener('click', e => {
+                if (!document.body.classList.contains('menu-open')) return;
+                if (!menuPanel || !menuButton) return;
+                const isOutside = !menuPanel.contains(e.target) && !menuButton.contains(e.target);
+                if (isOutside) {
+                    setMenuOpen(false);
+                    if (window.playTone) window.playTone('menu');
+                }
+            });
+
+            links.forEach(a => {
+                a.addEventListener('click', () => setMenuOpen(false));
+            });
+        });
+})();
+
 /* Rotating drum: cards travel around the Y axis on the XZ plane             */
 /* Cards wrap around the circumference — front, right, back, left, front     */
 (() => {
@@ -365,10 +453,6 @@ if (isTouchDevice) {
     const labelTitle = label?.querySelector('strong');
     const labelKicker = label?.querySelector('span');
     const modeButtons = [...works.querySelectorAll('.works-mode-btn')];
-    const menuButton = works.querySelector('.works-menu-button');
-    const menuPanel = works.querySelector('.works-menu-panel');
-    const menuScrim = works.querySelector('.works-menu-scrim');
-    const menuXBtn = works.querySelector('.works-menu-x');
     const list = works.querySelector('.works-list');
     const listLinks = [...works.querySelectorAll('.works-list a')];
     const listPreview = works.querySelector('.works-list-preview');
@@ -469,7 +553,7 @@ if (isTouchDevice) {
         spi.audioReady = true;
     };
 
-    const playTone = (type = 'hover') => {
+    window.playTone = (type = 'hover') => {
         ensureAudio();
         if (!spi.audioContext || !spi.masterGain) return;
         if (spi.audioContext.state === 'suspended') spi.audioContext.resume();
@@ -494,46 +578,6 @@ if (isTouchDevice) {
 
     document.addEventListener('pointerdown', ensureAudio, { once: true, passive: true });
     window.addEventListener('wheel', ensureAudio, { once: true, passive: true });
-
-    /* ── Menu ──────────────────────────────────────────────────────────── */
-    const setMenuOpen = (open) => {
-        works.classList.toggle('menu-open', open);
-        menuButton?.setAttribute('aria-expanded', String(open));
-        menuPanel?.setAttribute('aria-hidden', String(!open));
-    };
-
-    menuButton?.addEventListener('click', e => {
-        e.stopPropagation();
-        const opening = !works.classList.contains('menu-open');
-        setMenuOpen(opening);
-        playTone('menu');
-    });
-
-    menuXBtn?.addEventListener('click', e => {
-        e.stopPropagation();
-        setMenuOpen(false);
-        playTone('menu');
-    });
-
-    menuScrim?.addEventListener('click', () => { setMenuOpen(false); playTone('menu'); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenuOpen(false); });
-    
-    // Close menu when clicking anywhere outside the menu panel
-    document.addEventListener('click', e => {
-        if (!works.classList.contains('menu-open')) return;
-        if (!menuPanel || !menuButton) return;
-
-        // If click is not inside the panel and not on the menu button itself
-        const isOutside = !menuPanel.contains(e.target) && !menuButton.contains(e.target);
-        if (isOutside) {
-            setMenuOpen(false);
-            playTone('menu');
-        }
-    });
-
-    works.querySelectorAll('.works-menu-links a').forEach(a => {
-        a.addEventListener('click', () => setMenuOpen(false));
-    });
 
     /* ── Mode toggle ───────────────────────────────────────────────────── */
     const setMode = (mode) => {
