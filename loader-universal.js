@@ -79,3 +79,103 @@
     requestAnimationFrame(updateProgress);
 
 })();
+
+(function () {
+    // Inject Toast Styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .custom-email-toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #111111;
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 10000;
+            opacity: 0;
+            transform: translateY(12px) scale(0.95);
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .custom-email-toast.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .custom-email-toast.error {
+            border-color: rgba(255, 75, 75, 0.3);
+            background: #1a0f0f;
+        }
+    `;
+    document.head.appendChild(style);
+
+    let toastTimeout = null;
+    let toastEl = null;
+
+    function showToast(message, isError = false) {
+        if (toastEl) {
+            toastEl.remove();
+            toastEl = null;
+        }
+        if (toastTimeout) {
+            clearTimeout(toastTimeout);
+            toastTimeout = null;
+        }
+
+        toastEl = document.createElement('div');
+        toastEl.className = 'custom-email-toast';
+        if (isError) {
+            toastEl.classList.add('error');
+        }
+        toastEl.textContent = message;
+        document.body.appendChild(toastEl);
+
+        // Trigger transition
+        requestAnimationFrame(() => {
+            if (toastEl) toastEl.classList.add('show');
+        });
+
+        toastTimeout = setTimeout(() => {
+            if (toastEl) {
+                toastEl.classList.remove('show');
+                setTimeout(() => {
+                    if (toastEl) {
+                        toastEl.remove();
+                        toastEl = null;
+                    }
+                }, 350);
+            }
+        }, 2500);
+    }
+
+    // Intercept all email clicks
+    document.addEventListener('click', (e) => {
+        const anchor = e.target.closest('a');
+        if (!anchor) return;
+
+        const href = anchor.getAttribute('href');
+        if (href && href.startsWith('mailto:')) {
+            e.preventDefault();
+            
+            showToast("Redirecting to your mail client...");
+
+            setTimeout(() => {
+                try {
+                    // Try to trigger the mail client opening
+                    window.location.href = href;
+                } catch (err) {
+                    showToast("Unable to open mail application.", true);
+                }
+            }, 300);
+        }
+    });
+})();

@@ -2430,7 +2430,6 @@ body.page-leaving {
   grid-template-rows: auto 0fr;
   width: min(320px, calc(100vw - 32px));
   transition: grid-template-rows 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-              width 0.45s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
   overflow: hidden;
@@ -2438,7 +2437,6 @@ body.page-leaving {
 
 .pill-nav.open {
   grid-template-rows: auto 1fr;
-  width: min(420px, calc(100vw - 32px));
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
 }
 
@@ -2446,7 +2444,7 @@ body.page-leaving {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 12px 12px 36px;
+  padding: 12px 12px 12px 24px;
   width: 100%;
 }
 
@@ -2513,7 +2511,7 @@ body.page-leaving {
 }
 
 .pill-nav-dropdown-inner {
-  padding: 10px 36px 36px 36px;
+  padding: 10px 24px 24px 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -2523,7 +2521,7 @@ body.page-leaving {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin: 20px 0 30px 0;
+  margin: 16px 0 24px 0;
 }
 
 .menu-link {
@@ -2569,10 +2567,9 @@ body.page-leaving {
 
 .menu-card-footer {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding-top: 24px;
   

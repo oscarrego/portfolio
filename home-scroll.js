@@ -173,34 +173,36 @@
     }
   }
 
-  /* ── Hero portrait parallax ─────────────────────────────────────────────── */
+  /* ── Hero text parallax ─────────────────────────────────────────────────── */
   function initParallax() {
-    const portrait = document.querySelector('.hero-portrait-wrap img');
-    if (!portrait) return;
+    const line1 = document.querySelector('.hero-headline-line:nth-child(1) .hero-text-reveal'); // SOFTWARE
+    const line2 = document.querySelector('.hero-headline-line:nth-child(2) .hero-text-reveal'); // ENGINEER
 
-    gsap.to(portrait, {
-      scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1.4,
-      },
-      y: -60,
-      ease: 'none',
-    });
-
-    // Headline line 1 subtle parallax
-    const line1 = document.querySelector('.hero-text-reveal:first-of-type');
-    if (line1) {
+    if (line1 && line2) {
+      // Animate line 1 (SOFTWARE) moving left and slightly up
       gsap.to(line1, {
         scrollTrigger: {
           trigger: '.hero',
           start: 'top top',
           end: 'bottom top',
-          scrub: 2,
+          scrub: 1,
         },
-        y: -40,
-        ease: 'none',
+        x: -120,
+        y: -30,
+        ease: 'none'
+      });
+
+      // Animate line 2 (ENGINEER) moving right and slightly up
+      gsap.to(line2, {
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1,
+        },
+        x: 120,
+        y: -30,
+        ease: 'none'
       });
     }
   }
@@ -294,11 +296,9 @@
           menuLinks.forEach((a) => {
             const target = a.getAttribute('href').slice(1);
             if (target === entry.target.id) {
-              a.style.opacity = '1';
-              a.style.color = 'var(--accent)';
+              a.classList.add('active');
             } else {
-              a.style.opacity = '';
-              a.style.color = '';
+              a.classList.remove('active');
             }
           });
         }
@@ -404,6 +404,9 @@
     const paragraphs = section.querySelectorAll('.narrative-paragraph');
     if (!paragraphs.length) return;
 
+    const words = section.querySelectorAll('.narrative-word');
+    if (!words.length) return;
+
     // Premium cubic ease-in-out for organic, smooth transitions
     function easeInOutCubic(x) {
       return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
@@ -413,11 +416,10 @@
     const FADED  = 0.12;
     const ACTIVE = 1.0;
 
-    // Set initial states: line 1 fully visible, rest faded
-    paragraphs[0].style.opacity = String(ACTIVE);
-    for (let i = 1; i < paragraphs.length; i++) {
-      paragraphs[i].style.opacity = String(FADED);
-    }
+    // Make paragraphs fully visible so we can control opacity word-by-word
+    paragraphs.forEach(p => {
+      p.style.opacity = '1';
+    });
 
     let ticking = false;
 
@@ -436,42 +438,21 @@
       let progress = -top / travelLimit;
       progress = Math.max(0, Math.min(1, progress));
 
-      // Background color fade from black (#0a0a0a) to cream (#f0ece5)
-      // and text color fade from white (#ffffff) to dark (#0a0a0a)
-      // over progress 0.0 to 0.25
-      const fadeProgress = Math.max(0, Math.min(1, progress / 0.25));
-      const bgR = Math.round(10 + (240 - 10) * fadeProgress);
-      const bgG = Math.round(10 + (236 - 10) * fadeProgress);
-      const bgB = Math.round(10 + (229 - 10) * fadeProgress);
-      
-      const textR = Math.round(255 + (10 - 255) * fadeProgress);
-      const textG = Math.round(255 + (10 - 255) * fadeProgress);
-      const textB = Math.round(255 + (10 - 255) * fadeProgress);
+      // Highlight each word based on progress
+      const N = words.length;
+      const windowSize = 0.12; // Overlapping window size
 
-      const sticky = section.querySelector('.narrative-sticky');
-      if (sticky) {
-        sticky.style.backgroundColor = `rgb(${bgR}, ${bgG}, ${bgB})`;
-      }
+      words.forEach((word, index) => {
+        const targetProgress = N > 1 ? index / (N - 1) : 0;
+        const wordStart = targetProgress - windowSize;
+        const wordEnd = targetProgress;
 
-      paragraphs.forEach(p => {
-        p.style.color = `rgb(${textR}, ${textG}, ${textB})`;
+        let wordProgress = (progress - wordStart) / (wordEnd - wordStart);
+        wordProgress = Math.max(0, Math.min(1, wordProgress));
+
+        const eased = easeInOutCubic(wordProgress);
+        word.style.opacity = (FADED + (ACTIVE - FADED) * eased).toFixed(3);
       });
-
-
-      // Line 1 is always fully highlighted (hook line always visible)
-      paragraphs[0].style.opacity = String(ACTIVE);
-
-      // Line 2 (index 1): fades in from progress 0.0 → 0.45
-      if (paragraphs.length > 1) {
-        const p1 = easeInOutCubic(Math.max(0, Math.min(1, (progress - 0.0) / 0.45)));
-        paragraphs[1].style.opacity = (FADED + (ACTIVE - FADED) * p1).toFixed(3);
-      }
-
-      // Line 3 (index 2): fades in from progress 0.45 → 0.90
-      if (paragraphs.length > 2) {
-        const p2 = easeInOutCubic(Math.max(0, Math.min(1, (progress - 0.45) / 0.45)));
-        paragraphs[2].style.opacity = (FADED + (ACTIVE - FADED) * p2).toFixed(3);
-      }
     }
 
     // High performance rAF batching scroll handler

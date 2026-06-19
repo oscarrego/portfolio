@@ -40,7 +40,7 @@
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/main-D0p2atKA.css">
+  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/main-Dw2kQucE.css">
   <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/loader-BnDdxSgc.css">
 </head>
 
@@ -126,30 +126,20 @@
   <!-- ═══════════════════════════ § 1 — HERO ══════════════════════════════ -->
   <section id="hero" class="hero" aria-label="Introduction">
 
-    <!-- Oversized editorial headline — portrait sits between lines -->
+    <!-- Oversized editorial headline -->
     <div class="hero-headline" aria-label="Software Engineer">
 
       <div class="hero-headline-line">
         <span class="hero-text-reveal">SOFTWARE</span>
       </div>
 
-      <!-- Second line: ENGINEER with portrait nestled inside -->
-      <div class="hero-headline-line hero-headline-line--flex">
+      <div class="hero-headline-line">
         <span class="hero-text-reveal">ENGINEER</span>
-        <!-- Portrait floated into composition between words -->
-        <span class="hero-portrait-wrap" aria-hidden="true">
-          <img
-            src="/portfolio-hosting/assets/oscar_portrait-B7LVUuek.png"
-            alt="Oscar Rego"
-            draggable="false"
-            loading="eager"
-          >
-        </span>
       </div>
 
     </div>
 
-    <!-- Bottom bar: © 2026 · intro · scroll -->
+    <!-- Bottom bar: © 2026 · intro -->
     <div class="hero-bottom">
 
       <div class="hero-copyright" aria-label="Copyright 2026">© 2026</div>
@@ -159,11 +149,16 @@
         <span class="hero-intro-desc">Building software systems,<br>automation tools, and<br>AI-powered experiences.</span>
       </div>
 
-      <div class="hero-scroll-cue" aria-hidden="true">
-        <div class="hero-scroll-line"></div>
-        <span>SCROLL</span>
-      </div>
+      <!-- Grid layout placeholder -->
+      <div></div>
 
+    </div>
+
+    <!-- Vertical Scroll Cue -->
+    <div class="hero-scroll-cue" aria-hidden="true">
+      <div class="scroll-dot"></div>
+      <div class="scroll-line"></div>
+      <span class="scroll-text">SCROLL</span>
     </div>
 
   </section>
@@ -204,111 +199,118 @@
     </div>
   </section>
 
+  <!-- Divider between Narrative (About Intro) and Selected Work -->
+  <div style="background-color: var(--project-bg); padding: 0 var(--pad-x);">
+    <div class="h-rule" style="background-color: rgba(10, 10, 10, 0.08); max-width: 1440px; margin: 0 auto;"></div>
+  </div>
+
   <!-- ═══════════════════════════ § 2 — SELECTED WORK ════════════════════ -->
   <section id="work" class="sw-section" aria-label="Selected work">
+    <div class="sw-container">
 
-    <!-- Editorial heading -->
-    <div class="sw-heading-wrap">
-      <h2 class="sw-heading">
-        <span class="sw-heading-line sw-reveal">SELECTED</span>
-        <span class="sw-heading-line sw-reveal">WORK</span>
-      </h2>
-      <span class="sw-count sw-reveal-fade">04 Projects</span>
-    </div>
-
-    <!-- Grid -->
-    <div class="sw-grid">
-
-      <!-- Row 1: Orbit (with toggle) + Sentinel -->
-      <!-- ── Orbit ─────────────────────────────────────────── -->
-      <div class="sw-card sw-card--orbit sw-reveal-up" data-href="orbit.html" role="link" tabindex="0" aria-label="View Orbit project">
-        <div class="sw-card-media">
-          <video
-            id="orbit-video"
-            class="sw-card-video"
-            src="/portfolio-hosting/assets/orbit_demo-W4Jf8NoQ.mp4"
-            autoplay
-            muted
-            loop
-            playsinline
-          ></video>
-          <!-- Mobile/Desktop toggle -->
-          <div class="sw-orbit-toggle" id="orbit-toggle" role="group" aria-label="Preview mode">
-            <button class="sw-toggle-btn active" data-mode="mobile" aria-pressed="true">Mobile</button>
-            <button class="sw-toggle-btn" data-mode="desktop" aria-pressed="false">Desktop</button>
-          </div>
-        </div>
-        <div class="sw-card-info">
-          <div class="sw-card-text">
-            <p class="sw-card-title">Orbit</p>
-            <p class="sw-card-category">Realtime Presence &amp; Spatial Collaboration Platform</p>
-          </div>
-          <a href="orbit.html" class="sw-card-cta" tabindex="-1" aria-hidden="true">View Project ↗</a>
-        </div>
+      <!-- Editorial heading -->
+      <div class="sw-heading-wrap">
+        <h2 class="sw-heading">
+          <span class="sw-heading-line sw-reveal">Featured</span>
+          <span class="sw-heading-line sw-reveal">Projects</span>
+        </h2>
+        <span class="sw-count sw-reveal-fade">04 Projects</span>
       </div>
 
-      <!-- ── Sentinel ──────────────────────────────────────── -->
-      <div class="sw-card sw-card--sentinel sw-reveal-up" data-href="sentinel.html" role="link" tabindex="0" aria-label="View Sentinel project">
-        <div class="sw-card-media">
-          <video
-            class="sw-card-video"
-            src="/portfolio-hosting/assets/sentinal_demo-UvWSrx6U.mp4"
-            autoplay
-            muted
-            loop
-            playsinline
-          ></video>
-        </div>
-        <div class="sw-card-info">
-          <div class="sw-card-text">
-            <p class="sw-card-title">Sentinel</p>
-            <p class="sw-card-category">Realtime Vehicle &amp; ALPR System</p>
-          </div>
-          <a href="sentinel.html" class="sw-card-cta" tabindex="-1" aria-hidden="true">View Project ↗</a>
-        </div>
-      </div>
+      <!-- Grid -->
+      <div class="sw-grid">
 
-      <!-- Row 2: Placeholder + JSMS -->
-      <!-- ── Project V (Coming Soon) ──────────────────────── -->
-      <div class="sw-card sw-card--soon sw-reveal-up" role="presentation" aria-label="Future project, coming soon">
-        <div class="sw-card-media sw-card-media--soon">
-          <div class="sw-soon-inner">
-            <span class="sw-soon-label">Coming Soon</span>
-            <div class="sw-soon-glow"></div>
+        <!-- Row 1: Orbit (with toggle) + Sentinel -->
+        <!-- ── Orbit ─────────────────────────────────────────── -->
+        <div class="sw-card sw-card--orbit sw-reveal-up" data-href="orbit.html" role="link" tabindex="0" aria-label="View Orbit project">
+          <div class="sw-card-media">
+            <video
+              id="orbit-video"
+              class="sw-card-video"
+              src="/portfolio-hosting/assets/orbit_demo-W4Jf8NoQ.mp4"
+              autoplay
+              muted
+              loop
+              playsinline
+            ></video>
+            <!-- Mobile/Desktop toggle -->
+            <div class="sw-orbit-toggle" id="orbit-toggle" role="group" aria-label="Preview mode">
+              <button class="sw-toggle-btn active" data-mode="mobile" aria-pressed="true">Mobile</button>
+              <button class="sw-toggle-btn" data-mode="desktop" aria-pressed="false">Desktop</button>
+            </div>
+          </div>
+          <div class="sw-card-info">
+            <div class="sw-card-text">
+              <p class="sw-card-title">Orbit</p>
+              <p class="sw-card-category">Realtime Presence &amp; Spatial Collaboration Platform</p>
+            </div>
+            <a href="orbit.html" class="sw-card-cta" tabindex="-1" aria-hidden="true">View Project ↗</a>
           </div>
         </div>
-        <div class="sw-card-info">
-          <div class="sw-card-text">
-            <p class="sw-card-title">Project V</p>
-            <p class="sw-card-category">Future Project</p>
+
+        <!-- ── Sentinel ──────────────────────────────────────── -->
+        <div class="sw-card sw-card--sentinel sw-reveal-up" data-href="sentinel.html" role="link" tabindex="0" aria-label="View Sentinel project">
+          <div class="sw-card-media">
+            <video
+              class="sw-card-video"
+              src="/portfolio-hosting/assets/sentinal_demo-UvWSrx6U.mp4"
+              autoplay
+              muted
+              loop
+              playsinline
+            ></video>
           </div>
-          <span class="sw-card-cta sw-card-cta--disabled">Coming Soon ↗</span>
-        </div>
-      </div>
-
-      <!-- ── JSMS ─────────────────────────────────────────── -->
-      <div class="sw-card sw-card--jsms sw-reveal-up" data-href="jsms.html" role="link" tabindex="0" aria-label="View JSMS project">
-        <div class="sw-card-media">
-          <video
-            class="sw-card-video"
-            src="/portfolio-hosting/assets/jsms_demo-DnJ2yq6s.mp4"
-            autoplay
-            muted
-            loop
-            playsinline
-          ></video>
-        </div>
-        <div class="sw-card-info">
-          <div class="sw-card-text">
-            <p class="sw-card-title">Jewellery Store Management System</p>
-            <p class="sw-card-category">Full Stack Web Application</p>
+          <div class="sw-card-info">
+            <div class="sw-card-text">
+              <p class="sw-card-title">Sentinel</p>
+              <p class="sw-card-category">Realtime Vehicle &amp; ALPR System</p>
+            </div>
+            <a href="sentinel.html" class="sw-card-cta" tabindex="-1" aria-hidden="true">View Project ↗</a>
           </div>
-          <a href="jsms.html" class="sw-card-cta" tabindex="-1" aria-hidden="true">View Project ↗</a>
         </div>
-      </div>
 
-    </div><!-- /.sw-grid -->
+        <!-- Row 2: Placeholder + JSMS -->
+        <!-- ── Project V (Coming Soon) ──────────────────────── -->
+        <div class="sw-card sw-card--soon sw-reveal-up" role="presentation" aria-label="Future project, coming soon">
+          <div class="sw-card-media sw-card-media--soon">
+            <div class="sw-soon-inner">
+              <span class="sw-soon-label">Coming Soon</span>
+              <div class="sw-soon-glow"></div>
+            </div>
+          </div>
+          <div class="sw-card-info">
+            <div class="sw-card-text">
+              <p class="sw-card-title">Project V</p>
+              <p class="sw-card-category">Future Project</p>
+            </div>
+            <span class="sw-card-cta sw-card-cta--disabled">Coming Soon ↗</span>
+          </div>
+        </div>
 
+        <!-- ── JSMS ─────────────────────────────────────────── -->
+        <div class="sw-card sw-card--jsms sw-reveal-up" data-href="jsms.html" role="link" tabindex="0" aria-label="View JSMS project">
+          <div class="sw-card-media">
+            <video
+              class="sw-card-video"
+              src="/portfolio-hosting/assets/jsms_demo-DnJ2yq6s.mp4"
+              autoplay
+              muted
+              loop
+              playsinline
+            ></video>
+          </div>
+          <div class="sw-card-info">
+            <div class="sw-card-text">
+              <p class="sw-card-title">Jewellery Store Management System</p>
+              <p class="sw-card-category">Full Stack Web Application</p>
+            </div>
+            <a href="jsms.html" class="sw-card-cta" tabindex="-1" aria-hidden="true">View Project ↗</a>
+          </div>
+        </div>
+
+      </div><!-- /.sw-grid -->
+
+    </div><!-- /.sw-container -->
   </section>
 
   <!-- ═══════════════════════════ § 3 — EXPERIENCE ════════════════════════ -->
