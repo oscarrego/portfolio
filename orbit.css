@@ -80,6 +80,7 @@ body {
     height: 100%;
     object-fit: cover;
     display: block;
+    transform: scale(1.22); /* Enhanced cinematic zoom to match Sentinel/JSMS */
 }
 
 .orbit-hero-content {

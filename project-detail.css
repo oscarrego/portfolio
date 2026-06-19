@@ -423,9 +423,15 @@ html.project-detail-page body::before {
 
 /* Zoom out only when mobile video is active */
 .orbit-main-placeholder.mobile-active {
-  transform: scale(0.85);
-  border-radius: 24px;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  transform: scale(1.95);
+  
+}
+
+/* Zoom out the mobile video source content to see the device frame cleanly without cropping or black bars */
+.orbit-main-placeholder.mobile-active {
+  transform: scale(1);
+  transform: scale(1.001);
+  
 }
 
 @media (max-width: 900px) {
