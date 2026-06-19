@@ -84,11 +84,25 @@ a { text-decoration: none; color: inherit; }
   position: fixed;
   top: 24px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate3d(-50%, 24px, 0);
   z-index: 1000;
   pointer-events: none;
   transition: opacity 0.4s ease;
-  will-change: opacity;
+  will-change: opacity, transform;
+  
+  /* Entrance animation on page load */
+  animation: navPillEntrance 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes navPillEntrance {
+  0% {
+    opacity: 0;
+    transform: translate3d(-50%, 24px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 .pill-nav {

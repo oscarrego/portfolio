@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap');
+
 /* 
    OSCAR REGO PORTFOLIO 2026
    MASTER STYLESHEET 
@@ -27,7 +29,7 @@
     --pad-x: clamp(24px, 6vw, 100px);
     --pad-x-sm: clamp(16px, 4vw, 60px);
     --font-display: 'Bebas Neue', sans-serif;
-    --font-body: 'Mynor', sans-serif;
+    --font-body: 'Inter', 'Mynor', sans-serif;
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -886,18 +888,7 @@ body.works-in-view .floating-nav{
 
 
 
-/* 10. FOOTER (EDGE ALIGNED) */
 
-.image-footer{ width: 100vw; position: relative; left: 50%; transform: translateX(-50%); color: black; margin-top: auto; }
-.image-footer img{ width: 100%; height: 220px; object-fit: cover; }
-.footer-content{ position: absolute; top: 24px; left: 3%; right: 3%; display: flex; justify-content: space-between; z-index: 5; }
-.footer-small{ font-size: 11px; letter-spacing: 2.5px; opacity: 0.65; margin-bottom: 14px; }
-.footer-status{ display: flex; flex-direction: column; gap: 3px; }
-.footer-status p{ font-size: 14px; font-style: italic; color: inherit; opacity: 0.65; }
-.footer-right{ display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
-.footer-right a{ font-size: 12px; font-weight: 500; letter-spacing: 1.5px; }
-.footer-bottom{ position: absolute; left: 3%; bottom: 24px; z-index: 5; }
-.footer-bottom h1{ font-family: 'PixelOperator', monospace; font-size: 50px; letter-spacing: 2px; }
 
 /* 11. PIXEL CURSOR (ADAPTIVE) */
 
@@ -2419,24 +2410,24 @@ body.page-leaving {
   position: fixed;
   top: 24px;
   left: 50%;
-  transform: translateX(-50%);
-  z-index: 2000;
+  transform: translate3d(-50%, 24px, 0);
+  z-index: 1000;
   pointer-events: none;
   transition: opacity 0.4s ease;
   will-change: opacity, transform;
-
+  
   /* Entrance animation on page load */
-  animation: navPillEntrance 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: navPillEntrance 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 @keyframes navPillEntrance {
   0% {
     opacity: 0;
-    transform: translateX(-50%) translateY(-12px);
+    transform: translate3d(-50%, 24px, 0);
   }
   100% {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
@@ -2448,8 +2439,9 @@ body.page-leaving {
   display: grid;
   grid-template-rows: auto 0fr;
   width: min(320px, calc(100vw - 32px));
-  transition: grid-template-rows 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              border-radius 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
   overflow: hidden;
 }
@@ -2468,7 +2460,7 @@ body.page-leaving {
 }
 
 .pill-nav-logo {
-  font-family: inherit;
+  font-family: var(--font-body);
   font-size: 18px;
   font-weight: 700;
   color: #ffffff;
@@ -2494,6 +2486,8 @@ body.page-leaving {
   background: #f0f0f0;
   transform: scale(1.03);
 }
+
+/* ── Dots → X morphing animation ─────────────────────── */
 
 .menu-dots-container {
   display: flex;
@@ -2575,35 +2569,35 @@ body.page-leaving {
 }
 
 .menu-link {
-  font-family: inherit;
+  font-family: var(--font-body);
   font-size: clamp(32px, 4vw, 42px);
   font-weight: 600;
   letter-spacing: -0.035em;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.4); /* Inactive: muted gray */
   text-decoration: none;
   text-transform: lowercase;
-  transition: opacity 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-              transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-              color 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-              filter 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-block;
   width: fit-content;
   
+  /* Initial state for opening animation */
   opacity: 0;
   transform: translateY(15px);
   filter: blur(4px);
 }
 
 .pill-nav.open .menu-link {
-  opacity: 0.6;
+  opacity: 1;
   transform: translateY(0);
   filter: blur(0);
 }
 
 .pill-nav.open .menu-link.active,
 .pill-nav.open .menu-link:hover {
-  opacity: 1;
-  color: #ffffff;
+  color: #ffffff; /* Hover & Active: bright pure white */
 }
 
 .pill-nav.open .menu-link:hover {
@@ -2611,9 +2605,10 @@ body.page-leaving {
 }
 
 .menu-card-links:hover .menu-link:not(:hover):not(.active) {
-  opacity: 0.25;
+  color: rgba(255, 255, 255, 0.2);
 }
 
+/* Stagger delays for premium dropdown reveal */
 .pill-nav.open .menu-link:nth-child(1) { transition-delay: 0.08s; }
 .pill-nav.open .menu-link:nth-child(2) { transition-delay: 0.12s; }
 .pill-nav.open .menu-link:nth-child(3) { transition-delay: 0.16s; }
@@ -2627,6 +2622,7 @@ body.page-leaving {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding-top: 24px;
   
+  /* Initial state for footer entrance */
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -2640,7 +2636,7 @@ body.page-leaving {
 }
 
 .menu-email {
-  font-family: inherit;
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.6);
@@ -2701,7 +2697,7 @@ body.page-leaving {
 .menu-scrim {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 1999;
+  z-index: 999;
   background: rgba(10, 10, 10, 0.4);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -2722,7 +2718,7 @@ body.page-leaving {
   .menu-card-footer { padding-top: 20px; }
 }
 
-/* ─── HOME FOOTER STYLES ───────────────────────────────── */
+/* — Footer redesign — */
 
 .home-footer {
   background: #0a0a0a;
@@ -2815,10 +2811,8 @@ body.page-leaving {
   text-transform: none;
 }
 
-.home-footer .footer-right {
+.footer-right {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
   gap: 80px;
   flex-wrap: wrap;
   flex: 2;
@@ -2826,7 +2820,7 @@ body.page-leaving {
 }
 
 @media (max-width: 900px) {
-  .home-footer .footer-right {
+  .footer-right {
     justify-content: flex-start;
   }
 }
@@ -2927,6 +2921,7 @@ body.page-leaving {
   transform: translateX(4px);
 }
 
+/* Giant name at the bottom — positioned absolutely behind content */
 .footer-name-wrap {
   position: absolute;
   bottom: 0;
