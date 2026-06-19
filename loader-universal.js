@@ -180,13 +180,18 @@
     });
 
     // Observe footer background name for viewport-triggered reveal transition
-    const initFooterNameObserver = () => {
-        const footerName = document.querySelector('.footer-name');
-        if (footerName) {
+    // Observe home-footer for viewport-triggered reveal transition
+    const initFooterObserver = () => {
+        const homeFooter = document.querySelector('.home-footer');
+        if (homeFooter) {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        footerName.classList.add('in-view');
+                        homeFooter.classList.add('in-view');
+                        const footerName = homeFooter.querySelector('.footer-name');
+                        if (footerName) {
+                            footerName.classList.add('in-view');
+                        }
                         observer.unobserve(entry.target);
                     }
                 });
@@ -194,7 +199,7 @@
                 root: null,
                 threshold: 0.05
             });
-            observer.observe(footerName);
+            observer.observe(homeFooter);
             return true; // successfully observed
         }
         return false;
@@ -202,9 +207,9 @@
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
-            if (!initFooterNameObserver()) {
+            if (!initFooterObserver()) {
                 const domObserver = new MutationObserver((mutations, observerInstance) => {
-                    if (initFooterNameObserver()) {
+                    if (initFooterObserver()) {
                         observerInstance.disconnect();
                     }
                 });
@@ -215,9 +220,9 @@
             }
         });
     } else {
-        if (!initFooterNameObserver()) {
+        if (!initFooterObserver()) {
             const domObserver = new MutationObserver((mutations, observerInstance) => {
-                if (initFooterNameObserver()) {
+                if (initFooterObserver()) {
                     observerInstance.disconnect();
                 }
             });

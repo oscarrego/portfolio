@@ -2732,6 +2732,62 @@ body.page-leaving {
   position: relative;
 }
 
+/* Footer entrance animations */
+.footer-left {
+  opacity: 0;
+  filter: blur(12px);
+  transform: translateX(-32px);
+  transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1), filter 1.1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, filter, transform;
+}
+
+.footer-col-links {
+  opacity: 0;
+  filter: blur(12px);
+  transform: translateX(-32px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, filter, transform;
+}
+
+#contact {
+  opacity: 0;
+  filter: blur(12px);
+  transform: translateX(-32px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, filter, transform;
+}
+
+.home-footer.in-view .footer-left,
+.home-footer.in-view .footer-col-links,
+.home-footer.in-view #contact {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateX(0);
+}
+
+.home-footer.in-view .footer-left {
+  transition-delay: 0s;
+}
+
+.home-footer.in-view .footer-col-links {
+  transition-delay: 0.1s;
+}
+
+.home-footer.in-view #contact {
+  transition-delay: 0.2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-left,
+  .footer-col-links,
+  #contact,
+  .footer-name {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 .footer-top {
   display: flex;
   justify-content: space-between;
@@ -2901,14 +2957,21 @@ body.page-leaving {
   
   /* Initial transition state */
   opacity: 0;
-  transform: translateY(calc(35% + 20px));
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-  will-change: opacity, transform;
+  filter: blur(12px);
+  transform: translate(-32px, 35%);
+  transition: opacity 1.3s cubic-bezier(0.16, 1, 0.3, 1), filter 1.3s cubic-bezier(0.16, 1, 0.3, 1), transform 1.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, filter, transform;
 }
 
+.home-footer.in-view .footer-name,
 .footer-name.in-view {
   opacity: 1;
-  transform: translateY(35%);
+  filter: blur(0px);
+  transform: translate(0, 35%);
+}
+
+.home-footer.in-view .footer-name {
+  transition-delay: 0.3s;
 }
 
 

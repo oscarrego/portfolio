@@ -83,9 +83,10 @@
       gsap.from(el, {
         scrollTrigger: { trigger: el, start: 'top 88%', once: true },
         opacity: 0,
-        y: 16,
-        duration: 0.7,
-        ease: 'power3.out',
+        filter: 'blur(12px)',
+        x: -32,
+        duration: 0.9,
+        ease: 'power2.out',
       });
     });
 
@@ -98,10 +99,11 @@
         gsap.from(line, {
           scrollTrigger: { trigger: swSection, start: 'top 82%', once: true },
           opacity: 0,
-          y: 60,
-          duration: 1.0,
-          ease: 'power4.out',
-          delay: i * 0.12,
+          filter: 'blur(12px)',
+          x: -32,
+          duration: 1.1,
+          ease: 'power2.out',
+          delay: i * 0.1, // 100ms stagger
         });
       });
 
@@ -111,9 +113,11 @@
         gsap.from(swCount, {
           scrollTrigger: { trigger: swSection, start: 'top 82%', once: true },
           opacity: 0,
-          duration: 0.8,
-          ease: 'power3.out',
-          delay: 0.3,
+          filter: 'blur(12px)',
+          x: -32,
+          duration: 0.9,
+          ease: 'power2.out',
+          delay: 0.2,
         });
       }
 
@@ -123,15 +127,14 @@
         gsap.from(card, {
           scrollTrigger: { trigger: card, start: 'top 88%', once: true },
           opacity: 0,
-          y: 48,
-          duration: 0.9,
-          ease: 'power4.out',
-          delay: (i % 2) * 0.12,
+          filter: 'blur(12px)',
+          x: -32,
+          duration: 1.2,
+          ease: 'power2.out',
+          delay: (i % 2) * 0.1, // 100ms stagger
         });
       });
     }
-
-
 
     // Experience items stagger
     const expItems = document.querySelectorAll('.exp-item');
@@ -139,10 +142,11 @@
       gsap.from(item, {
         scrollTrigger: { trigger: item, start: 'top 92%', once: true },
         opacity: 0,
-        y: 20,
-        duration: 0.65,
-        ease: 'power3.out',
-        delay: i * 0.06,
+        filter: 'blur(12px)',
+        x: -32,
+        duration: 1.3,
+        ease: 'power2.out',
+        delay: i * 0.1, // 100ms stagger
       });
     });
 
@@ -152,13 +156,12 @@
       gsap.from(expTitle, {
         scrollTrigger: { trigger: expTitle, start: 'top 85%', once: true },
         opacity: 0,
-        y: 30,
-        duration: 0.9,
-        ease: 'power4.out',
+        filter: 'blur(12px)',
+        x: -32,
+        duration: 1.1,
+        ease: 'power2.out',
       });
     }
-
-
 
     // Footer sig
     const footerSig = document.querySelector('.home-footer-sig');
@@ -166,9 +169,10 @@
       gsap.from(footerSig, {
         scrollTrigger: { trigger: footerSig, start: 'top 90%', once: true },
         opacity: 0,
-        y: 20,
-        duration: 0.8,
-        ease: 'power3.out',
+        filter: 'blur(12px)',
+        x: -32,
+        duration: 0.9,
+        ease: 'power2.out',
       });
     }
   }
