@@ -2423,7 +2423,21 @@ body.page-leaving {
   z-index: 2000;
   pointer-events: none;
   transition: opacity 0.4s ease;
-  will-change: opacity;
+  will-change: opacity, transform;
+
+  /* Entrance animation on page load */
+  animation: navPillEntrance 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes navPillEntrance {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
 
 .pill-nav {

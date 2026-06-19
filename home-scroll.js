@@ -48,11 +48,11 @@
     // Locked in place permanently; scroll listener disabled
   }
 
-  /* ── Hero headline reveal ───────────────────────────────────────────────── */
+  /* ── Hero headline reveal ──────────────────────────────────────── */
   function initHeroReveal() {
     const spans = document.querySelectorAll('.hero-text-reveal');
     const bottom = document.querySelectorAll(
-      '.hero-copyright, .hero-intro-name, .hero-intro-desc'
+      '.hero-copyright, .hero-scroll-indicator'
     );
 
     if (!spans.length) return;
@@ -173,35 +173,36 @@
     }
   }
 
-  /* ── Hero text parallax ─────────────────────────────────────────────────── */
+  /* ── Hero text parallax ──────────────────────────────────────── */
   function initParallax() {
-    const line1 = document.querySelector('.hero-headline-line:nth-child(1) .hero-text-reveal'); // SOFTWARE
-    const line2 = document.querySelector('.hero-headline-line:nth-child(2) .hero-text-reveal'); // ENGINEER
+    // Target the OUTER line wrappers, NOT the inner reveal spans.
+    // The inner spans have overflow:hidden on their parent; animating Y on them
+    // causes the text to be clipped against that boundary on scroll-back.
+    const line1 = document.querySelector('.hero-headline-line:nth-child(1)'); // SOFTWARE wrapper
+    const line2 = document.querySelector('.hero-headline-line:nth-child(2)'); // ENGINEER wrapper
 
     if (line1 && line2) {
-      // Animate line 1 (SOFTWARE) moving left and slightly up
+      // Animate SOFTWARE wrapper moving left
       gsap.to(line1, {
         scrollTrigger: {
           trigger: '.hero',
           start: 'top top',
           end: 'bottom top',
-          scrub: 1,
+          scrub: 1.2,
         },
         x: -120,
-        y: -30,
         ease: 'none'
       });
 
-      // Animate line 2 (ENGINEER) moving right and slightly up
+      // Animate ENGINEER wrapper moving right
       gsap.to(line2, {
         scrollTrigger: {
           trigger: '.hero',
           start: 'top top',
           end: 'bottom top',
-          scrub: 1,
+          scrub: 1.2,
         },
         x: 120,
-        y: -30,
         ease: 'none'
       });
     }
@@ -314,8 +315,6 @@
     const scrim = document.getElementById('menu-scrim');
     const trigger = document.getElementById('pill-nav-trigger');
     const links = document.querySelectorAll('.menu-link');
-    const dotsContainer = trigger?.querySelector('.menu-dots-container');
-    const closeIcon = trigger?.querySelector('.menu-close-icon');
 
     if (!pillNav || !scrim) return;
 
@@ -323,9 +322,6 @@
       pillNav.classList.add('open');
       scrim.classList.add('open');
       scrim.setAttribute('aria-hidden', 'false');
-      
-      if (dotsContainer) dotsContainer.style.display = 'none';
-      if (closeIcon) closeIcon.style.display = 'flex';
 
       if (window._lenis) {
         window._lenis.stop();
@@ -336,9 +332,6 @@
       pillNav.classList.remove('open');
       scrim.classList.remove('open');
       scrim.setAttribute('aria-hidden', 'true');
-
-      if (dotsContainer) dotsContainer.style.display = 'flex';
-      if (closeIcon) closeIcon.style.display = 'none';
 
       if (window._lenis) {
         window._lenis.start();

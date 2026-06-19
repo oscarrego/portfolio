@@ -13,8 +13,8 @@
 /* ─── DESIGN TOKENS ───────────────────────────────────────── */
 
 :root {
-  --pd-bg:          #f0ece5;   /* Cream — matches .sw-section */
-  --pd-bg-card:     #e8e4dc;   /* Slightly deeper cream for media containers */
+  --pd-bg:          #F5F2EC;   /* Cream — matches .sw-section */
+  --pd-bg-card:     #EDEAE4;   /* Slightly deeper cream for media containers */
   --pd-text:        #0a0a0a;   /* Primary black */
   --pd-muted:       rgba(10, 10, 10, 0.50); /* Muted text */
   --pd-faint:       rgba(10, 10, 10, 0.30); /* Counter / label */

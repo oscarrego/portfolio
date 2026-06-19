@@ -26,7 +26,7 @@
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --pad-x: clamp(24px, 6vw, 100px);
   --pad-x-sm: clamp(16px, 4vw, 60px);
-  --project-bg: #f0ece5;
+  --project-bg: #F5F2EC;
 }
 
 .theme-light {
@@ -99,8 +99,9 @@ a { text-decoration: none; color: inherit; }
   display: grid;
   grid-template-rows: auto 0fr;
   width: min(320px, calc(100vw - 32px));
-  transition: grid-template-rows 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              border-radius 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
   overflow: hidden;
 }
@@ -146,25 +147,58 @@ a { text-decoration: none; color: inherit; }
   transform: scale(1.03);
 }
 
-.menu-dot {
-  width: 5px;
-  height: 5px;
-  background: #000000;
-  border-radius: 50%;
-  margin: 0 2.5px;
-}
+/* ── Dots → X morphing animation ─────────────────────── */
 
 .menu-dots-container {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  width: 22px;
+  height: 14px;
+}
+
+.menu-dot {
+  width: 5px;
+  height: 5px;
+  background: #000000;
+  border-radius: 50%;
+  position: absolute;
+  transition:
+    transform 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity   0.28s cubic-bezier(0.4, 0, 0.2, 1),
+    width     0.38s cubic-bezier(0.4, 0, 0.2, 1),
+    height    0.38s cubic-bezier(0.4, 0, 0.2, 1),
+    border-radius 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Resting positions: left, center, right */
+.menu-dot--left  { transform: translateX(-8px); }
+.menu-dot--mid   { transform: translateX(0px); }
+.menu-dot--right { transform: translateX(8px); }
+
+/* Open state — morph into X */
+.pill-nav.open .menu-dot--left {
+  transform: translateX(0) rotate(45deg);
+  width: 14px;
+  height: 2px;
+  border-radius: 2px;
+  background: #000000;
+}
+.pill-nav.open .menu-dot--right {
+  transform: translateX(0) rotate(-45deg);
+  width: 14px;
+  height: 2px;
+  border-radius: 2px;
+  background: #000000;
+}
+.pill-nav.open .menu-dot--mid {
+  opacity: 0;
+  transform: translateX(0) translateY(8px);
 }
 
 .menu-close-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #000000;
+  display: none; /* hidden — using CSS dot morph instead */
 }
 
 /* ─── MENU DROPDOWN & CONTENT ────────────────────────── */
@@ -438,29 +472,62 @@ a { text-decoration: none; color: inherit; }
   align-self: flex-end;
 }
 
-.hero-intro {
+/* ─── Hero Scroll Indicator ────────────────────────── */
+
+.hero-scroll-indicator {
   display: flex;
   flex-direction: column;
-  gap: 8px;
   align-items: center;
-  text-align: center;
+  gap: 12px;
+  justify-self: center;
+  align-self: flex-end;
 }
 
-.hero-intro-name {
-  font-size: 13px;
+.hero-scroll-line-wrap {
+  position: relative;
+  width: 1px;
+  height: 56px;
+  overflow: hidden;
+}
+
+.hero-scroll-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.hero-scroll-glow {
+  position: absolute;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 40%;
+  background: linear-gradient(to bottom, transparent, #ffffff, rgba(255, 255, 255, 0.8), transparent);
+  filter: blur(1px);
+  border-radius: 2px;
+  animation: scrollGlowDrop 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollGlowDrop {
+  0%   { top: -40%; opacity: 0; }
+  15%  { opacity: 1; }
+  80%  { opacity: 0.9; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.hero-scroll-label {
+  font-family: var(--font-body);
+  font-size: 9px;
   font-weight: 500;
-  color: var(--text);
-  letter-spacing: 1px;
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  writing-mode: horizontal-tb;
 }
-
-.hero-intro-desc {
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--muted);
-  line-height: 1.6;
-  max-width: 260px;
-}
-
 
 
 /* ═══════════════════════════════════════════════════════
@@ -792,7 +859,7 @@ a { text-decoration: none; color: inherit; }
   border-top: 1px solid rgba(10, 10, 10, 0.08);
   /* Override variables locally for cream theme */
   --bg: var(--project-bg);
-  --surface: #e6e2db;
+  --surface: #EBE8E2;
   --text: #0a0a0a;
   --muted: rgba(10, 10, 10, 0.45);
   --subtle: rgba(10, 10, 10, 0.04);
@@ -1162,7 +1229,8 @@ a { text-decoration: none; color: inherit; }
   }
 
   .hero-copyright { font-size: 36px; }
-  .hero-intro { align-items: flex-start; text-align: left; }
+  .hero-scroll-indicator { align-self: flex-start; }
+
 
   .work-preview { display: none; }
 
@@ -1220,10 +1288,6 @@ a { text-decoration: none; color: inherit; }
   will-change: opacity;
   /* Transitions are handled via JS-driven opacity only — no CSS transition
      to avoid conflicts with the scroll-driven animation */
-}
-
-.narrative-paragraph:last-child {
-  margin-bottom: 0;
 }
 
 .narrative-word {
