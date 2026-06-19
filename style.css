@@ -2600,13 +2600,17 @@ body.page-leaving {
   filter: blur(0);
 }
 
+.pill-nav.open .menu-link.active,
 .pill-nav.open .menu-link:hover {
   opacity: 1;
   color: #ffffff;
+}
+
+.pill-nav.open .menu-link:hover {
   transform: translateX(8px);
 }
 
-.menu-card-links:hover .menu-link:not(:hover) {
+.menu-card-links:hover .menu-link:not(:hover):not(.active) {
   opacity: 0.25;
 }
 
@@ -2755,8 +2759,10 @@ body.page-leaving {
   text-transform: none;
 }
 
-.footer-right {
+.home-footer .footer-right {
   display: flex;
+  flex-direction: row;
+  align-items: flex-start;
   gap: 80px;
   flex-wrap: wrap;
   flex: 2;
@@ -2764,7 +2770,7 @@ body.page-leaving {
 }
 
 @media (max-width: 900px) {
-  .footer-right {
+  .home-footer .footer-right {
     justify-content: flex-start;
   }
 }

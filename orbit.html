@@ -26,6 +26,9 @@
     <!-- Shared project detail: cream theme + scroll-reveal -->
     <link rel="stylesheet" href="project-detail.css">
 
+    <!-- Lenis smooth scroll -->
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -57,9 +60,10 @@
             <div class="pill-nav-dropdown" id="pill-nav-dropdown">
                 <div class="pill-nav-dropdown-inner">
                     <div class="menu-card-links">
-                        <a href="index.html#work" class="menu-link">works</a>
-                        <a href="index.html#experience" class="menu-link">experience</a>
-                        <a href="index.html#footer" class="menu-link">contact</a>
+                        <a href="orbit.html" class="menu-link active">orbit</a>
+                        <a href="sentinel.html" class="menu-link">sentinel</a>
+                        <a href="jsms.html" class="menu-link">jsms</a>
+                        <a href="#footer" class="menu-link">contact</a>
                     </div>
 
                     <div class="menu-card-footer">
@@ -305,16 +309,37 @@
         </section>
     </main>
 
-    <!-- FOOTER -->
-    <div id="footer-container"></div>
-
-<script>
-fetch('footer.html')
-  .then(response => response.text())
-  .then(data => {
-    document.getElementById('footer-container').innerHTML = data;
-  });
-</script>
+    <!-- ═══════════════════════════ FOOTER ══════════════════════════════════ -->
+    <footer id="footer" class="home-footer" aria-label="Footer">
+        <div class="footer-top">
+            <!-- Left: tagline -->
+            <div class="footer-left">
+                <p class="footer-tagline">Development,<br>Automation,<br>and Thoughtful Design.</p>
+            </div>
+            <!-- Right: columns -->
+            <div class="footer-right">
+                <div class="footer-col footer-col-links">
+                    <span class="footer-col-label">/Quick links</span>
+                    <nav class="footer-pills" aria-label="Footer navigation">
+                        <a href="index.html" class="footer-pill" data-text="Home"><span>Home</span></a>
+                        <a href="index.html#work" class="footer-pill" data-text="Works"><span>Works</span></a>
+                        <a href="index.html#experience" class="footer-pill" data-text="Experience"><span>Experience</span></a>
+                        <a href="index.html#footer" class="footer-pill" data-text="Contact"><span>Contact</span></a>
+                    </nav>
+                </div>
+                <div class="footer-col">
+                    <span class="footer-col-label">/Contact</span>
+                    <a href="mailto:oscarrego789@gmail.com" class="footer-contact-link">oscarrego789@gmail.com</a>
+                    <a href="https://github.com/oscarrego" target="_blank" rel="noopener noreferrer" class="footer-contact-link">github.com/oscarrego</a>
+                    <a href="https://linkedin.com/in/oscarrego789" target="_blank" rel="noopener noreferrer" class="footer-contact-link">linkedin.com/in/oscarrego789</a>
+                </div>
+            </div>
+        </div>
+        <!-- Giant name watermark -->
+        <div class="footer-name-wrap" aria-hidden="true">
+            <span class="footer-name">OSCAR</span>
+        </div>
+    </footer>
 
     <!-- Scripts (Inheriting kinetic scrolling and cursor logic) -->
     <script type="module" src="script.js"></script>

@@ -961,6 +961,23 @@ if (isTouchDevice) {
 
         if (!pillNav || !scrim) return;
 
+        // Initialize Lenis on subpages if Lenis library is loaded and not yet initialized
+        if (window.Lenis && !window._lenis) {
+            const lenis = new Lenis({
+                duration: 1.3,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                smoothWheel: true,
+            });
+
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+
+            window._lenis = lenis;
+        }
+
         function openMenu() {
             pillNav.classList.add('open');
             scrim.classList.add('open');
@@ -1006,8 +1023,26 @@ if (isTouchDevice) {
         });
 
         links.forEach(link => {
-            link.addEventListener('click', () => {
-                closeMenu();
+            link.addEventListener('click', (e) => {
+                const targetId = link.getAttribute('href');
+                if (targetId && targetId.startsWith('#')) {
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        e.preventDefault();
+                        closeMenu();
+
+                        // Let the menu transition finish before scrolling for a smoother feel
+                        setTimeout(() => {
+                            if (window._lenis) {
+                                window._lenis.scrollTo(target, { duration: 1.4, easing: (t) => 1 - Math.pow(1 - t, 4) });
+                            } else {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        }, 450);
+                    }
+                } else {
+                    closeMenu();
+                }
             });
         });
     };
