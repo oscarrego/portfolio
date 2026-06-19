@@ -368,51 +368,67 @@
 
   /* ── Menu Open/Close ────────────────────────────────────────────────────── */
   function initMenu() {
+    const pillNav = document.getElementById('pill-nav');
+    const scrim = document.getElementById('menu-scrim');
     const trigger = document.getElementById('pill-nav-trigger');
-    const closeBtn = document.getElementById('menu-close-btn');
-    const overlay = document.getElementById('menu-overlay');
     const links = document.querySelectorAll('.menu-link');
+    const dotsContainer = trigger?.querySelector('.menu-dots-container');
+    const closeIcon = trigger?.querySelector('.menu-close-icon');
 
-    if (!overlay) return;
+    if (!pillNav || !scrim) return;
 
     function openMenu() {
-      overlay.classList.add('open');
-      overlay.setAttribute('aria-hidden', 'false');
+      pillNav.classList.add('open');
+      scrim.classList.add('open');
+      scrim.setAttribute('aria-hidden', 'false');
+      
+      if (dotsContainer) dotsContainer.style.display = 'none';
+      if (closeIcon) closeIcon.style.display = 'flex';
+
       if (window._lenis) {
         window._lenis.stop();
-      }
-      const navContainer = document.querySelector('.pill-nav-container');
-      if (navContainer) {
-        navContainer.style.opacity = '0';
-        navContainer.style.pointerEvents = 'none';
       }
     }
 
     function closeMenu() {
-      overlay.classList.remove('open');
-      overlay.setAttribute('aria-hidden', 'true');
+      pillNav.classList.remove('open');
+      scrim.classList.remove('open');
+      scrim.setAttribute('aria-hidden', 'true');
+
+      if (dotsContainer) dotsContainer.style.display = 'flex';
+      if (closeIcon) closeIcon.style.display = 'none';
+
       if (window._lenis) {
         window._lenis.start();
       }
-      const navContainer = document.querySelector('.pill-nav-container');
-      if (navContainer) {
-        navContainer.style.opacity = '1';
-        navContainer.style.pointerEvents = 'auto';
+    }
+
+    function toggleMenu() {
+      if (pillNav.classList.contains('open')) {
+        closeMenu();
+      } else {
+        openMenu();
       }
     }
 
     if (trigger) {
-      trigger.addEventListener('click', openMenu);
+      trigger.addEventListener('click', (e) => {
+        toggleMenu();
+      });
     }
 
-    if (closeBtn) {
-      closeBtn.addEventListener('click', closeMenu);
-    }
+    // Close menu when clicking the scrim backdrop
+    scrim.addEventListener('click', (e) => {
+      closeMenu();
+    });
 
-    // Close menu when clicking outside the card
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) {
+    // Close menu when pressing Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && pillNav.classList.contains('open')) {
         closeMenu();
+        if (window.playTone) {
+          window.playTone('menu-close');
+        }
       }
     });
 
@@ -433,33 +449,84 @@
           } else {
             target.scrollIntoView({ behavior: 'smooth' });
           }
-        }, 300);
+        }, 450);
       });
     });
   }
 
-  /* ── Narrative scroll lock & highlight ──────────────────────────────────── */
+  /* ── Narrative scroll lock & highlight ──────────────────────── */
   function initNarrative() {
     const section = document.querySelector('.narrative-section');
     if (!section) return;
-    
-    const words = section.querySelectorAll('.narrative-word');
-    if (!words.length) return;
 
-    // Stagger color reveal of each word as user scrolls through the section
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: 'top 80%',
-        end: 'bottom 20%',
-        scrub: 0.8,
+    const paragraphs = section.querySelectorAll('.narrative-paragraph');
+    if (!paragraphs.length) return;
+
+    // Premium cubic ease-in-out for organic, smooth transitions
+    function easeInOutCubic(x) {
+      return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+    }
+
+    // Faded = very low opacity dark-on-cream (12%), active = fully opaque (100%)
+    const FADED  = 0.12;
+    const ACTIVE = 1.0;
+
+    // Set initial states: line 1 fully visible, rest faded
+    paragraphs[0].style.opacity = String(ACTIVE);
+    for (let i = 1; i < paragraphs.length; i++) {
+      paragraphs[i].style.opacity = String(FADED);
+    }
+
+    let ticking = false;
+
+    function updateNarrativeScroll() {
+      const rect = section.getBoundingClientRect();
+      const sectionHeight = rect.height;
+      const viewportHeight = window.innerHeight;
+
+      // Total scrollable range of the spacer section
+      const travelLimit = sectionHeight - viewportHeight;
+      if (travelLimit <= 0) return;
+
+      // Progress: 0.0 when section top touches viewport top,
+      //           1.0 when section bottom touches viewport bottom
+      const top = rect.top;
+      let progress = -top / travelLimit;
+      progress = Math.max(0, Math.min(1, progress));
+
+
+      // Line 1 is always fully highlighted (hook line always visible)
+      paragraphs[0].style.opacity = String(ACTIVE);
+
+      // Line 2 (index 1): fades in from progress 0.0 → 0.45
+      if (paragraphs.length > 1) {
+        const p1 = easeInOutCubic(Math.max(0, Math.min(1, (progress - 0.0) / 0.45)));
+        paragraphs[1].style.opacity = (FADED + (ACTIVE - FADED) * p1).toFixed(3);
       }
-    })
-    .to(words, {
-      color: '#000000',
-      stagger: 0.08,
-      ease: 'none'
-    });
+
+      // Line 3 (index 2): fades in from progress 0.45 → 0.90
+      if (paragraphs.length > 2) {
+        const p2 = easeInOutCubic(Math.max(0, Math.min(1, (progress - 0.45) / 0.45)));
+        paragraphs[2].style.opacity = (FADED + (ACTIVE - FADED) * p2).toFixed(3);
+      }
+    }
+
+    // High performance rAF batching scroll handler
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateNarrativeScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    
+    // Kick initial render
+    updateNarrativeScroll();
   }
 
   /* ── Init ───────────────────────────────────────────────────────────────── */

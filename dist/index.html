@@ -40,7 +40,7 @@
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/main-B8QDf9Ge.css">
+  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/main-BU8FgXQz.css">
   <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/loader-BnDdxSgc.css">
 </head>
 
@@ -56,69 +56,70 @@
     <div class="loader-percent" id="loader-percent">0%</div>
   </div>
 
-  <!-- ═══════════════════════════ NAV ═════════════════════════════════════ -->
-  <div class="pill-nav-container">
-    <nav class="pill-nav" aria-label="Main navigation">
-      <a href="#hero" class="pill-nav-logo">Oscar</a>
-      <button class="pill-nav-trigger" id="pill-nav-trigger" aria-label="Open Menu">
-        <span class="menu-dot"></span>
-        <span class="menu-dot"></span>
-        <span class="menu-dot"></span>
-      </button>
+  <div class="pill-nav-container" id="pill-nav-container">
+    <nav class="pill-nav" id="pill-nav" aria-label="Main navigation">
+      <div class="pill-nav-header">
+        <a href="#hero" class="pill-nav-logo">Oscar</a>
+        <button class="pill-nav-trigger" id="pill-nav-trigger" aria-label="Toggle Menu">
+          <span class="menu-dots-container">
+            <span class="menu-dot"></span>
+            <span class="menu-dot"></span>
+            <span class="menu-dot"></span>
+          </span>
+          <span class="menu-close-icon" style="display: none;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <div class="pill-nav-dropdown" id="pill-nav-dropdown">
+        <div class="pill-nav-dropdown-inner">
+          <div class="menu-card-links">
+            <a href="#work" class="menu-link">works</a>
+            <a href="#experience" class="menu-link">experience</a>
+            <a href="#about" class="menu-link">about</a>
+            <a href="#contact" class="menu-link">contact</a>
+          </div>
+
+          <div class="menu-card-footer">
+            <a href="mailto:oscarrego789@gmail.com" class="menu-email">oscarrego789@gmail.com</a>
+            <div class="menu-socials">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="Instagram">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="Twitter">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </a>
+              <a href="https://github.com/oscarrego" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="GitHub">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+              </a>
+              <a href="https://linkedin.com/in/oscarrego789" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="LinkedIn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect x="2" y="9" width="4" height="12"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </nav>
   </div>
 
-  <!-- Menu Overlay -->
-  <div class="menu-overlay" id="menu-overlay" aria-hidden="true">
-    <div class="menu-card">
-      <div class="menu-card-header">
-        <span class="menu-close-text">close</span>
-        <button class="menu-close-btn" id="menu-close-btn" aria-label="Close Menu">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-      </div>
-      
-      <div class="menu-card-links">
-        <a href="#work" class="menu-link">works</a>
-        <a href="#experience" class="menu-link">experience</a>
-        <a href="#about" class="menu-link">about</a>
-        <a href="#contact" class="menu-link">contact</a>
-      </div>
-      
-      <div class="menu-card-footer">
-        <a href="mailto:oscarrego789@gmail.com" class="menu-email">oscarrego789@gmail.com</a>
-        <div class="menu-socials">
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="Instagram">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-            </svg>
-          </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="Twitter">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
-          </a>
-          <a href="https://github.com/oscarrego" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="GitHub">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-            </svg>
-          </a>
-          <a href="https://linkedin.com/in/oscarrego789" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="LinkedIn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-              <rect x="2" y="9" width="4" height="12"></rect>
-              <circle cx="4" cy="4" r="2"></circle>
-            </svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Menu Scrim -->
+  <div class="menu-scrim" id="menu-scrim" aria-hidden="true"></div>
 
   <!-- ═══════════════════════════ § 1 — HERO ══════════════════════════════ -->
   <section id="hero" class="hero" aria-label="Introduction">
@@ -167,35 +168,37 @@
 
   <!-- ═══════════════════════════ § NARRATIVE ═════════════════════════════ -->
   <section id="narrative" class="narrative-section" aria-label="Narrative">
-    <div class="narrative-inner">
-      <p class="narrative-paragraph">
-        <span class="narrative-word">Curious</span>
-        <span class="narrative-word">about</span>
-        <span class="narrative-word">software</span>
-        <span class="narrative-word">systems.</span>
-      </p>
-      <p class="narrative-paragraph">
-        <span class="narrative-word">Exploring</span>
-        <span class="narrative-word">development,</span>
-        <br>
-        <span class="narrative-word">automation,</span>
-        <span class="narrative-word">and</span>
-        <span class="narrative-word">AI.</span>
-      </p>
-      <p class="narrative-paragraph">
-        <span class="narrative-word">Learning</span>
-        <span class="narrative-word">that</span>
-        <span class="narrative-word">exceptional</span>
-        <span class="narrative-word">software</span>
-        <br>
-        <span class="narrative-word">needs</span>
-        <span class="narrative-word">both</span>
-        <span class="narrative-word">great</span>
-        <span class="narrative-word">code</span>
-        <span class="narrative-word">and</span>
-        <span class="narrative-word">great</span>
-        <span class="narrative-word">UI/UX.</span>
-      </p>
+    <div class="narrative-sticky">
+      <div class="narrative-inner">
+        <p class="narrative-paragraph">
+          <span class="narrative-word">Curious</span>
+          <span class="narrative-word">about</span>
+          <span class="narrative-word">software</span>
+          <span class="narrative-word">systems.</span>
+        </p>
+        <p class="narrative-paragraph">
+          <span class="narrative-word">Exploring</span>
+          <span class="narrative-word">development,</span>
+          <br>
+          <span class="narrative-word">automation,</span>
+          <span class="narrative-word">and</span>
+          <span class="narrative-word">AI.</span>
+        </p>
+        <p class="narrative-paragraph">
+          <span class="narrative-word">Learning</span>
+          <span class="narrative-word">that</span>
+          <span class="narrative-word">exceptional</span>
+          <span class="narrative-word">software</span>
+          <br>
+          <span class="narrative-word">needs</span>
+          <span class="narrative-word">both</span>
+          <span class="narrative-word">great</span>
+          <span class="narrative-word">code</span>
+          <span class="narrative-word">and</span>
+          <span class="narrative-word">great</span>
+          <span class="narrative-word">UI/UX.</span>
+        </p>
+      </div>
     </div>
   </section>
 
@@ -543,8 +546,42 @@
 
   <!-- ═══════════════════════════ FOOTER ══════════════════════════════════ -->
   <footer class="home-footer" aria-label="Footer">
-    <span class="home-footer-sig">OSCAR REGO</span>
-    <span class="home-footer-copy">© 2026 — All rights reserved</span>
+
+    <div class="footer-top">
+
+      <!-- Left: tagline -->
+      <div class="footer-left">
+        <p class="footer-tagline">Building software<br>systems, tools,<br>and AI experiences.</p>
+      </div>
+
+      <!-- Right: columns -->
+      <div class="footer-right">
+        <div class="footer-col">
+          <span class="footer-col-label">/Quick links</span>
+          <nav class="footer-pills" aria-label="Footer navigation">
+            <a href="#hero" class="footer-pill">Home</a>
+            <a href="#work" class="footer-pill">Works</a>
+            <a href="#experience" class="footer-pill">Experience</a>
+            <a href="#about" class="footer-pill">About Me</a>
+            <a href="#contact" class="footer-pill">Contact</a>
+          </nav>
+        </div>
+
+        <div class="footer-col">
+          <span class="footer-col-label">/Contact</span>
+          <a href="mailto:oscarrego789@gmail.com" class="footer-contact-link">oscarrego789@gmail.com</a>
+          <a href="https://github.com/oscarrego" target="_blank" rel="noopener noreferrer" class="footer-contact-link">github.com/oscarrego</a>
+          <a href="https://linkedin.com/in/oscarrego789" target="_blank" rel="noopener noreferrer" class="footer-contact-link">linkedin.com/in/oscarrego789</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Giant name watermark -->
+    <div class="footer-name-wrap" aria-hidden="true">
+      <span class="footer-name">OSCAR</span>
+    </div>
+
   </footer>
 
   <!-- ═══════════════════════════ SCRIPTS ═════════════════════════════════ -->

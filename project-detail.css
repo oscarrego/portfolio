@@ -1,0 +1,294 @@
+/*
+  OSCAR REGO PORTFOLIO 2026
+  PROJECT DETAIL — SHARED STYLESHEET
+  ────────────────────────────────────
+  Applied to: orbit.html, sentinel.html, jsms.html
+
+  Design system: cream background (#f0ece5), black typography (#0a0a0a),
+  soft neutral borders — matching the homepage Selected Work section exactly.
+
+  No orange accents. No dark backgrounds. Clean monochrome editorial.
+*/
+
+/* ─── DESIGN TOKENS ───────────────────────────────────────── */
+
+:root {
+  --pd-bg:          #f0ece5;   /* Cream — matches .sw-section */
+  --pd-bg-card:     #e8e4dc;   /* Slightly deeper cream for media containers */
+  --pd-text:        #0a0a0a;   /* Primary black */
+  --pd-muted:       rgba(10, 10, 10, 0.50); /* Muted text */
+  --pd-faint:       rgba(10, 10, 10, 0.30); /* Counter / label */
+  --pd-border:      rgba(10, 10, 10, 0.09); /* Soft borders */
+  --pd-shadow:      rgba(0, 0, 0, 0.07);    /* Subtle shadows */
+  --pd-ease:        cubic-bezier(0.16, 1, 0.3, 1);
+  --pd-ease-std:    cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── PAGE BACKGROUND ─────────────────────────────────────── */
+
+/*
+  style.css sets: body { background-color: var(--bg-main) !important; }
+  We need to override that. The detail pages have class="project-detail-page"
+  on <html>, giving us higher specificity combined with !important.
+*/
+html.project-detail-page body,
+html.project-detail-page {
+  background-color: var(--pd-bg) !important;
+}
+
+/* ─── HERO SECTIONS ───────────────────────────────────────── */
+
+/* Orbit */
+.orbit-main-placeholder {
+  background: var(--pd-bg-card) !important;
+}
+
+.orbit-main-placeholder::after {
+  background: linear-gradient(
+    to top,
+    rgba(240, 236, 229, 1)   0%,
+    rgba(240, 236, 229, 0.9) 25%,
+    rgba(240, 236, 229, 0.4) 55%,
+    transparent              100%
+  ) !important;
+}
+
+.orbit-title {
+  color: var(--pd-text) !important;
+}
+
+.orbit-meta {
+  color: var(--pd-muted) !important;
+}
+
+.orbit-intro-text {
+  color: var(--pd-muted) !important;
+}
+
+/* Sentinel */
+.sentinel-main-placeholder {
+  background: var(--pd-bg-card) !important;
+}
+
+.sentinel-main-placeholder::after {
+  background: linear-gradient(
+    to top,
+    rgba(240, 236, 229, 1)   0%,
+    rgba(240, 236, 229, 0.9) 25%,
+    rgba(240, 236, 229, 0.4) 55%,
+    transparent              100%
+  ) !important;
+}
+
+.sentinel-title {
+  color: var(--pd-text) !important;
+}
+
+.sentinel-meta {
+  color: var(--pd-muted) !important;
+}
+
+.sentinel-intro-text {
+  color: var(--pd-muted) !important;
+}
+
+/* JSMS */
+.jsms-main-placeholder {
+  background: var(--pd-bg-card) !important;
+}
+
+.jsms-main-placeholder::after {
+  background: linear-gradient(
+    to top,
+    rgba(240, 236, 229, 1)   0%,
+    rgba(240, 236, 229, 0.9) 25%,
+    rgba(240, 236, 229, 0.4) 55%,
+    transparent              100%
+  ) !important;
+}
+
+.jsms-title {
+  color: var(--pd-text) !important;
+}
+
+.jsms-meta {
+  color: var(--pd-muted) !important;
+}
+
+.jsms-intro-text {
+  color: var(--pd-muted) !important;
+}
+
+/* ─── CONTENT BLOCKS — shared typography overrides ──────── */
+
+/* Section counter (e.g. "1 /") */
+.section-counter {
+  color: var(--pd-faint) !important;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* h2 headings — remove orange, apply black */
+.orbit-content-block h2,
+.sentinel-content-block h2,
+.jsms-content-block h2 {
+  color: var(--pd-text) !important;
+  font-family: 'Inter', 'AltmannGrotesk-Bold', sans-serif;
+  font-size: clamp(22px, 2.5vw, 30px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* Body paragraphs */
+.orbit-content-block p,
+.sentinel-content-block p,
+.jsms-content-block p {
+  color: var(--pd-muted) !important;
+  font-family: 'Inter', 'AltmannGrotesk-Regular', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ─── CAROUSEL WRAPPERS ───────────────────────────────────── */
+
+.orbit-carousel-wrapper,
+.sentinel-carousel-wrapper,
+.jsms-carousel-wrapper,
+.orbit-mobile-carousel-wrapper {
+  background: var(--pd-bg-card) !important;
+  border: 1px solid var(--pd-border) !important;
+  box-shadow:
+    0 4px 16px var(--pd-shadow),
+    0 1px 4px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Remove dark vignette overlays on sentinel / jsms carousel wrappers */
+.sentinel-carousel-wrapper::after,
+.jsms-carousel-wrapper::after {
+  background: none !important;
+}
+
+/* ─── CAROUSEL NAV BUTTONS ────────────────────────────────── */
+
+.carousel-nav {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border: 1px solid var(--pd-border) !important;
+  color: var(--pd-text) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+.carousel-nav:hover {
+  background: #ffffff !important;
+  color: var(--pd-text) !important;
+  filter: none !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.14) !important;
+  transform: scale(1.05) !important;
+}
+
+/* ─── DETAIL SECTIONS BACKGROUND ─────────────────────────── */
+
+.orbit-details,
+.sentinel-details,
+.jsms-details {
+  background: transparent;
+}
+
+.orbit-case-study,
+.sentinel-case-study,
+.jsms-case-study {
+  background: var(--pd-bg);
+}
+
+/* ─── FLOATING NAV (detail pages use .floating-nav) ──────── */
+
+.floating-nav {
+  background: rgba(10, 10, 10, 0.90) !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.floating-nav a {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.floating-nav a:hover {
+  color: #ffffff !important;
+}
+
+/* ─── SCROLL REVEAL — base states ────────────────────────── */
+
+/*
+  Each .orbit-detail-row / .sentinel-detail-row / .jsms-detail-row
+  starts invisible and animates in via IntersectionObserver in
+  project-detail.js.
+
+  Content block (left col): fade + 24px lift
+  Image card   (right col): fade + 14px lift, 80ms after text
+*/
+
+@media (prefers-reduced-motion: no-preference) {
+
+  .orbit-content-block,
+  .sentinel-content-block,
+  .jsms-content-block {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity  0.70s var(--pd-ease),
+      transform 0.70s var(--pd-ease);
+    will-change: opacity, transform;
+  }
+
+  .orbit-sticky-card,
+  .orbit-mobile-sticky-card,
+  .sentinel-sticky-card,
+  .jsms-sticky-card {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity  0.70s var(--pd-ease),
+      transform 0.70s var(--pd-ease);
+    will-change: opacity, transform;
+    /* Delay relative to content block */
+    transition-delay: 0.08s;
+  }
+
+  /* Revealed states — added by project-detail.js */
+  .orbit-content-block.pd-revealed,
+  .sentinel-content-block.pd-revealed,
+  .jsms-content-block.pd-revealed,
+  .orbit-sticky-card.pd-revealed,
+  .orbit-mobile-sticky-card.pd-revealed,
+  .sentinel-sticky-card.pd-revealed,
+  .jsms-sticky-card.pd-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Reduced-motion: instant reveal, no transforms */
+@media (prefers-reduced-motion: reduce) {
+  .orbit-content-block,
+  .sentinel-content-block,
+  .jsms-content-block,
+  .orbit-sticky-card,
+  .orbit-mobile-sticky-card,
+  .sentinel-sticky-card,
+  .jsms-sticky-card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ─── FOOTER CONTAINER (detail pages use fetched footer.html) */
+
+#footer-container {
+  background: #0a0a0a;
+}

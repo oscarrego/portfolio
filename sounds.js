@@ -363,17 +363,22 @@
     const target = e.target;
     if (!target) return;
 
-    // 1. Navigation Pill Trigger (Menu open)
+    // 1. Navigation Pill Trigger (Menu open/close toggle)
     const navTrigger = target.closest('#pill-nav-trigger');
     if (navTrigger) {
-      window.playTone('menu-open');
+      const pillNav = document.getElementById('pill-nav');
+      if (pillNav && pillNav.classList.contains('open')) {
+        window.playTone('menu-open');
+      } else {
+        window.playTone('menu-close');
+      }
       return;
     }
 
-    // 2. Menu Close Button or backdrop overlay click
+    // 2. Menu Close Button or scrim overlay click
     const closeBtn = target.closest('#menu-close-btn');
-    const menuOverlay = target.closest('#menu-overlay');
-    if (closeBtn || (menuOverlay && target === menuOverlay)) {
+    const scrim = target.closest('#menu-scrim');
+    if (closeBtn || scrim) {
       window.playTone('menu-close');
       return;
     }
