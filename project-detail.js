@@ -101,11 +101,63 @@
     });
   }
 
+  /* ── Video Controls ───────────────────────────────────────────── */
+  function initVideoControls() {
+    const placeholder = document.querySelector(
+      '.orbit-main-placeholder, .sentinel-main-placeholder, .jsms-main-placeholder'
+    );
+    if (!placeholder) return;
+
+    const video = placeholder.querySelector('video');
+    const fallback = placeholder.querySelector('img');
+    const controlBtn = placeholder.querySelector('.video-control-btn');
+
+    if (!video || !fallback || !controlBtn) return;
+
+    let isPlaying = true;
+
+    controlBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+
+      if (isPlaying) {
+        // Pause Behavior
+        video.pause();
+        video.style.opacity = '0';
+        video.style.pointerEvents = 'none';
+
+        fallback.style.opacity = '1';
+        fallback.style.pointerEvents = 'auto';
+
+        controlBtn.querySelector('.control-icon').textContent = '▶';
+        controlBtn.setAttribute('aria-label', 'Play Video');
+        isPlaying = false;
+      } else {
+        // Play Behavior
+        fallback.style.opacity = '0';
+        fallback.style.pointerEvents = 'none';
+
+        video.style.opacity = '1';
+        video.style.pointerEvents = 'auto';
+
+        video.play().catch((err) => console.log('Video play interrupted:', err));
+
+        controlBtn.querySelector('.control-icon').textContent = '⏸';
+        controlBtn.setAttribute('aria-label', 'Pause Video');
+        isPlaying = true;
+      }
+    });
+  }
+
   /* ── Init ─────────────────────────────────────────────────────── */
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initReveal);
-  } else {
+  function initAll() {
     initReveal();
+    initVideoControls();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
   }
 
 })();

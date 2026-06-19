@@ -112,7 +112,13 @@
         <!-- 1. HERO / MAIN SHOWCASE SECTION -->
         <section class="jsms-hero">
             <div class="jsms-main-placeholder" role="button" tabindex="0">
-                <video src="videos/jsms_demo.mp4" poster="images/jsms_main.jpg" autoplay loop muted playsinline class="jsms-main-image"></video>
+                <video src="videos/jsms_demo.mp4" autoplay loop muted playsinline class="jsms-main-image orbit-hero-video"></video>
+                <img src="images/jsms_main.jpg" alt="JSMS Showcase" class="jsms-main-image orbit-hero-fallback" style="opacity: 0; pointer-events: none;">
+                
+                <!-- Video Controls -->
+                <button class="video-control-btn" aria-label="Pause Video">
+                    <span class="control-icon">⏸</span>
+                </button>
 
                 <div class="jsms-hero-content">
                     <h1 class="jsms-title">JSMS</h1>

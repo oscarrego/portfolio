@@ -112,7 +112,13 @@
         <!-- 1. HERO / MAIN SHOWCASE SECTION -->
         <section class="sentinel-hero">
             <div class="sentinel-main-placeholder" role="button" tabindex="0">
-                <video src="videos/sentinal_demo.mp4" poster="images/sentinel_main.png" autoplay loop muted playsinline class="sentinel-main-image"></video>
+                <video src="videos/sentinal_demo.mp4" autoplay loop muted playsinline class="sentinel-main-image orbit-hero-video"></video>
+                <img src="images/sentinel_main.png" alt="Sentinel Showcase" class="sentinel-main-image orbit-hero-fallback" style="opacity: 0; pointer-events: none;">
+                
+                <!-- Video Controls -->
+                <button class="video-control-btn" aria-label="Pause Video">
+                    <span class="control-icon">⏸</span>
+                </button>
 
                 <div class="sentinel-hero-content">
                     <h1 class="sentinel-title">Sentinel</h1>

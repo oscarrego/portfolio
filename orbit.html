@@ -112,7 +112,13 @@
         <!-- 1. HERO / MAIN SHOWCASE SECTION -->
         <section class="orbit-hero">
             <div class="orbit-main-placeholder" role="button" tabindex="0">
-                <video src="videos/orbit_demo.mp4" poster="images/orbit_main.png" autoplay loop muted playsinline class="orbit-main-image"></video>
+                <video src="videos/orbit_demo.mp4" autoplay loop muted playsinline class="orbit-main-image orbit-hero-video"></video>
+                <img src="images/orbit_main.png" alt="Orbit Showcase" class="orbit-main-image orbit-hero-fallback" style="opacity: 0; pointer-events: none;">
+                
+                <!-- Video Controls -->
+                <button class="video-control-btn" aria-label="Pause Video">
+                    <span class="control-icon">⏸</span>
+                </button>
 
                 <div class="orbit-hero-content">
                     <h1 class="orbit-title">Orbit</h1>

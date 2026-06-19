@@ -178,4 +178,30 @@
             }, 300);
         }
     });
+
+    // Observe footer background name for viewport-triggered reveal transition
+    const initFooterNameObserver = () => {
+        const footerName = document.querySelector('.footer-name');
+        if (footerName) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        footerName.classList.add('in-view');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                root: null,
+                threshold: 0.05
+            });
+            observer.observe(footerName);
+        }
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFooterNameObserver);
+    } else {
+        initFooterNameObserver();
+    }
 })();
+

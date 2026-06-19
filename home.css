@@ -1125,13 +1125,23 @@ a { text-decoration: none; color: inherit; }
   font-size: clamp(140px, 24vw, 420px);
   font-weight: 900;
   letter-spacing: -0.05em;
-  color: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.015);
   white-space: nowrap;
   user-select: none;
   line-height: 0.8;
   display: block;
   text-transform: uppercase;
-  transform: translateY(25%);
+  
+  /* Initial transition state */
+  opacity: 0;
+  transform: translateY(calc(35% + 20px));
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  will-change: opacity, transform;
+}
+
+.footer-name.in-view {
+  opacity: 1;
+  transform: translateY(35%);
 }
 
 /* ═══════════════════════════════════════════════════════
