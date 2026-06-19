@@ -22,11 +22,11 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
-  <script type="module" crossorigin src="/portfolio-hosting/assets/script-D-gZ9FPI.js"></script>
-  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/script-DkJFwEBy.css">
+  <script type="module" crossorigin src="/portfolio-hosting/assets/script-hk-1fB09.js"></script>
+  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/script-VNUtP1Cy.css">
   <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/sentinel-CW7YDm-n.css">
   <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/loader-BnDdxSgc.css">
-  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/project-detail-BDG1ujDu.css">
+  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/project-detail-BhPz_3lE.css">
 </head>
 <body>
     <!-- LOADING SCREEN -->
@@ -40,11 +40,70 @@
     <div class="mouse-glow"></div>
 
     <!-- FLOATING NAV -->
-    <div class="floating-nav">
-        <a href="index.html">WORK</a>
-        <a href="tools.html">TOOLS</a>
-        <a href="about.html">ABOUT</a>
+    <div class="pill-nav-container" id="pill-nav-container">
+        <nav class="pill-nav" id="pill-nav" aria-label="Main navigation">
+            <div class="pill-nav-header">
+                <a href="index.html" class="pill-nav-logo">Oscar</a>
+                <button class="pill-nav-trigger" id="pill-nav-trigger" aria-label="Toggle Menu">
+                    <span class="menu-dots-container">
+                        <span class="menu-dot"></span>
+                        <span class="menu-dot"></span>
+                        <span class="menu-dot"></span>
+                    </span>
+                    <span class="menu-close-icon" style="display: none;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+
+            <div class="pill-nav-dropdown" id="pill-nav-dropdown">
+                <div class="pill-nav-dropdown-inner">
+                    <div class="menu-card-links">
+                        <a href="index.html#work" class="menu-link">works</a>
+                        <a href="index.html#experience" class="menu-link">experience</a>
+                        <a href="index.html#footer" class="menu-link">contact</a>
+                    </div>
+
+                    <div class="menu-card-footer">
+                        <a href="mailto:oscarrego789@gmail.com" class="menu-email">oscarrego789@gmail.com</a>
+                        <div class="menu-socials">
+                            <a href="https://github.com/oscarrego" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="GitHub">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                </svg>
+                            </a>
+                            <a href="https://linkedin.com/in/oscarrego789" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="LinkedIn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                    <rect x="2" y="9" width="4" height="12"></rect>
+                                    <circle cx="4" cy="4" r="2"></circle>
+                                </svg>
+                            </a>
+                            <a href="resume/Oscar_Resume.pdf" target="_blank" class="social-circle" aria-label="Resume">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    <polyline points="10 9 9 9 8 9"></polyline>
+                                </svg>
+                            </a>
+                            <a href="mailto:oscarrego789@gmail.com" class="social-circle" aria-label="Gmail">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </div>
+    <div class="menu-scrim" id="menu-scrim" aria-hidden="true"></div>
 
     <!-- MAIN CASE STUDY CONTENT -->
     <main class="sentinel-case-study">

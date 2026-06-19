@@ -948,3 +948,79 @@ if (isTouchDevice) {
     setMode('spiral');
     requestAnimationFrame(animate);
 })();
+
+/* ── SHARED PILL NAVIGATION (FOR ALL SUBPAGES) ─────────────────────────── */
+(() => {
+    const initPillNav = () => {
+        const pillNav = document.getElementById('pill-nav');
+        const scrim = document.getElementById('menu-scrim');
+        const trigger = document.getElementById('pill-nav-trigger');
+        const links = document.querySelectorAll('.menu-link');
+        const dotsContainer = trigger?.querySelector('.menu-dots-container');
+        const closeIcon = trigger?.querySelector('.menu-close-icon');
+
+        if (!pillNav || !scrim) return;
+
+        function openMenu() {
+            pillNav.classList.add('open');
+            scrim.classList.add('open');
+            scrim.setAttribute('aria-hidden', 'false');
+            
+            if (dotsContainer) dotsContainer.style.display = 'none';
+            if (closeIcon) closeIcon.style.display = 'flex';
+
+            if (window._lenis) {
+                window._lenis.stop();
+            }
+        }
+
+        function closeMenu() {
+            pillNav.classList.remove('open');
+            scrim.classList.remove('open');
+            scrim.setAttribute('aria-hidden', 'true');
+
+            if (dotsContainer) dotsContainer.style.display = 'flex';
+            if (closeIcon) closeIcon.style.display = 'none';
+
+            if (window._lenis) {
+                window._lenis.start();
+            }
+        }
+
+        function toggleMenu() {
+            if (pillNav.classList.contains('open')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        }
+
+        if (trigger) {
+            trigger.addEventListener('click', (e) => {
+                toggleMenu();
+            });
+        }
+
+        scrim.addEventListener('click', (e) => {
+            closeMenu();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && pillNav.classList.contains('open')) {
+                closeMenu();
+            }
+        });
+
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                closeMenu();
+            });
+        });
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPillNav);
+    } else {
+        initPillNav();
+    }
+})();

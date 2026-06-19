@@ -131,40 +131,7 @@
       });
     }
 
-    // About text
-    const bioText = document.querySelector('.about-bio-text');
-    if (bioText) {
-      gsap.from(bioText, {
-        scrollTrigger: { trigger: bioText, start: 'top 85%', once: true },
-        opacity: 0,
-        y: 28,
-        duration: 1,
-        ease: 'power4.out',
-      });
-    }
 
-    const aboutCols = document.querySelectorAll('.about-col-label, .about-col-list li');
-    aboutCols.forEach((el, i) => {
-      gsap.from(el, {
-        scrollTrigger: { trigger: el, start: 'top 92%', once: true },
-        opacity: 0,
-        y: 14,
-        duration: 0.6,
-        ease: 'power3.out',
-        delay: i * 0.04,
-      });
-    });
-
-    const aboutSub = document.querySelector('.about-bio-sub');
-    if (aboutSub) {
-      gsap.from(aboutSub, {
-        scrollTrigger: { trigger: aboutSub, start: 'top 88%', once: true },
-        opacity: 0,
-        y: 18,
-        duration: 0.8,
-        ease: 'power3.out',
-      });
-    }
 
     // Experience items stagger
     const expItems = document.querySelectorAll('.exp-item');
@@ -191,32 +158,7 @@
       });
     }
 
-    // Contact headline — stagger each word line
-    const contactH = document.querySelector('.contact-headline');
-    if (contactH) {
-      const words = contactH.querySelectorAll('span');
-      gsap.from(words, {
-        scrollTrigger: { trigger: contactH, start: 'top 85%', once: true },
-        opacity: 0,
-        y: 40,
-        duration: 1.0,
-        ease: 'power4.out',
-        stagger: 0.08,
-      });
-    }
 
-    // Contact links
-    const contactLinks = document.querySelectorAll('.contact-link-item');
-    contactLinks.forEach((item, i) => {
-      gsap.from(item, {
-        scrollTrigger: { trigger: item, start: 'top 92%', once: true },
-        opacity: 0,
-        x: -20,
-        duration: 0.7,
-        ease: 'power3.out',
-        delay: i * 0.07,
-      });
-    });
 
     // Footer sig
     const footerSig = document.querySelector('.home-footer-sig');
@@ -493,6 +435,27 @@
       const top = rect.top;
       let progress = -top / travelLimit;
       progress = Math.max(0, Math.min(1, progress));
+
+      // Background color fade from black (#0a0a0a) to cream (#f0ece5)
+      // and text color fade from white (#ffffff) to dark (#0a0a0a)
+      // over progress 0.0 to 0.25
+      const fadeProgress = Math.max(0, Math.min(1, progress / 0.25));
+      const bgR = Math.round(10 + (240 - 10) * fadeProgress);
+      const bgG = Math.round(10 + (236 - 10) * fadeProgress);
+      const bgB = Math.round(10 + (229 - 10) * fadeProgress);
+      
+      const textR = Math.round(255 + (10 - 255) * fadeProgress);
+      const textG = Math.round(255 + (10 - 255) * fadeProgress);
+      const textB = Math.round(255 + (10 - 255) * fadeProgress);
+
+      const sticky = section.querySelector('.narrative-sticky');
+      if (sticky) {
+        sticky.style.backgroundColor = `rgb(${bgR}, ${bgG}, ${bgB})`;
+      }
+
+      paragraphs.forEach(p => {
+        p.style.color = `rgb(${textR}, ${textG}, ${textB})`;
+      });
 
 
       // Line 1 is always fully highlighted (hook line always visible)

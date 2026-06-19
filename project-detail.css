@@ -40,83 +40,83 @@ html.project-detail-page {
 
 /* Orbit */
 .orbit-main-placeholder {
-  background: var(--pd-bg-card) !important;
+  background: #050505 !important;
 }
 
 .orbit-main-placeholder::after {
   background: linear-gradient(
     to top,
-    rgba(240, 236, 229, 1)   0%,
-    rgba(240, 236, 229, 0.9) 25%,
-    rgba(240, 236, 229, 0.4) 55%,
-    transparent              100%
+    #050505 0%,
+    rgba(5, 5, 5, 0.9) 25%,
+    rgba(5, 5, 5, 0.4) 55%,
+    transparent 100%
   ) !important;
 }
 
 .orbit-title {
-  color: var(--pd-text) !important;
+  color: #ffffff !important;
 }
 
 .orbit-meta {
-  color: var(--pd-muted) !important;
+  color: #d7ff3f !important;
 }
 
 .orbit-intro-text {
-  color: var(--pd-muted) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 
 /* Sentinel */
 .sentinel-main-placeholder {
-  background: var(--pd-bg-card) !important;
+  background: #050505 !important;
 }
 
 .sentinel-main-placeholder::after {
   background: linear-gradient(
     to top,
-    rgba(240, 236, 229, 1)   0%,
-    rgba(240, 236, 229, 0.9) 25%,
-    rgba(240, 236, 229, 0.4) 55%,
-    transparent              100%
+    #050505 0%,
+    rgba(5, 5, 5, 0.9) 25%,
+    rgba(5, 5, 5, 0.4) 55%,
+    transparent 100%
   ) !important;
 }
 
 .sentinel-title {
-  color: var(--pd-text) !important;
+  color: #ffffff !important;
 }
 
 .sentinel-meta {
-  color: var(--pd-muted) !important;
+  color: #d7ff3f !important;
 }
 
 .sentinel-intro-text {
-  color: var(--pd-muted) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 
 /* JSMS */
 .jsms-main-placeholder {
-  background: var(--pd-bg-card) !important;
+  background: #050505 !important;
 }
 
 .jsms-main-placeholder::after {
   background: linear-gradient(
     to top,
-    rgba(240, 236, 229, 1)   0%,
-    rgba(240, 236, 229, 0.9) 25%,
-    rgba(240, 236, 229, 0.4) 55%,
-    transparent              100%
+    #050505 0%,
+    rgba(5, 5, 5, 0.9) 25%,
+    rgba(5, 5, 5, 0.4) 55%,
+    transparent 100%
   ) !important;
 }
 
 .jsms-title {
-  color: var(--pd-text) !important;
+  color: #ffffff !important;
 }
 
 .jsms-meta {
-  color: var(--pd-muted) !important;
+  color: #d7ff3f !important;
 }
 
 .jsms-intro-text {
-  color: var(--pd-muted) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 
 /* ─── CONTENT BLOCKS — shared typography overrides ──────── */
@@ -204,8 +204,7 @@ html.project-detail-page {
   background: var(--pd-bg);
 }
 
-/* ─── FLOATING NAV (detail pages use .floating-nav) ──────── */
-
+/*
 .floating-nav {
   background: rgba(10, 10, 10, 0.90) !important;
   border: 1px solid rgba(255, 255, 255, 0.10) !important;
@@ -220,6 +219,7 @@ html.project-detail-page {
 .floating-nav a:hover {
   color: #ffffff !important;
 }
+*/
 
 /* ─── SCROLL REVEAL — base states ────────────────────────── */
 
