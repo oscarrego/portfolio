@@ -127,11 +127,10 @@
         gsap.from(card, {
           scrollTrigger: { trigger: card, start: 'top 88%', once: true },
           opacity: 0,
-          filter: 'blur(12px)',
-          x: -32,
+          y: 40,
           duration: 1.2,
           ease: 'power2.out',
-          delay: (i % 2) * 0.1, // 100ms stagger
+          delay: i * 0.1, // 100ms stagger per card
         });
       });
     }

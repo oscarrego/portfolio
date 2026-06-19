@@ -80,7 +80,7 @@
       if (imageCard) {
         setTimeout(() => {
           imageCard.classList.add('pd-revealed');
-        }, 80);
+        }, 100);
       }
 
       /* Once revealed, stop observing this row — no repeat animations */

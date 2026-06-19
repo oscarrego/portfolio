@@ -2957,16 +2957,14 @@ body.page-leaving {
   
   /* Initial transition state */
   opacity: 0;
-  filter: blur(12px);
-  transform: translate(-32px, 35%);
-  transition: opacity 1.3s cubic-bezier(0.16, 1, 0.3, 1), filter 1.3s cubic-bezier(0.16, 1, 0.3, 1), transform 1.3s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, filter, transform;
+  transform: translate(0, calc(35% + 60px));
+  transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1), transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 .home-footer.in-view .footer-name,
 .footer-name.in-view {
   opacity: 1;
-  filter: blur(0px);
   transform: translate(0, 35%);
 }
 
