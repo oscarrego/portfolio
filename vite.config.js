@@ -14,6 +14,7 @@ export default defineConfig({
         orbit: resolve(__dirname, 'orbit.html'),
         sentinel: resolve(__dirname, 'sentinel.html'),
         jsms: resolve(__dirname, 'jsms.html'),
+        studygpt: resolve(__dirname, 'studygpt.html'),
         tools: resolve(__dirname, 'tools.html'),
       }
     }

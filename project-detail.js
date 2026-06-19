@@ -37,12 +37,15 @@
     '.sentinel-detail-row',
     /* JSMS */
     '.jsms-detail-row',
+    /* StudyGPT */
+    '.studygpt-detail-row',
   ];
 
   const CONTENT_SELECTORS = [
     '.orbit-content-block',
     '.sentinel-content-block',
     '.jsms-content-block',
+    '.studygpt-content-block',
   ];
 
   const CARD_SELECTORS = [
@@ -50,6 +53,7 @@
     '.orbit-mobile-sticky-card',
     '.sentinel-sticky-card',
     '.jsms-sticky-card',
+    '.studygpt-sticky-card',
   ];
 
   /* ── IntersectionObserver ─────────────────────────────────────── */
@@ -103,7 +107,7 @@
   /* ── Video Controls ───────────────────────────────────── */
   function initVideoControls() {
     const placeholder = document.querySelector(
-      '.orbit-main-placeholder, .sentinel-main-placeholder, .jsms-main-placeholder'
+      '.orbit-main-placeholder, .sentinel-main-placeholder, .jsms-main-placeholder, .studygpt-main-placeholder'
     );
     if (!placeholder) return;
 

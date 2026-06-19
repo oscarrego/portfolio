@@ -641,10 +641,11 @@ a { text-decoration: none; color: inherit; }
   will-change: transform;
 }
 
-/* Tighter default framing for Orbit Desktop, Sentinel, JSMS */
+/* Tighter default framing for Orbit Desktop, Sentinel, JSMS, StudyGPT */
 .sw-card--orbit-desktop .sw-card-video,
 .sw-card--sentinel .sw-card-video,
-.sw-card--jsms .sw-card-video {
+.sw-card--jsms .sw-card-video,
+.sw-card--studygpt .sw-card-video {
   transform: scale(1.06);
 }
 
@@ -661,7 +662,8 @@ a { text-decoration: none; color: inherit; }
 /* Tighter-base cards get a larger final zoom */
 .sw-card--orbit-desktop:hover .sw-card-video,
 .sw-card--sentinel:hover .sw-card-video,
-.sw-card--jsms:hover .sw-card-video {
+.sw-card--jsms:hover .sw-card-video,
+.sw-card--studygpt:hover .sw-card-video {
   transform: scale(1.12);
 }
 
