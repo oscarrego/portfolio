@@ -47,15 +47,9 @@
                 <a href="index.html" class="pill-nav-logo">Oscar</a>
                 <button class="pill-nav-trigger" id="pill-nav-trigger" aria-label="Toggle Menu">
                     <span class="menu-dots-container">
-                        <span class="menu-dot"></span>
-                        <span class="menu-dot"></span>
-                        <span class="menu-dot"></span>
-                    </span>
-                    <span class="menu-close-icon" style="display: none;">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
+                        <span class="menu-dot menu-dot--left"></span>
+                        <span class="menu-dot menu-dot--mid"></span>
+                        <span class="menu-dot menu-dot--right"></span>
                     </span>
                 </button>
             </div>
@@ -115,6 +109,12 @@
                 <video src="videos/orbit_demo.mp4" autoplay loop muted playsinline class="orbit-main-image orbit-hero-video"></video>
                 <img src="images/orbit_main.png" alt="Orbit Showcase" class="orbit-main-image orbit-hero-fallback" style="opacity: 0; pointer-events: none;">
                 
+                <!-- Video Mode Switcher (Mobile/Desktop) -->
+                <div class="video-mode-toggle" id="hero-video-toggle" role="group" aria-label="Video switcher">
+                    <button class="video-mode-btn active" data-mode="mobile" aria-pressed="true">Mobile</button>
+                    <button class="video-mode-btn" data-mode="desktop" aria-pressed="false">Desktop</button>
+                </div>
+
                 <!-- Video Controls -->
                 <button class="video-control-btn" aria-label="Pause Video">
                     <span class="control-icon-wrapper">

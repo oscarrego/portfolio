@@ -2495,25 +2495,56 @@ body.page-leaving {
   transform: scale(1.03);
 }
 
+.menu-dots-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 22px;
+  height: 14px;
+}
+
 .menu-dot {
   width: 5px;
   height: 5px;
   background: #000000;
   border-radius: 50%;
-  margin: 0 2.5px;
+  position: absolute;
+  transition:
+    transform 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity   0.28s cubic-bezier(0.4, 0, 0.2, 1),
+    width     0.38s cubic-bezier(0.4, 0, 0.2, 1),
+    height    0.38s cubic-bezier(0.4, 0, 0.2, 1),
+    border-radius 0.38s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.menu-dots-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Resting positions: left, center, right */
+.menu-dot--left  { transform: translateX(-8px); }
+.menu-dot--mid   { transform: translateX(0px); }
+.menu-dot--right { transform: translateX(8px); }
+
+/* Open state — morph into X */
+.pill-nav.open .menu-dot--left {
+  transform: translateX(0) rotate(45deg);
+  width: 14px;
+  height: 2px;
+  border-radius: 2px;
+  background: #000000;
+}
+.pill-nav.open .menu-dot--right {
+  transform: translateX(0) rotate(-45deg);
+  width: 14px;
+  height: 2px;
+  border-radius: 2px;
+  background: #000000;
+}
+.pill-nav.open .menu-dot--mid {
+  opacity: 0;
+  transform: translateX(0) translateY(8px);
 }
 
 .menu-close-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #000000;
+  display: none; /* hidden — using CSS dot morph instead */
 }
 
 /* ─── MENU DROPDOWN & CONTENT ────────────────────────── */

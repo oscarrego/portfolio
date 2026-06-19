@@ -965,9 +965,6 @@ if (isTouchDevice) {
             pillNav.classList.add('open');
             scrim.classList.add('open');
             scrim.setAttribute('aria-hidden', 'false');
-            
-            if (dotsContainer) dotsContainer.style.display = 'none';
-            if (closeIcon) closeIcon.style.display = 'flex';
 
             if (window._lenis) {
                 window._lenis.stop();
@@ -978,9 +975,6 @@ if (isTouchDevice) {
             pillNav.classList.remove('open');
             scrim.classList.remove('open');
             scrim.setAttribute('aria-hidden', 'true');
-
-            if (dotsContainer) dotsContainer.style.display = 'flex';
-            if (closeIcon) closeIcon.style.display = 'none';
 
             if (window._lenis) {
                 window._lenis.start();

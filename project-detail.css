@@ -403,3 +403,112 @@ html.project-detail-page {
   }
 }
 
+/* Remove top strip blur effect from project detail pages */
+html.project-detail-page body::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* Orbit hero mode switcher & zoom transition */
+.orbit-hero {
+  background: #050505;
+  overflow: hidden;
+}
+
+.orbit-main-placeholder {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              border-radius 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Zoom out only when mobile video is active */
+.orbit-main-placeholder.mobile-active {
+  transform: scale(0.85);
+  border-radius: 24px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 900px) {
+  .orbit-main-placeholder.mobile-active {
+    transform: scale(1);
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .orbit-main-placeholder.mobile-active {
+    transform: scale(1);
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+/* Video Mode Switcher in the Center of Video */
+/* Video Mode Switcher at the bottom of the container */
+.video-mode-toggle {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  display: flex;
+  background: rgba(10, 10, 10, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 100px;
+  padding: 6px;
+  gap: 4px;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.video-mode-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.55);
+  background: transparent;
+  border: none;
+  border-radius: 100px;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.15s ease;
+  user-select: none;
+  outline: none;
+}
+
+.video-mode-btn.active {
+  background: #ffffff;
+  color: #050505;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.video-mode-btn:hover:not(.active) {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.video-mode-btn:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 600px) {
+  .video-mode-toggle {
+    bottom: 24px;
+  }
+}
+
+/* Hide toggle when video is paused */
+.orbit-main-placeholder.video-paused .video-mode-toggle {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) scale(0.92);
+}
+
+.orbit-hero-video.fading {
+  opacity: 0 !important;
+}
+

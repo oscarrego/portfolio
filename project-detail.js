@@ -100,7 +100,6 @@
       observer.observe(row);
     });
   }
-
   /* ── Video Controls ───────────────────────────────────── */
   function initVideoControls() {
     const placeholder = document.querySelector(
@@ -114,12 +113,12 @@
 
     if (!video || !fallback || !controlBtn) return;
 
-    let isPlaying = true;
-
     controlBtn.addEventListener('click', (e) => {
       e.stopPropagation();
 
-      if (isPlaying) {
+      const isPaused = placeholder.classList.contains('video-paused');
+
+      if (!isPaused) {
         // Pause Behavior
         video.pause();
         video.style.opacity = '0';
@@ -130,7 +129,7 @@
 
         controlBtn.classList.add('paused');
         controlBtn.setAttribute('aria-label', 'Play Video');
-        isPlaying = false;
+        placeholder.classList.add('video-paused');
       } else {
         // Play Behavior
         fallback.style.opacity = '0';
@@ -143,8 +142,73 @@
 
         controlBtn.classList.remove('paused');
         controlBtn.setAttribute('aria-label', 'Pause Video');
-        isPlaying = true;
+        placeholder.classList.remove('video-paused');
       }
+    });
+  }
+
+  /* ── Orbit Hero Mode Toggle (Mobile / Desktop) ────────── */
+  function initOrbitHeroToggle() {
+    const toggle = document.getElementById('hero-video-toggle');
+    const placeholder = document.querySelector('.orbit-main-placeholder');
+    const video = placeholder?.querySelector('.orbit-hero-video');
+    const fallback = placeholder?.querySelector('.orbit-hero-fallback');
+
+    if (!toggle || !placeholder || !video) return;
+
+    const SOURCES = {
+      mobile: 'videos/orbit_demo.mp4',
+      desktop: 'videos/orbit_demo_pc.mp4',
+    };
+
+    const FALLBACKS = {
+      mobile: 'images/orbit_main.png',
+      desktop: 'images/orbit_main.png',
+    };
+
+    let currentMode = 'mobile';
+
+    // Set initial active state and container scale on load
+    placeholder.classList.add('mobile-active');
+
+    toggle.querySelectorAll('.video-mode-btn').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const mode = btn.dataset.mode;
+        if (mode === currentMode) return;
+        currentMode = mode;
+
+        // Button state update
+        toggle.querySelectorAll('.video-mode-btn').forEach((b) => {
+          const isActive = b.dataset.mode === mode;
+          b.classList.toggle('active', isActive);
+          b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+
+        // Apply scale transition to placeholder
+        if (mode === 'mobile') {
+          placeholder.classList.add('mobile-active');
+        } else {
+          placeholder.classList.remove('mobile-active');
+        }
+
+        // Crossfade video source
+        video.classList.add('fading');
+        setTimeout(() => {
+          video.src = SOURCES[mode];
+          if (fallback) {
+            fallback.src = FALLBACKS[mode];
+          }
+          video.load();
+          
+          // Only play if it's not currently paused
+          const isPaused = placeholder.classList.contains('video-paused');
+          if (!isPaused) {
+            video.play().catch((err) => console.log('Video play interrupted:', err));
+          }
+          video.classList.remove('fading');
+        }, 340);
+      });
     });
   }
 
@@ -152,6 +216,7 @@
   function initAll() {
     initReveal();
     initVideoControls();
+    initOrbitHeroToggle();
   }
 
   if (document.readyState === 'loading') {
