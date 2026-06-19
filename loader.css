@@ -11,7 +11,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: #000000;
+    background: #f5f5f7;
     z-index: 9998; /* Under the global TV static (9999), over all other content */
     display: none;
     flex-direction: column;
@@ -20,8 +20,6 @@
     padding: 60px 8%; /* Matches hero/body padding */
     transition: opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
             visibility 0.4s;
-
-    
 }
 
 #loader.fade-out {
@@ -41,7 +39,7 @@
 .loader-wave {
     width: 200%;
     height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 10'%3E%3Cpath d='M0,5 Q10,0 20,5 T40,5' fill='none' stroke='%23d7ff3f' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 10'%3E%3Cpath d='M0,5 Q10,0 20,5 T40,5' fill='none' stroke='%23000000' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
     background-size: 40px 10px;
     background-repeat: repeat-x;
     animation: waveMove 0.8s linear infinite;
@@ -56,7 +54,7 @@
     font-family: 'Mynor', sans-serif;
     font-size: 11px;
     letter-spacing: 3px;
-    color: rgba(215, 255, 63, 0.7); /* Accent color matching hero intro label */
+    color: rgba(0, 0, 0, 0.6); /* Accent color matching hero intro label */
     text-transform: uppercase;
     font-weight: 600;
     margin-bottom: 8px;
@@ -66,7 +64,7 @@
     font-family: 'PixelOperator', monospace;
     font-size: 80px;
     line-height: 0.85;
-    color: #ffffff;
+    color: #000000;
     letter-spacing: -2px;
 }
 
@@ -75,7 +73,7 @@
     font-family: 'Mynor', sans-serif;
     font-size: 11px;
     letter-spacing: 2px;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(0, 0, 0, 0.5);
     text-transform: uppercase;
     font-weight: 500;
     line-height: 1.4;

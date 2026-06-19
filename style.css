@@ -2678,7 +2678,7 @@ body.page-leaving {
 .home-footer {
   background: #0a0a0a;
   color: #ffffff;
-  padding: 120px var(--pad-x) 160px;
+  padding: 120px clamp(48px, 10vw, 160px) 160px;
   overflow: hidden;
   position: relative;
 }
@@ -2714,8 +2714,8 @@ body.page-leaving {
   display: flex;
   gap: 80px;
   flex-wrap: wrap;
-  flex: 1.5;
-  justify-content: flex-end;
+  flex: 2;
+  justify-content: space-between;
 }
 
 @media (max-width: 900px) {
@@ -2729,6 +2729,11 @@ body.page-leaving {
   flex-direction: column;
   gap: 20px;
   min-width: 180px;
+}
+
+.footer-col-links {
+  align-items: flex-start;
+  text-align: left;
 }
 
 .footer-col-label {
@@ -2745,6 +2750,7 @@ body.page-leaving {
   flex-wrap: wrap;
   gap: 10px;
   max-width: 320px;
+  justify-content: flex-start;
 }
 
 .footer-pill {

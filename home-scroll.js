@@ -52,7 +52,7 @@
   function initHeroReveal() {
     const spans = document.querySelectorAll('.hero-text-reveal');
     const bottom = document.querySelectorAll(
-      '.hero-copyright, .hero-intro-name, .hero-intro-desc, .hero-scroll-cue'
+      '.hero-copyright, .hero-intro-name, .hero-intro-desc'
     );
 
     if (!spans.length) return;

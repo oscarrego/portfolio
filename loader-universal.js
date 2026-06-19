@@ -195,13 +195,38 @@
                 threshold: 0.05
             });
             observer.observe(footerName);
+            return true; // successfully observed
         }
+        return false;
     };
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initFooterNameObserver);
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!initFooterNameObserver()) {
+                const domObserver = new MutationObserver((mutations, observerInstance) => {
+                    if (initFooterNameObserver()) {
+                        observerInstance.disconnect();
+                    }
+                });
+                domObserver.observe(document.body, {
+                    childList: true,
+                    subtree: true
+                });
+            }
+        });
     } else {
-        initFooterNameObserver();
+        if (!initFooterNameObserver()) {
+            const domObserver = new MutationObserver((mutations, observerInstance) => {
+                if (initFooterNameObserver()) {
+                    observerInstance.disconnect();
+                }
+            });
+            domObserver.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        }
     }
 })();
+
 

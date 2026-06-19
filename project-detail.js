@@ -101,7 +101,7 @@
     });
   }
 
-  /* ── Video Controls ───────────────────────────────────────────── */
+  /* ── Video Controls ───────────────────────────────────── */
   function initVideoControls() {
     const placeholder = document.querySelector(
       '.orbit-main-placeholder, .sentinel-main-placeholder, .jsms-main-placeholder'
@@ -128,7 +128,7 @@
         fallback.style.opacity = '1';
         fallback.style.pointerEvents = 'auto';
 
-        controlBtn.querySelector('.control-icon').textContent = '▶';
+        controlBtn.classList.add('paused');
         controlBtn.setAttribute('aria-label', 'Play Video');
         isPlaying = false;
       } else {
@@ -141,7 +141,7 @@
 
         video.play().catch((err) => console.log('Video play interrupted:', err));
 
-        controlBtn.querySelector('.control-icon').textContent = '⏸';
+        controlBtn.classList.remove('paused');
         controlBtn.setAttribute('aria-label', 'Pause Video');
         isPlaying = true;
       }

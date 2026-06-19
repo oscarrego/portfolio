@@ -293,8 +293,16 @@
     window.addEventListener(evt, resumeContext, { once: true, capture: true, passive: true });
   });
 
+  // Load initial state from localStorage
+  const savedSoundState = localStorage.getItem('uiSoundEnabled');
+  window._soundsMuted = (savedSoundState === 'false');
+
+  // Set initial gain based on localStorage state
+  masterGain.gain.setValueAtTime(window._soundsMuted ? 0 : 0.25, ctx.currentTime);
+
   // Global playTone function
   window.playTone = function (type = 'click') {
+    if (window._soundsMuted) return;
     resumeContext();
     if (type === 'hover') return;
     let mappedType = type;
@@ -308,24 +316,128 @@
     }
   };
 
-  // ── Volume toggle (mute/unmute all UI sounds) ────────────────────────────
-  window._soundsMuted = false;
+  // Helper to update button class, title and icon display
+  function updateVolToggleUI() {
+    const btn = document.getElementById('vol-toggle');
+    if (!btn) return;
+    btn.classList.toggle('is-muted', window._soundsMuted);
+    btn.setAttribute('title', window._soundsMuted ? 'UI Sounds Disabled' : 'UI Sounds Enabled');
+    
+    const iconOn = btn.querySelector('.vol-icon--on');
+    const iconOff = btn.querySelector('.vol-icon--off');
+    if (iconOn && iconOff) {
+      iconOn.style.display = window._soundsMuted ? 'none' : 'block';
+      iconOff.style.display = window._soundsMuted ? 'block' : 'none';
+    }
+  }
+
+  // Toggle Function
   window.toggleSoundMute = function () {
+    // If currently unmuted (turning mute ON), play tone BEFORE muting
+    if (!window._soundsMuted) {
+      window.playTone('click');
+    }
+    
     window._soundsMuted = !window._soundsMuted;
+    
+    // Save to localStorage
+    localStorage.setItem('uiSoundEnabled', (!window._soundsMuted).toString());
+    
+    // Smooth transition of master gain value
     masterGain.gain.setTargetAtTime(
       window._soundsMuted ? 0 : 0.25,
       ctx.currentTime, 0.05
     );
-    const btn = document.getElementById('vol-toggle');
-    if (!btn) return;
-    btn.classList.toggle('is-muted', window._soundsMuted);
-    btn.querySelector('.vol-icon--on').style.display  = window._soundsMuted ? 'none' : '';
-    btn.querySelector('.vol-icon--off').style.display = window._soundsMuted ? ''     : 'none';
+    
+    // Update Button UI
+    updateVolToggleUI();
+
+    // If currently unmuted (turning mute OFF), play tone AFTER unmuting
+    if (!window._soundsMuted) {
+      window.playTone('click');
+    }
   };
 
   function initVolToggle() {
-    const btn = document.getElementById('vol-toggle');
-    if (!btn) return;
+    // 1. Inject Styles
+    if (!document.getElementById('vol-toggle-styles')) {
+      const style = document.createElement('style');
+      style.id = 'vol-toggle-styles';
+      style.textContent = `
+        .vol-toggle {
+          position: fixed;
+          bottom: 32px;
+          right: 32px;
+          width: 48px;
+          height: 48px;
+          z-index: 2100;
+          background: rgba(0, 0, 0, 0.85);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 50%;
+          color: rgba(255, 255, 255, 0.95);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: color 0.25s ease;
+          padding: 0;
+          outline: none;
+          box-shadow: none;
+        }
+        .vol-toggle:not(.is-muted) {
+          color: rgba(255, 255, 255, 0.95);
+        }
+        .vol-toggle.is-muted {
+          color: rgba(255, 255, 255, 0.4);
+        }
+        .vol-toggle .vol-icon {
+          width: 18px;
+          height: 18px;
+          display: block;
+        }
+        @media (max-width: 600px) {
+          .vol-toggle {
+            bottom: 24px;
+            right: 24px;
+            width: 42px;
+            height: 42px;
+          }
+          .vol-toggle .vol-icon {
+            width: 16px;
+            height: 16px;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    // 2. Inject Button
+    let btn = document.getElementById('vol-toggle');
+    if (!btn) {
+      btn = document.createElement('button');
+      btn.id = 'vol-toggle';
+      btn.className = 'vol-toggle';
+      btn.setAttribute('aria-label', 'Toggle UI Sounds');
+      btn.innerHTML = `
+        <svg class="vol-icon vol-icon--on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
+        <svg class="vol-icon vol-icon--off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+      `;
+      document.body.appendChild(btn);
+    }
+
+    // 3. Update UI to match current muting state
+    updateVolToggleUI();
+
+    // 4. Add Click listener
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
       window.toggleSoundMute();

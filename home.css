@@ -461,61 +461,7 @@ a { text-decoration: none; color: inherit; }
   max-width: 260px;
 }
 
-.hero-scroll-cue {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 12px;
-  position: absolute;
-  bottom: 48px;
-  right: var(--pad-x);
-  height: 120px;
-  z-index: 10;
-}
 
-.scroll-dot {
-  width: 6px;
-  height: 6px;
-  background-color: var(--accent);
-  border-radius: 50%;
-  animation: scrollDotMove 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
-}
-
-.scroll-line {
-  width: 1px;
-  height: 60px;
-  background: linear-gradient(to bottom, var(--rule) 0%, rgba(255, 255, 255, 0.15) 100%);
-  position: relative;
-}
-
-@keyframes scrollDotMove {
-  0% {
-    transform: translateY(0);
-    opacity: 0.2;
-  }
-  20% {
-    opacity: 1;
-  }
-  80% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(54px);
-    opacity: 0;
-  }
-}
-
-.scroll-text {
-  font-family: var(--font-body);
-  font-size: 9px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--muted);
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  margin-top: 4px;
-}
 
 /* ═══════════════════════════════════════════════════════
    § 2 — SELECTED WORK SHOWCASE
@@ -934,32 +880,29 @@ a { text-decoration: none; color: inherit; }
 
 .vol-toggle {
   position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 999;
-  background: rgba(10, 10, 10, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 100px;
-  width: 44px;
-  height: 44px;
+  bottom: 32px;
+  right: 32px;
+  width: 48px;
+  height: 48px;
+  z-index: 2100;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #ffffff;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s;
-}
-
-.vol-toggle:hover {
-  transform: scale(1.1);
-  background: rgba(30, 30, 30, 0.95);
+  transition: color 0.25s ease;
+  padding: 0;
+  outline: none;
+  box-shadow: none;
 }
 
 .vol-toggle.is-muted {
-  opacity: 0.55;
+  color: rgba(255, 255, 255, 0.4);
 }
 
 /* — Footer redesign — */
@@ -967,7 +910,7 @@ a { text-decoration: none; color: inherit; }
 .home-footer {
   background: #0a0a0a;
   color: #ffffff;
-  padding: 120px var(--pad-x) 160px;
+  padding: 120px clamp(48px, 10vw, 160px) 160px;
   overflow: hidden;
   position: relative;
 }
@@ -1003,8 +946,8 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   gap: 80px;
   flex-wrap: wrap;
-  flex: 1.5;
-  justify-content: flex-end;
+  flex: 2;
+  justify-content: space-between;
 }
 
 @media (max-width: 900px) {
@@ -1018,6 +961,11 @@ a { text-decoration: none; color: inherit; }
   flex-direction: column;
   gap: 20px;
   min-width: 180px;
+}
+
+.footer-col-links {
+  align-items: flex-start;
+  text-align: left;
 }
 
 .footer-col-label {
@@ -1034,6 +982,7 @@ a { text-decoration: none; color: inherit; }
   flex-wrap: wrap;
   gap: 10px;
   max-width: 320px;
+  justify-content: flex-start;
 }
 
 .footer-pill {
@@ -1213,7 +1162,6 @@ a { text-decoration: none; color: inherit; }
   }
 
   .hero-copyright { font-size: 36px; }
-  .hero-scroll-cue { display: none; }
   .hero-intro { align-items: flex-start; text-align: left; }
 
   .work-preview { display: none; }
@@ -1262,11 +1210,11 @@ a { text-decoration: none; color: inherit; }
 
 .narrative-paragraph {
   font-family: var(--font-body);
-  font-size: clamp(22px, 3.8vw, 40px);
-  font-weight: 400;
-  line-height: 1.55;
-  letter-spacing: -0.01em;
-  margin-bottom: 1.6rem;
+  font-size: clamp(24px, 3.8vw, 38px);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  margin-bottom: 0;
   text-align: center;
   color: #0a0a0a;
   will-change: opacity;
@@ -1282,7 +1230,7 @@ a { text-decoration: none; color: inherit; }
   display: inline-block;
   color: inherit;
   will-change: opacity;
-  margin-right: 0.2em;
+  margin-right: 0.22em;
 }
 
 @media (max-width: 600px) {
@@ -1290,7 +1238,9 @@ a { text-decoration: none; color: inherit; }
     padding: 24px var(--pad-x);
   }
   .narrative-paragraph {
-    font-size: clamp(20px, 6vw, 30px);
-    margin-bottom: 1.5rem;
+    font-size: clamp(20px, 5.5vw, 26px);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    margin-bottom: 0;
   }
 }
