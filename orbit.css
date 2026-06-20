@@ -83,6 +83,11 @@ body {
     transform: scale(1.22); /* Enhanced cinematic zoom to match Sentinel/JSMS */
 }
 
+/* Mobile hero: remove cinematic zoom so full original recording is visible */
+.orbit-main-placeholder.mobile-active .orbit-hero-video {
+    transform: none;
+}
+
 .orbit-hero-content {
     position: absolute;
     bottom: 120px;
