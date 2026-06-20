@@ -1,9 +1,4 @@
-  /* ═══════════════════════════════════════════════════════════════════════════
-   Oscar's Portfolio 2026 — HOME-SCROLL.JS
-   Editorial one-pager scroll animations.
-   Uses GSAP + ScrollTrigger (loaded from CDN in index.html).
-   Also handles: nav state, project hover preview, section reveals.
- ═══════════════════════════════════════════════════════════════════════════ */
+
 
 (function () {
   'use strict';
