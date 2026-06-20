@@ -1000,6 +1000,9 @@ if (isTouchDevice) {
             requestAnimationFrame(raf);
 
             window._lenis = lenis;
+            if (document.documentElement.classList.contains('loading-active')) {
+                lenis.stop();
+            }
         }
 
         function openMenu() {

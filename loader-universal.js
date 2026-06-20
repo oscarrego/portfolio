@@ -27,6 +27,7 @@
             return false;
         }
     })();
+    window._isReload = isReload;
 
     // Check if the user returned from a project detail page card click
     const fromProjectCard = sessionStorage.getItem('fromProjectCard');
@@ -79,11 +80,13 @@
     // ── Already shown this session? Skip immediately ──────────────────────────
     if (sessionStorage.getItem(SESSION_KEY)) {
         loader.style.display = 'none';
+        window._loaderFinished = true;
         return;
     }
 
     // ── First visit in this tab session — show the loader ─────────────────────
     sessionStorage.setItem(SESSION_KEY, '1');
+    document.documentElement.classList.add('loading-active');
     loader.style.display = 'flex';
 
     // Setup suitcase lock wheels
@@ -139,6 +142,12 @@
             setTimeout(function () {
                 loader.style.display = 'none';
                 loader.classList.remove('fade-out');
+                document.documentElement.classList.remove('loading-active');
+                if (window._lenis) {
+                    window._lenis.start();
+                }
+                window._loaderFinished = true;
+                window.dispatchEvent(new CustomEvent('loaderFinished'));
                 if (isReload) {
                     window.scrollTo(0, 0);
                 }

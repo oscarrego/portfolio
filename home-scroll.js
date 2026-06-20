@@ -53,6 +53,9 @@
     }
 
     window._lenis = lenis;
+    if (document.documentElement.classList.contains('loading-active')) {
+      lenis.stop();
+    }
   }
 
   /* ── Nav scroll state ───────────────────────────────────────────────────── */

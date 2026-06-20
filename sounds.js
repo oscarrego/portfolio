@@ -331,6 +331,158 @@
     }
   }
 
+  let bgMusic = null;
+  let hasInteracted = false;
+  const targetVolume = 0.15; // Soft ambient volume
+  let fadeInterval = null;
+
+  function fadeBgMusic(targetVol, durationMs = 400) {
+    if (!bgMusic) return;
+    clearInterval(fadeInterval);
+    
+    // If we want to play, make sure we call play() first
+    if (targetVol > 0 && bgMusic.paused) {
+      bgMusic.play().catch(err => {
+        console.warn('Playback prevented:', err);
+      });
+    }
+
+    const startVol = bgMusic.volume;
+    const steps = 20;
+    const intervalTime = durationMs / steps;
+    const volStep = (targetVol - startVol) / steps;
+    let stepCount = 0;
+
+    fadeInterval = setInterval(() => {
+      stepCount++;
+      let nextVol = startVol + volStep * stepCount;
+      bgMusic.volume = Math.max(0, Math.min(targetVolume, nextVol));
+      if (stepCount >= steps) {
+        clearInterval(fadeInterval);
+        bgMusic.volume = targetVol;
+        if (targetVol === 0) {
+          bgMusic.pause();
+        }
+      }
+    }, intervalTime);
+  }
+
+  function playBgMusic() {
+    if (!bgMusic) return;
+    if (document.hidden || window._soundsMuted) {
+      return;
+    }
+    fadeBgMusic(targetVolume, 400);
+  }
+
+  function pauseBgMusic() {
+    if (!bgMusic) return;
+    fadeBgMusic(0, 300);
+  }
+
+  function startPlayingMusic() {
+    if (window._soundsMuted) return;
+
+    bgMusic.play()
+      .then(() => {
+        hasInteracted = true;
+        if (!document.hidden) {
+          fadeBgMusic(targetVolume, 400);
+        } else {
+          bgMusic.volume = 0;
+          bgMusic.pause();
+        }
+      })
+      .catch(() => {
+        // Autoplay blocked, wait for user gesture
+        const startMusicOnInteraction = () => {
+          hasInteracted = true;
+          playBgMusic();
+          ['click', 'touchstart', 'keydown'].forEach(evt => {
+            window.removeEventListener(evt, startMusicOnInteraction, { capture: true });
+          });
+        };
+        ['click', 'touchstart', 'keydown'].forEach(evt => {
+          window.addEventListener(evt, startMusicOnInteraction, { once: true, capture: true, passive: true });
+        });
+      });
+  }
+
+  function initBackgroundMusic() {
+    bgMusic = new Audio('main_menu.mp3');
+    bgMusic.loop = true;
+    bgMusic.volume = 0; // Start at 0 and fade in
+
+    // Retrieve saved time from localStorage (only if NOT a reload/refresh)
+    const isReload = window._isReload || false;
+    if (isReload) {
+      localStorage.removeItem('bgMusicTime');
+    }
+    const savedTime = isReload ? null : localStorage.getItem('bgMusicTime');
+
+    if (savedTime) {
+      if (bgMusic.readyState >= 1) {
+        bgMusic.currentTime = parseFloat(savedTime) || 0;
+      } else {
+        bgMusic.addEventListener('loadedmetadata', () => {
+          bgMusic.currentTime = parseFloat(savedTime) || 0;
+        }, { once: true });
+      }
+    }
+
+    // Periodically save current time
+    let lastSaveTime = 0;
+    bgMusic.addEventListener('timeupdate', () => {
+      const now = Date.now();
+      if (now - lastSaveTime > 1000) {
+        localStorage.setItem('bgMusicTime', bgMusic.currentTime.toString());
+        lastSaveTime = now;
+      }
+    });
+
+    // Save time on beforeunload
+    window.addEventListener('beforeunload', () => {
+      if (bgMusic) {
+        localStorage.setItem('bgMusicTime', bgMusic.currentTime.toString());
+      }
+    });
+
+    // Visibility / focus change handlers
+    function handleVisibilityChange() {
+      if (document.hidden || !document.hasFocus()) {
+        pauseBgMusic();
+      } else {
+        if (hasInteracted && !window._soundsMuted) {
+          playBgMusic();
+        }
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('focus', handleVisibilityChange);
+    window.addEventListener('blur', handleVisibilityChange);
+
+    // Play only when loading screen completes or immediately if already skipped
+    if (window._loaderFinished) {
+      startPlayingMusic();
+    } else {
+      window.addEventListener('loaderFinished', () => {
+        startPlayingMusic();
+      }, { once: true });
+    }
+
+    // Setup fallback interaction for marking interaction status even if muted
+    const markInteraction = () => {
+      hasInteracted = true;
+      ['click', 'touchstart', 'keydown'].forEach(evt => {
+        window.removeEventListener(evt, markInteraction, { capture: true });
+      });
+    };
+    ['click', 'touchstart', 'keydown'].forEach(evt => {
+      window.addEventListener(evt, markInteraction, { once: true, capture: true, passive: true });
+    });
+  }
+
   // Toggle Function
   window.toggleSoundMute = function () {
     // If currently unmuted (turning mute ON), play tone BEFORE muting
@@ -351,6 +503,17 @@
     
     // Update Button UI
     updateVolToggleUI();
+
+    // Update background music volume/mute (commented out for now)
+    /*
+    if (bgMusic) {
+      if (window._soundsMuted) {
+        fadeBgMusic(0, 150);
+      } else {
+        playBgMusic();
+      }
+    }
+    */
 
     // If currently unmuted (turning mute OFF), play tone AFTER unmuting
     if (!window._soundsMuted) {
@@ -460,10 +623,31 @@
       window.toggleSoundMute();
     });
   }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initVolToggle);
-  } else {
+
+  function isInternalNavigationLink(anchor) {
+    if (!anchor || !anchor.href) return false;
+    if (anchor.target === '_blank') return false;
+    if (anchor.href.startsWith('mailto:')) return false;
+    if (anchor.href.startsWith('tel:')) return false;
+    if (anchor.href.startsWith('javascript:')) return false;
+    if (anchor.hasAttribute('download')) return false;
+    try {
+      const url = new URL(anchor.href);
+      return url.origin === window.location.origin;
+    } catch {
+      return false;
+    }
+  }
+
+  function initAll() {
     initVolToggle();
+    // initBackgroundMusic(); // Commented out for now
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
   }
 
 
@@ -472,6 +656,17 @@
   document.addEventListener('click', function (e) {
     const target = e.target;
     if (!target) return;
+
+    // Fade out background music if clicking an internal link (commented out for now)
+    /*
+    const anchor = target.closest('a');
+    if (anchor && isInternalNavigationLink(anchor)) {
+      pauseBgMusic();
+      if (bgMusic) {
+        localStorage.setItem('bgMusicTime', bgMusic.currentTime.toString());
+      }
+    }
+    */
 
     // 1. Navigation Pill Trigger (Menu open/close toggle)
     const navTrigger = target.closest('#pill-nav-trigger');

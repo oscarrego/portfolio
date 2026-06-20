@@ -5,7 +5,16 @@
 
 
 
+/* Lock scrolling and interactions while loading */
+html.loading-active,
+body.loading-active {
+    overflow: hidden !important;
+    height: 100% !important;
+    pointer-events: none !important;
+}
+
 #loader {
+    pointer-events: auto !important;
     position: fixed;
     top: 0;
     left: 0;
