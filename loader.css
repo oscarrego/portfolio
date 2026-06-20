@@ -18,8 +18,8 @@
     justify-content: flex-end;
     align-items: flex-start;
     padding: 60px 8%; /* Matches hero/body padding */
-    transition: opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
-            visibility 0.4s;
+    transition: opacity 1.5s cubic-bezier(0.22, 1, 0.36, 1),
+            visibility 1.5s;
 }
 
 #loader.fade-out {

@@ -64,7 +64,7 @@
     });
 
     const SESSION_KEY = 'portfolioLoaderShown';
-    const LOADER_DURATION = 2200; // ms
+    const LOADER_DURATION = 4000; // ms
 
     // Grab elements — guard in case loader HTML is missing on a page
     const loader = document.getElementById('loader');
@@ -142,7 +142,7 @@
                 if (isReload) {
                     window.scrollTo(0, 0);
                 }
-            }, 450);
+            }, 1200);
         }
     }
 
