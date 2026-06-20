@@ -26,6 +26,23 @@
       smoothWheel: true,
     });
 
+    // Detect reload to reset scroll position immediately
+    const isReload = (function () {
+      try {
+        const navs = window.performance && window.performance.getEntriesByType && window.performance.getEntriesByType('navigation');
+        if (navs && navs.length > 0) {
+          return navs[0].type === 'reload';
+        }
+        return window.performance && window.performance.navigation && window.performance.navigation.type === 1;
+      } catch (e) {
+        return false;
+      }
+    })();
+
+    if (isReload) {
+      lenis.scrollTo(0, { immediate: true });
+    }
+
     // If GSAP ticker is available, use it exclusively (avoids double-RAF)
     if (window.gsap && window.ScrollTrigger) {
       lenis.on('scroll', ScrollTrigger.update);
@@ -260,12 +277,23 @@
   /* ── Clickable card navigation ──────────────────────────────────────────── */
   function initCardNav() {
     document.querySelectorAll('.sw-card[data-href]').forEach((card) => {
+      // Set click listener on card
       card.addEventListener('click', () => {
+        sessionStorage.setItem('fromProjectCard', 'true');
         window.location.href = card.dataset.href;
       });
+
+      // Set click listener on any links inside the card (like CTA) to set the flag too
+      card.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          sessionStorage.setItem('fromProjectCard', 'true');
+        });
+      });
+
       card.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
+          sessionStorage.setItem('fromProjectCard', 'true');
           window.location.href = card.dataset.href;
         }
       });

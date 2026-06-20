@@ -15,14 +15,42 @@
 (function () {
     'use strict';
 
+    // Detect if this page load is a reload/refresh
+    const isReload = (function () {
+        try {
+            const navs = window.performance && window.performance.getEntriesByType && window.performance.getEntriesByType('navigation');
+            if (navs && navs.length > 0) {
+                return navs[0].type === 'reload';
+            }
+            return window.performance && window.performance.navigation && window.performance.navigation.type === 1;
+        } catch (e) {
+            return false;
+        }
+    })();
+
+    // Check if the user returned from a project detail page card click
+    const fromProjectCard = sessionStorage.getItem('fromProjectCard');
+    let targetHash = window.location.hash;
+
+    if (fromProjectCard === 'true' && !isReload) {
+        targetHash = '#work';
+        sessionStorage.removeItem('fromProjectCard');
+    }
+
     // Force browser to always start at the top on reload/load (except when hash/redirecting link navigation is present)
     if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
     }
-    window.scrollTo(0, 0);
+
+    if (isReload) {
+        window.scrollTo(0, 0);
+    } else if (!targetHash) {
+        window.scrollTo(0, 0);
+    }
+
     window.addEventListener('load', () => {
-        if (window.location.hash) {
-            const el = document.querySelector(window.location.hash);
+        if (targetHash && !isReload) {
+            const el = document.querySelector(targetHash);
             if (el) {
                 if (window._lenis) {
                     window._lenis.scrollTo(el, { immediate: true });
@@ -92,6 +120,9 @@
             setTimeout(function () {
                 loader.style.display = 'none';
                 loader.classList.remove('fade-out');
+                if (isReload) {
+                    window.scrollTo(0, 0);
+                }
             }, 450);
         }
     }

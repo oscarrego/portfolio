@@ -353,8 +353,24 @@ if (isTouchDevice) {
 if (!isTouchDevice) {
     class KineticScroll {
         constructor() {
-            this.scrollY      = window.scrollY;
-            this.targetY      = window.scrollY;
+            const isReload = (function () {
+                try {
+                    const navs = window.performance && window.performance.getEntriesByType && window.performance.getEntriesByType('navigation');
+                    if (navs && navs.length > 0) {
+                        return navs[0].type === 'reload';
+                    }
+                    return window.performance && window.performance.navigation && window.performance.navigation.type === 1;
+                } catch (e) {
+                    return false;
+                }
+            })();
+
+            if (isReload) {
+                window.scrollTo(0, 0);
+            }
+
+            this.scrollY      = isReload ? 0 : window.scrollY;
+            this.targetY      = isReload ? 0 : window.scrollY;
             this.velocity     = 0;
             this.friction     = 0.94;
             this.acceleration = 0.06;
