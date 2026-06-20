@@ -1297,16 +1297,15 @@ a { text-decoration: none; color: inherit; }
 }
 
 .footer-social-icon-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+  display: block;
+  position: relative;
   width: 20px;
   height: 20px;
   overflow: hidden;
 }
 
 .footer-social-icon-inner svg {
+  display: block;
   width: 20px;
   height: 20px;
   fill: currentColor;
