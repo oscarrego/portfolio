@@ -385,6 +385,23 @@
           padding: 0;
           outline: none;
           box-shadow: none;
+          opacity: 0;
+          filter: blur(12px);
+          
+          /* Entrance animation on page load — slow & smooth from bottom to top */
+          animation: volToggleEntrance 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        @keyframes volToggleEntrance {
+          0% {
+            opacity: 0;
+            filter: blur(12px);
+            transform: translate3d(0, 40px, 0);
+          }
+          100% {
+            opacity: 1;
+            filter: blur(0px);
+            transform: translate3d(0, 0, 0);
+          }
         }
         .vol-toggle:not(.is-muted) {
           color: rgba(255, 255, 255, 0.95);

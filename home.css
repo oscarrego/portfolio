@@ -84,23 +84,27 @@ a { text-decoration: none; color: inherit; }
   position: fixed;
   top: 24px;
   left: 50%;
-  transform: translate3d(-50%, 24px, 0);
+  transform: translate3d(-50%, 40px, 0);
   z-index: 1000;
   pointer-events: none;
   transition: opacity 0.4s ease;
-  will-change: opacity, transform;
+  will-change: opacity, transform, filter;
+  opacity: 0;
+  filter: blur(12px);
   
-  /* Entrance animation on page load */
-  animation: navPillEntrance 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  /* Entrance animation on page load — slow & smooth from bottom to top */
+  animation: navPillEntrance 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 @keyframes navPillEntrance {
   0% {
     opacity: 0;
-    transform: translate3d(-50%, 24px, 0);
+    filter: blur(12px);
+    transform: translate3d(-50%, 40px, 0);
   }
   100% {
     opacity: 1;
+    filter: blur(0px);
     transform: translate3d(-50%, 0, 0);
   }
 }
@@ -982,6 +986,24 @@ a { text-decoration: none; color: inherit; }
   padding: 0;
   outline: none;
   box-shadow: none;
+  opacity: 0;
+  filter: blur(12px);
+  
+  /* Entrance animation on page load — slow & smooth from bottom to top */
+  animation: volToggleEntrance 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes volToggleEntrance {
+  0% {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translate3d(0, 40px, 0);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 .vol-toggle.is-muted {
