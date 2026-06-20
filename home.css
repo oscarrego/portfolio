@@ -1214,6 +1214,124 @@ a { text-decoration: none; color: inherit; }
   transform: translateX(4px);
 }
 
+.footer-gmail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+  margin-bottom: 8px;
+  width: fit-content;
+  display: block;
+}
+
+.footer-gmail-link:hover {
+  color: #ffffff;
+}
+
+.footer-gmail-text {
+  position: relative;
+}
+
+.footer-gmail-text::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.footer-gmail-link:hover .footer-gmail-text::after {
+  transform: scaleX(1);
+}
+
+.footer-arrow-icon {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  transform: rotate(-60deg);
+  transition: transform 0.3s var(--ease-out);
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.footer-gmail-link:hover .footer-arrow-icon {
+  transform: translate(2px, -2px) rotate(-60deg);
+}
+
+
+.footer-socials {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.footer-social-icon {
+  color: #000000;
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  overflow: hidden;
+  background-clip: padding-box;
+}
+
+.footer-social-icon-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+
+.footer-social-icon-inner svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  flex-shrink: 0;
+  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.footer-social-icon:hover {
+  color: #000000;
+  background-color: #e4e4e7;
+  border-color: #e4e4e7;
+}
+
+.footer-social-icon:hover .footer-social-icon-inner svg {
+  transform: translateY(-20px);
+}
+
+.theme-light .footer-social-icon:hover {
+  color: #000000;
+  background-color: #e4e4e7;
+  border-color: #e4e4e7;
+  box-shadow: none;
+}
+
+
 /* Giant name at the bottom — positioned absolutely behind content */
 .footer-name-wrap {
   position: absolute;

@@ -86,6 +86,17 @@
     sessionStorage.setItem(SESSION_KEY, '1');
     loader.style.display = 'flex';
 
+    // Setup suitcase lock wheels
+    percentEl.innerHTML = `
+      <div class="lock-wheel"><div class="lock-strip" id="wheel-hundreds"><span>0</span><span>1</span></div></div>
+      <div class="lock-wheel"><div class="lock-strip" id="wheel-tens"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div></div>
+      <div class="lock-wheel"><div class="lock-strip" id="wheel-ones"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div></div>
+      <span class="lock-percent">%</span>
+    `;
+    const hundredsStrip = document.getElementById('wheel-hundreds');
+    const tensStrip = document.getElementById('wheel-tens');
+    const onesStrip = document.getElementById('wheel-ones');
+
     // Mobile notice (only on narrow screens)
     const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     if (mobileNotice && (isTouch || window.innerWidth <= 768)) {
@@ -108,12 +119,20 @@
         const eased = 1 - Math.pow(1 - Math.min(rawProgress, 1), 2);
         const displayValue = Math.floor(eased * 100);
 
-        percentEl.textContent = displayValue + '%';
+        const hundreds = Math.floor(displayValue / 100);
+        const tens = Math.floor((displayValue % 100) / 10);
+        const ones = displayValue % 10;
+
+        if (hundredsStrip) hundredsStrip.style.transform = `translateY(${-hundreds * 50}%)`;
+        if (tensStrip) tensStrip.style.transform = `translateY(${-tens * 10}%)`;
+        if (onesStrip) onesStrip.style.transform = `translateY(${-ones * 10}%)`;
 
         if (rawProgress < 1) {
             requestAnimationFrame(updateProgress);
         } else {
-            percentEl.textContent = '100%';
+            if (hundredsStrip) hundredsStrip.style.transform = "translateY(-50%)";
+            if (tensStrip) tensStrip.style.transform = "translateY(0%)";
+            if (onesStrip) onesStrip.style.transform = "translateY(0%)";
 
             // Fade out
             loader.classList.add('fade-out');
@@ -208,27 +227,18 @@
         }, 2500);
     }
 
-    // Intercept all email clicks
+    // Intercept all email clicks to show a helpful toast feedback,
+    // but do NOT prevent default behavior so the mail client opens natively
     document.addEventListener('click', (e) => {
         const anchor = e.target.closest('a');
         if (!anchor) return;
 
         const href = anchor.getAttribute('href');
         if (href && href.startsWith('mailto:')) {
-            e.preventDefault();
-            
-            showToast("Redirecting to your mail client...");
-
-            setTimeout(() => {
-                try {
-                    // Try to trigger the mail client opening
-                    window.location.href = href;
-                } catch (err) {
-                    showToast("Unable to open mail application.", true);
-                }
-            }, 300);
+            showToast("Opening your default mail client...");
         }
     });
+
 
     // Observe footer background name for viewport-triggered reveal transition
     // Observe home-footer for viewport-triggered reveal transition
