@@ -488,6 +488,7 @@
     // 5. Selected Work Cards / project card click
     const swCard = target.closest('.sw-card') || target.closest('.work-card');
     if (swCard) {
+      window.playTone('nav-confirm');
       return;
     }
 

@@ -280,7 +280,10 @@
       // Set click listener on card
       card.addEventListener('click', () => {
         sessionStorage.setItem('fromProjectCard', 'true');
-        window.location.href = card.dataset.href;
+        document.body.classList.add('page-leaving');
+        setTimeout(() => {
+          window.location.href = card.dataset.href;
+        }, 300);
       });
 
       // Set click listener on any links inside the card (like CTA) to set the flag too
@@ -294,7 +297,13 @@
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           sessionStorage.setItem('fromProjectCard', 'true');
-          window.location.href = card.dataset.href;
+          if (typeof window.playTone === 'function') {
+            window.playTone('nav-confirm');
+          }
+          document.body.classList.add('page-leaving');
+          setTimeout(() => {
+            window.location.href = card.dataset.href;
+          }, 300);
         }
       });
     });
