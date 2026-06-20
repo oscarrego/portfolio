@@ -15,6 +15,26 @@
 (function () {
     'use strict';
 
+    // Force browser to always start at the top on reload/load (except when hash/redirecting link navigation is present)
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+    window.addEventListener('load', () => {
+        if (window.location.hash) {
+            const el = document.querySelector(window.location.hash);
+            if (el) {
+                if (window._lenis) {
+                    window._lenis.scrollTo(el, { immediate: true });
+                } else {
+                    el.scrollIntoView();
+                }
+            }
+        } else {
+            window.scrollTo(0, 0);
+        }
+    });
+
     const SESSION_KEY = 'portfolioLoaderShown';
     const LOADER_DURATION = 2200; // ms
 
