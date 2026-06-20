@@ -449,26 +449,7 @@
     initVolToggle();
   }
 
-  // ── Delegated Mouse Hover Event tracking for Project Card entry ──
-  let activeHoveredCard = null;
 
-  document.addEventListener('mouseover', function (e) {
-    const card = e.target.closest('.sw-card, .work-card');
-    if (card && card !== activeHoveredCard) {
-      activeHoveredCard = card;
-      window.playTone('hover-tick');
-    }
-  }, { capture: true });
-
-  document.addEventListener('mouseout', function (e) {
-    const card = e.target.closest('.sw-card, .work-card');
-    if (card && activeHoveredCard === card) {
-      const related = e.relatedTarget;
-      if (!related || !card.contains(related)) {
-        activeHoveredCard = null;
-      }
-    }
-  }, { capture: true });
 
   // Setup click triggers on document to catch interactions automatically
   document.addEventListener('click', function (e) {
@@ -478,12 +459,7 @@
     // 1. Navigation Pill Trigger (Menu open/close toggle)
     const navTrigger = target.closest('#pill-nav-trigger');
     if (navTrigger) {
-      const pillNav = document.getElementById('pill-nav');
-      if (pillNav && pillNav.classList.contains('open')) {
-        window.playTone('menu-open');
-      } else {
-        window.playTone('menu-close');
-      }
+      window.playTone('hover-tick');
       return;
     }
 
@@ -512,7 +488,6 @@
     // 5. Selected Work Cards / project card click
     const swCard = target.closest('.sw-card') || target.closest('.work-card');
     if (swCard) {
-      window.playTone('launch');
       return;
     }
 

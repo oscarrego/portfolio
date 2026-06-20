@@ -5,6 +5,9 @@
 
 /* ── Global Audio System (Pre-rendered / Ccached) ───────────────────────── */
 (() => {
+    // Only initialize fallback if window.playTone is not already defined (e.g. sounds.js not loaded)
+    if (window.playTone) return;
+
     const AC = window.AudioContext || window.webkitAudioContext;
     const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
     if (!AC || !OAC) return;
@@ -75,6 +78,10 @@
     });
 
     window.playTone = (type = 'hover') => {
+        // Respect mute state if set
+        const isMuted = window._soundsMuted || (localStorage.getItem('uiSoundEnabled') === 'false');
+        if (isMuted) return;
+
         resumeContext();
 
         const buf = buffers[type];
@@ -111,6 +118,7 @@
         }
     };
 })();
+
 
 /* ── Touch / pointer capability detection ───────────────────────────────── */
 // Dual check: matchMedia for capability + maxTouchPoints for device flags

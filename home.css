@@ -654,16 +654,16 @@ a { text-decoration: none; color: inherit; }
   transform: scale(1.06);
 }
 
-/* Hover: zoom only the video inside the card container */
-.sw-card:not(.sw-card--soon):hover .sw-card-video {
+/* Hover: zoom only the video inside the card container when hovering over media */
+.sw-card-media:hover .sw-card-video {
   transform: scale(1.08);
 }
 
 /* Tighter-base cards get a larger final zoom */
-.sw-card--orbit-desktop:hover .sw-card-video,
-.sw-card--sentinel:hover .sw-card-video,
-.sw-card--jsms:hover .sw-card-video,
-.sw-card--studygpt:hover .sw-card-video {
+.sw-card--orbit-desktop .sw-card-media:hover .sw-card-video,
+.sw-card--sentinel .sw-card-media:hover .sw-card-video,
+.sw-card--jsms .sw-card-media:hover .sw-card-video,
+.sw-card--studygpt .sw-card-media:hover .sw-card-video {
   transform: scale(1.12);
 }
 
@@ -808,7 +808,8 @@ a { text-decoration: none; color: inherit; }
   flex-shrink: 0;
 }
 
-.sw-card:not(.sw-card--soon):hover .sw-card-cta {
+.sw-card-media:hover + .sw-card-info .sw-card-cta,
+.sw-card-cta:hover {
   color: #0a0a0a;
 }
 
