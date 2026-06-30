@@ -463,6 +463,7 @@ a { text-decoration: none; color: inherit; }
   line-height: 0.90;
 }
 
+
 .hero-text-reveal {
   display: block;
   transform: translateY(105%);
