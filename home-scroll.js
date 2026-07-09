@@ -466,7 +466,7 @@
       // Progress: 0.0 when section top touches viewport top,
       //           1.0 when section bottom touches viewport bottom
       const top = rect.top;
-      let progress = -top / travelLimit;
+      let progress = (-top / travelLimit) * 1.45; // Increased highlight speed by 45% so words light up quicker in the scroll range
       progress = Math.max(0, Math.min(1, progress));
 
       // Highlight each word based on progress
