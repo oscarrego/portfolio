@@ -13,6 +13,8 @@ export default defineConfig({
         aboutIntro: resolve(__dirname, 'about-intro.html'),
         orbit: resolve(__dirname, 'orbit.html'),
         sentinel: resolve(__dirname, 'sentinel.html'),
+        issuetracker: resolve(__dirname, 'issuetracker.html'),
+        mediarift: resolve(__dirname, 'mediarift.html'),
         jsms: resolve(__dirname, 'jsms.html'),
         studygpt: resolve(__dirname, 'studygpt.html'),
         tools: resolve(__dirname, 'tools.html'),

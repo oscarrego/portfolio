@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oscar | JSMS </title>
+    <title>Oscar | Issue Tracker System</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-    <!-- Google Analytics 4 — Replace G-7MTB5QH0GN with your Measurement ID -->
+    <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7MTB5QH0GN"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -21,8 +21,8 @@
     <link rel="stylesheet" href="mobile.css">
     
     <!-- Dedicated Case Study Styles -->
-    <link rel="stylesheet" href="jsms.css">
-    <link rel="stylesheet" href="jsms-mobile.css">
+    <link rel="stylesheet" href="issuetracker.css">
+    <link rel="stylesheet" href="issuetracker-mobile.css">
     <!-- Shared project detail: cream theme + scroll-reveal -->
     <link rel="stylesheet" href="project-detail.css">
 
@@ -67,15 +67,15 @@
                     <div class="menu-card-links">
                         <a href="orbit.html" class="menu-link">orbit</a>
                         <a href="sentinel.html" class="menu-link">sentinel</a>
-                        <a href="issuetracker.html" class="menu-link">issuetracker</a>
+                        <a href="issuetracker.html" class="menu-link active">issuetracker</a>
                         <a href="mediarift.html" class="menu-link">mediarift</a>
-                        <a href="jsms.html" class="menu-link active">jsms</a>
+                        <a href="jsms.html" class="menu-link">jsms</a>
                         <a href="studygpt.html" class="menu-link">studygpt</a>
                         <a href="#footer" class="menu-link">contact</a>
                     </div>
 
                     <div class="menu-card-footer">
-                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=oscarrego789@gmail.com" target="_blank" rel="noopener noreferrer" class="menu-email">oscarrego789@gmail.com</a>
+                        <a href="mailto:oscarrego789@gmail.com" class="menu-email">oscarrego789@gmail.com</a>
                         <div class="menu-socials">
                             <a href="https://github.com/oscarrego" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="GitHub">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -98,7 +98,7 @@
                                     <polyline points="10 9 9 9 8 9"></polyline>
                                 </svg>
                             </a>
-                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=oscarrego789@gmail.com" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="Gmail">
+                            <a href="mailto:oscarrego789@gmail.com" class="social-circle" aria-label="Gmail">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                                     <polyline points="22,6 12,13 2,6"></polyline>
@@ -113,13 +113,13 @@
     <div class="menu-scrim" id="menu-scrim" aria-hidden="true"></div>
 
     <!-- MAIN CASE STUDY CONTENT -->
-    <main class="jsms-case-study">
+    <main class="issuetracker-case-study">
         
         <!-- 1. HERO / MAIN SHOWCASE SECTION -->
-        <section class="jsms-hero">
-            <div class="jsms-main-placeholder" role="button" tabindex="0">
-                <video src="videos/jsms_demo.mp4" autoplay loop muted playsinline class="jsms-main-image orbit-hero-video"></video>
-                <img src="images/jsms_main.jpg" alt="JSMS Showcase" class="jsms-main-image orbit-hero-fallback" style="opacity: 0; pointer-events: none;">
+        <section class="issuetracker-hero">
+            <div class="issuetracker-main-placeholder" role="button" tabindex="0">
+                <video src="videos/IssueTrackerSystem.mp4" autoplay loop muted playsinline class="issuetracker-main-image orbit-hero-video"></video>
+                <img src="images/IssueTrackerSystem/dashboard.png" alt="Issue Tracker Showcase" class="issuetracker-main-image orbit-hero-fallback" style="opacity: 0; pointer-events: none;">
                 
                 <!-- Video Controls -->
                 <button class="video-control-btn" aria-label="Pause Video">
@@ -133,37 +133,31 @@
                     </span>
                 </button>
 
-                <div class="jsms-hero-content">
-                    <h1 class="jsms-title">JSMS</h1>
-                    <div class="jsms-meta">FULL STACK WEB APPLICATION / 2024</div>
-                    <p class="jsms-intro-text">
-                        A full-stack jewellery e-commerce platform designed for product management, customer authentication, and administrative control.
+                <div class="issuetracker-hero-content">
+                    <h1 class="issuetracker-title">Issue Tracker</h1>
+                    <div class="issuetracker-meta">ISSUE TRACKING &amp; COLLABORATION SYSTEM / 2026</div>
+                    <p class="issuetracker-intro-text">
+                        A comprehensive software project management and bug tracking system featuring interactive dashboards, customizable severity metrics, member role controls, and customizable views.
                     </p>
                 </div>
             </div>
         </section>
 
         <!-- 2. DETAIL SECTION BELOW HERO -->
-        <section class="jsms-details">
+        <section class="issuetracker-details">
             
             <!-- ROW 1 -->
-            <div class="jsms-detail-row">
-                <div class="jsms-content-block">
-                
-
+            <div class="issuetracker-detail-row">
+                <div class="issuetracker-content-block">
                     <span class="section-counter">1 /</span>
-                    <h2>Project Overview</h2>
-                    <p>JSMS provides a comprehensive solution for jewellery retailers to manage their online presence. The system integrates product cataloging, secure user accounts, and a streamlined shopping cart workflow into a single, cohesive platform.</p>
+                    <h2>Interactive Dashboard &amp; Metrics</h2>
+                    <p>Track project progress, monitor active issues, and view real-time statistics via a clean, consolidated dashboard interface. The platform consolidates active notifications, tasks assigned to the user, and overall issue density into actionable visual widgets.</p>
                 </div>
-                <div class="jsms-sticky-card">
-                    <div class="jsms-carousel-wrapper autoplay-carousel">
-                        <img src="images/jsms/main_page.png" alt="JSMS Overview" class="jsms-sticky-image active">
-                        <img src="images/jsms/products0.png" alt="JSMS Storefront" class="jsms-sticky-image">
-                        <img src="images/jsms/products1.png" alt="JSMS Storefront" class="jsms-sticky-image">
-                        <img src="images/jsms/middle_page.png" alt="JSMS Storefront" class="jsms-sticky-image">
-                        <img src="images/jsms/middle_page1.png" alt="JSMS Storefront" class="jsms-sticky-image">
-                        <img src="images/jsms/footer.png" alt="JSMS Storefront" class="jsms-sticky-image">
-                        
+                <div class="issuetracker-sticky-card">
+                    <div class="issuetracker-carousel-wrapper">
+                        <img src="images/IssueTrackerSystem/dashboard.png" alt="Dashboard View" class="issuetracker-sticky-image active">
+                        <img src="images/IssueTrackerSystem/inbox.png" alt="Inbox notifications" class="issuetracker-sticky-image">
+                        <img src="images/IssueTrackerSystem/my_issues.png" alt="My Assigned Issues" class="issuetracker-sticky-image">
                         <button class="carousel-nav prev"><span>&lt;</span></button>
                         <button class="carousel-nav next"><span>&gt;</span></button>
                     </div>
@@ -171,142 +165,37 @@
             </div>
 
             <!-- ROW 2 -->
-            <div class="jsms-detail-row">
-                <div class="jsms-content-block">
-                  
+            <div class="issuetracker-detail-row">
+                <div class="issuetracker-content-block">
                     <span class="section-counter">2 /</span>
-                    <h2>User Authentication System</h2>
-                    <p>A secure authentication module developed using PHP and MySQL, enabling user registration, login, session management, and account access control for the jewellery management platform.</p>
+                    <h2>Issue Management &amp; Creation</h2>
+                    <p>Log new bugs, define custom severities, status values, and set assignees through a detailed issue form. Filter, sort, and search through issues using the customized database table view, allowing teams to quickly address bottlenecks and track progress step-by-step.</p>
                 </div>
-                <div class="jsms-sticky-card">
-                    <div class="jsms-carousel-wrapper autoplay-carousel">
-                        <img src="images/jsms/user_signin.png" alt="JSMS Architecture" class="jsms-sticky-image active">
-                        <img src="images/jsms/user_register.png" alt="JSMS Backend" class="jsms-sticky-image">
+                <div class="issuetracker-sticky-card">
+                    <div class="issuetracker-carousel-wrapper">
+                        <img src="images/IssueTrackerSystem/new_issue.png" alt="New Issue Form" class="issuetracker-sticky-image active">
+                        <img src="images/IssueTrackerSystem/issues.png" alt="Issue Grid View" class="issuetracker-sticky-image">
+                        <img src="images/IssueTrackerSystem/view-current-issue.png" alt="Detailed Issue Inspector" class="issuetracker-sticky-image">
                         <button class="carousel-nav prev"><span>&lt;</span></button>
                         <button class="carousel-nav next"><span>&gt;</span></button>
                     </div>
                 </div>
             </div>
 
-            
-
-            <!-- ROW 4 -->
-            <div class="jsms-detail-row">
-                <div class="jsms-content-block">
-                   
+            <!-- ROW 3 -->
+            <div class="issuetracker-detail-row">
+                <div class="issuetracker-content-block">
                     <span class="section-counter">3 /</span>
-                    <h2>Dynamic Category</h2>
-                    <p>The storefront is powered by a database-driven category system where jewellery categories are dynamically created, updated, and managed through the backend. Any changes made by administrators are automatically reflected across the customer-facing interface without requiring code modifications.</p>
+                    <h2>Team Collaboration &amp; Control</h2>
+                    <p>Manage project members, invite new developers, and update access permissions. Create entirely new projects and customize details like category, icon, and specific tracking parameters via a robust administration panel.</p>
                 </div>
-                <div class="jsms-sticky-card">
-                    <div class="jsms-carousel-wrapper autoplay-carousel">
-                        <img src="images/jsms/categories0.png" alt="JSMS Products" class="jsms-sticky-image active">
-                        <img src="images/jsms/categories1.png" alt="JSMS Inventory" class="jsms-sticky-image">
-                        <img src="images/jsms/categories2.png" alt="JSMS Inventory" class="jsms-sticky-image">
+                <div class="issuetracker-sticky-card">
+                    <div class="issuetracker-carousel-wrapper">
+                        <img src="images/IssueTrackerSystem/manage_members.png" alt="Manage Members" class="issuetracker-sticky-image active">
+                        <img src="images/IssueTrackerSystem/customize_panel.png" alt="Customization panel" class="issuetracker-sticky-image">
+                        <img src="images/IssueTrackerSystem/create_project.png" alt="Create new project" class="issuetracker-sticky-image">
                         <button class="carousel-nav prev"><span>&lt;</span></button>
                         <button class="carousel-nav next"><span>&gt;</span></button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ROW 5 -->
-            <div class="jsms-detail-row">
-                <div class="jsms-content-block">
-                   
-                    <span class="section-counter">4 /</span>
-                    <h2>Shopping Cart</h2>
-                    <p>A database-driven shopping cart system that allows users to add products, manage quantities, review selections, and calculate order totals before checkout. Cart data is linked to authenticated user accounts, ensuring a personalized shopping experience across sessions.</p>
-                </div>
-                <div class="jsms-sticky-card">
-                    <div class="jsms-carousel-wrapper">
-                        <img src="images/jsms/shopping_cart.png" alt="JSMS Customers" class="jsms-sticky-image active">
-                        
-                      
-                    </div>
-                </div>
-            </div>
-
-            <!-- ROW 6 -->
-            <div class="jsms-detail-row">
-                <div class="jsms-content-block">
-                   
-                    <span class="section-counter">5 /</span>
-                    <h2>Admin Authentication</h2>
-                    <p>A dedicated administrative authentication system built with PHP and MySQL, providing secure backend access through role-based login, session management, and protected administrator controls for platform management.</p>
-                </div>
-                <div class="jsms-sticky-card">
-                    <div class="jsms-carousel-wrapper autoplay-carousel">
-                        <img src="images/jsms/admin_signin.png" alt="JSMS Orders" class="jsms-sticky-image active">
-                        <img src="images/jsms/admin_register.png" alt="JSMS Checkout" class="jsms-sticky-image">
-                        <button class="carousel-nav prev"><span>&lt;</span></button>
-                        <button class="carousel-nav next"><span>&gt;</span></button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ROW 7 -->
-            <div class="jsms-detail-row">
-                <div class="jsms-content-block">
-                   
-                    <span class="section-counter">6 /</span>
-                    <h2>Dashboard & System Overview</h2>
-                    <p>A centralized administrative dashboard designed to provide real-time insights into platform activity, inventory statistics, user management, catalog performance, and system health, enabling efficient monitoring and control of all backend operations through a unified management interface.</p>
-                </div>
-                <div class="jsms-sticky-card">
-                    <div class="jsms-carousel-wrapper">
-                        <img src="images/jsms/dashboard.png" alt="JSMS Database" class="jsms-sticky-image active">
-                        
-                       
-                    </div>
-                </div>
-            </div>
-
-            <!-- ROW 8 -->
-            <div class="jsms-detail-row">
-                <div class="jsms-content-block">
-                   
-                    <span class="section-counter">7 /</span>
-                    <h2>Category Management System</h2>
-                    <p>A backend-driven category management system that enables administrators to create, update, organize, and remove jewellery categories dynamically, with all changes automatically reflected across the frontend storefront and product catalog.</p>
-                </div>
-                <div class="jsms-sticky-card">
-                    <div class="jsms-carousel-wrapper ">
-                        <img src="images/jsms/manage_category.png" alt="JSMS Future" class="jsms-sticky-image active">
-                        
-                    </div>
-                </div>
-            </div>
-
-             <!-- ROW 9 -->
-            <div class="jsms-detail-row">
-                <div class="jsms-content-block">
-                   
-                    <span class="section-counter">8 /</span>
-                    <h2>Product Management & Catalog Creation</h2>
-                    <p>A comprehensive product management system enabling administrators to create, categorize, and publish jewellery products with image uploads, pricing controls, live previews, and dynamic frontend synchronization powered by a PHP and MySQL backend architecture.</p>
-                </div>
-                <div class="jsms-sticky-card">
-                    <div class="jsms-carousel-wrapper">
-                        <img src="images/jsms/add_product.png" alt="JSMS Future" class="jsms-sticky-image active">
-                       
-                        
-                    </div>
-                </div>
-            </div>
-
-                 <!-- ROW 10- -->
-            <div class="jsms-detail-row">
-                <div class="jsms-content-block">
-                   
-                    <span class="section-counter">9 /</span>
-                    <h2>Product Catalog Management</h2>
-                    <p>A backend-powered catalog management system that enables administrators to browse, search, filter, and manage jewellery inventory through a centralized dashboard, providing complete control over product records, pricing information, category assignments, and storefront synchronization.</p>
-                </div>
-                <div class="jsms-sticky-card">
-                    <div class="jsms-carousel-wrapper">
-                        <img src="images/jsms/view_product.png" alt="JSMS Future" class="jsms-sticky-image active">
-                        
-                        
                     </div>
                 </div>
             </div>
@@ -334,7 +223,7 @@
                 </div>
                 <div class="footer-col">
                     <span class="footer-col-label">/Contact</span>
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=oscarrego789@gmail.com" target="_blank" rel="noopener noreferrer" class="footer-gmail-link">
+                    <a href="mailto:oscarrego789@gmail.com" class="footer-gmail-link">
                         <span class="footer-gmail-text">oscarrego789@gmail.com</span>
                         <svg class="footer-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -376,12 +265,11 @@
     <script src="loader-universal.js"></script>
     <script src="analytics.js"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-    const carouselWrappers = document.querySelectorAll('.jsms-carousel-wrapper');
+document.addEventListener('DOMContentLoaded', () => {
+    const carouselWrappers = document.querySelectorAll('.issuetracker-carousel-wrapper');
 
     carouselWrappers.forEach(wrapper => {
-
-        const images = wrapper.querySelectorAll('.jsms-sticky-image');
+        const images = wrapper.querySelectorAll('.issuetracker-sticky-image');
         const prevBtn = wrapper.querySelector('.carousel-nav.prev');
         const nextBtn = wrapper.querySelector('.carousel-nav.next');
 
@@ -389,51 +277,34 @@
         let autoPlayInterval = null;
 
         const updateCarousel = (newIndex) => {
-
             images[currentIndex].classList.remove('active');
-
             currentIndex = newIndex;
-
             if (currentIndex >= images.length) currentIndex = 0;
             if (currentIndex < 0) currentIndex = images.length - 1;
-
             images[currentIndex].classList.add('active');
         };
 
         if (wrapper.classList.contains('autoplay-carousel')) {
-
             const observer = new IntersectionObserver((entries) => {
-
                 entries.forEach(entry => {
-
                     if (entry.isIntersecting) {
-
                         if (!autoPlayInterval) {
-
                             autoPlayInterval = setInterval(() => {
                                 updateCarousel(currentIndex + 1);
                             }, 3000);
-
                         }
-
                     } else {
-
                         clearInterval(autoPlayInterval);
                         autoPlayInterval = null;
-
                     }
-
                 });
-
             }, {
                 threshold: 0.6
             });
-
             observer.observe(wrapper);
         }
 
         if (prevBtn && nextBtn) {
-
             prevBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 updateCarousel(currentIndex - 1);
@@ -443,14 +314,12 @@
                 e.stopPropagation();
                 updateCarousel(currentIndex + 1);
             });
-
         }
-
     });
 });
     </script>
-<script src="page-transition.js"></script>
-<script src="grain.js"></script>
-<script src="project-detail.js"></script>
+    <script src="page-transition.js"></script>
+    <script src="grain.js"></script>
+    <script src="project-detail.js"></script>
 </body>
 </html>

@@ -119,6 +119,60 @@ html.project-detail-page {
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
+/* Issue Tracker */
+.issuetracker-main-placeholder {
+  background: #050505 !important;
+}
+
+.issuetracker-main-placeholder::after {
+  background: linear-gradient(
+    to top,
+    #050505 0%,
+    rgba(5, 5, 5, 0.9) 25%,
+    rgba(5, 5, 5, 0.4) 55%,
+    transparent 100%
+  ) !important;
+}
+
+.issuetracker-title {
+  color: #ffffff !important;
+}
+
+.issuetracker-meta {
+  color: #d7ff3f !important;
+}
+
+.issuetracker-intro-text {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Mediarift */
+.mediarift-main-placeholder {
+  background: #050505 !important;
+}
+
+.mediarift-main-placeholder::after {
+  background: linear-gradient(
+    to top,
+    #050505 0%,
+    rgba(5, 5, 5, 0.9) 25%,
+    rgba(5, 5, 5, 0.4) 55%,
+    transparent 100%
+  ) !important;
+}
+
+.mediarift-title {
+  color: #ffffff !important;
+}
+
+.mediarift-meta {
+  color: #d7ff3f !important;
+}
+
+.mediarift-intro-text {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
 /* JSMS */
 .jsms-main-placeholder {
   background: #050505 !important;
@@ -162,7 +216,9 @@ html.project-detail-page {
 .orbit-content-block h2,
 .sentinel-content-block h2,
 .jsms-content-block h2,
-.studygpt-content-block h2 {
+.studygpt-content-block h2,
+.issuetracker-content-block h2,
+.mediarift-content-block h2 {
   color: var(--pd-text) !important;
   font-family: 'Inter', 'AltmannGrotesk-Bold', sans-serif;
   font-size: clamp(22px, 2.5vw, 30px);
@@ -174,7 +230,9 @@ html.project-detail-page {
 .orbit-content-block p,
 .sentinel-content-block p,
 .jsms-content-block p,
-.studygpt-content-block p {
+.studygpt-content-block p,
+.issuetracker-content-block p,
+.mediarift-content-block p {
   color: var(--pd-muted) !important;
   font-family: 'Inter', 'AltmannGrotesk-Regular', sans-serif;
   font-size: 15px;
@@ -187,6 +245,8 @@ html.project-detail-page {
 .sentinel-carousel-wrapper,
 .jsms-carousel-wrapper,
 .studygpt-carousel-wrapper,
+.issuetracker-carousel-wrapper,
+.mediarift-carousel-wrapper,
 .orbit-mobile-carousel-wrapper {
   background: var(--pd-bg-card) !important;
   border: 1px solid var(--pd-border) !important;
@@ -198,7 +258,9 @@ html.project-detail-page {
 /* Remove dark vignette overlays on sentinel / jsms carousel wrappers */
 .sentinel-carousel-wrapper::after,
 .jsms-carousel-wrapper::after,
-.studygpt-carousel-wrapper::after {
+.studygpt-carousel-wrapper::after,
+.issuetracker-carousel-wrapper::after,
+.mediarift-carousel-wrapper::after {
   background: none !important;
 }
 
@@ -226,14 +288,18 @@ html.project-detail-page {
 .orbit-details,
 .sentinel-details,
 .jsms-details,
-.studygpt-details {
+.studygpt-details,
+.issuetracker-details,
+.mediarift-details {
   background: transparent;
 }
 
 .orbit-case-study,
 .sentinel-case-study,
 .jsms-case-study,
-.studygpt-case-study {
+.studygpt-case-study,
+.issuetracker-case-study,
+.mediarift-case-study {
   background: var(--pd-bg);
 }
 
@@ -270,7 +336,9 @@ html.project-detail-page {
   .orbit-content-block,
   .sentinel-content-block,
   .jsms-content-block,
-  .studygpt-content-block {
+  .studygpt-content-block,
+  .issuetracker-content-block,
+  .mediarift-content-block {
     opacity: 0;
     filter: blur(12px);
     transform: translateX(-32px);
@@ -285,7 +353,9 @@ html.project-detail-page {
   .orbit-mobile-sticky-card,
   .sentinel-sticky-card,
   .jsms-sticky-card,
-  .studygpt-sticky-card {
+  .studygpt-sticky-card,
+  .issuetracker-sticky-card,
+  .mediarift-sticky-card {
     opacity: 0;
     filter: blur(12px);
     transform: translateX(-32px);
@@ -303,11 +373,15 @@ html.project-detail-page {
   .sentinel-content-block.pd-revealed,
   .jsms-content-block.pd-revealed,
   .studygpt-content-block.pd-revealed,
+  .issuetracker-content-block.pd-revealed,
+  .mediarift-content-block.pd-revealed,
   .orbit-sticky-card.pd-revealed,
   .orbit-mobile-sticky-card.pd-revealed,
   .sentinel-sticky-card.pd-revealed,
   .jsms-sticky-card.pd-revealed,
-  .studygpt-sticky-card.pd-revealed {
+  .studygpt-sticky-card.pd-revealed,
+  .issuetracker-sticky-card.pd-revealed,
+  .mediarift-sticky-card.pd-revealed {
     opacity: 1;
     filter: blur(0px);
     transform: translateX(0);
@@ -320,11 +394,15 @@ html.project-detail-page {
   .sentinel-content-block,
   .jsms-content-block,
   .studygpt-content-block,
+  .issuetracker-content-block,
+  .mediarift-content-block,
   .orbit-sticky-card,
   .orbit-mobile-sticky-card,
   .sentinel-sticky-card,
   .jsms-sticky-card,
-  .studygpt-sticky-card {
+  .studygpt-sticky-card,
+  .issuetracker-sticky-card,
+  .mediarift-sticky-card {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
@@ -427,7 +505,9 @@ html.project-detail-page {
   .orbit-hero-content,
   .sentinel-hero-content,
   .jsms-hero-content,
-  .studygpt-hero-content {
+  .studygpt-hero-content,
+  .issuetracker-hero-content,
+  .mediarift-hero-content {
     bottom: 110px !important;
   }
 }
@@ -444,7 +524,9 @@ html.project-detail-page {
   .orbit-hero-content,
   .sentinel-hero-content,
   .jsms-hero-content,
-  .studygpt-hero-content {
+  .studygpt-hero-content,
+  .issuetracker-hero-content,
+  .mediarift-hero-content {
     bottom: 100px !important;
   }
 }

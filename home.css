@@ -654,7 +654,9 @@ a { text-decoration: none; color: inherit; }
 .sw-card--orbit-desktop .sw-card-video,
 .sw-card--sentinel .sw-card-video,
 .sw-card--jsms .sw-card-video,
-.sw-card--studygpt .sw-card-video {
+.sw-card--studygpt .sw-card-video,
+.sw-card--issuetracker .sw-card-video,
+.sw-card--mediarift .sw-card-video {
   transform: scale(1.06);
 }
 
@@ -672,7 +674,9 @@ a { text-decoration: none; color: inherit; }
 .sw-card--orbit-desktop .sw-card-media:hover .sw-card-video,
 .sw-card--sentinel .sw-card-media:hover .sw-card-video,
 .sw-card--jsms .sw-card-media:hover .sw-card-video,
-.sw-card--studygpt .sw-card-media:hover .sw-card-video {
+.sw-card--studygpt .sw-card-media:hover .sw-card-video,
+.sw-card--issuetracker .sw-card-media:hover .sw-card-video,
+.sw-card--mediarift .sw-card-media:hover .sw-card-video {
   transform: scale(1.12);
 }
 

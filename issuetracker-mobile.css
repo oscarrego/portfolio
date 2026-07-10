@@ -1,0 +1,108 @@
+/* OSCAR REGO PORTFOLIO 2026 - ISSUE TRACKER SYSTEM MOBILE STYLESHEET */
+
+@media (max-width: 1200px) {
+    .issuetracker-detail-row {
+        grid-template-columns: 1fr 400px;
+        gap: 60px;
+    }
+}
+
+@media (max-width: 900px) {
+    /* Prevent horizontal scrolling and handle overflow */
+    html, body {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+
+    .issuetracker-case-study {
+        padding-top: 0;
+    }
+
+    .issuetracker-title {
+        font-size: 72px;
+    }
+
+    .issuetracker-main-placeholder {
+        height: 70vh;
+        min-height: 500px;
+    }
+
+    .issuetracker-hero-content {
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 88%;
+    }
+
+    .issuetracker-details {
+        gap: 80px;
+        margin-top: 60px;
+        padding: 0 5%;
+    }
+
+    .issuetracker-detail-row {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .issuetracker-sticky-card {
+        position: static;
+        width: 100%;
+        height: auto;
+    }
+
+    .issuetracker-carousel-wrapper {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+    }
+}
+
+@media (max-width: 600px) {
+    .issuetracker-title {
+        font-size: 14vw;
+    }
+
+    .issuetracker-main-placeholder {
+        height: 65vh;
+        min-height: 450px;
+    }
+
+    .issuetracker-hero-content {
+        bottom: 60px;
+    }
+
+    .issuetracker-content-block h2 {
+        font-size: 28px;
+    }
+
+    .issuetracker-content-block p {
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    .issuetracker-intro-text {
+        font-size: 16px;
+    }
+
+    /* Keep carousel navigation usable on small touch devices */
+    .carousel-nav {
+        width: 32px;
+        height: 32px;
+        font-size: 24px;
+        border-radius: 8px;
+        bottom: 10px;
+    }
+
+    .carousel-nav.prev {
+        right: 60px;
+    }
+
+    .carousel-nav.next {
+        right: 15px;
+    }
+
+    .carousel-nav span {
+        transform: translateY(-2px);
+    }
+}

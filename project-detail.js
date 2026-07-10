@@ -39,6 +39,10 @@
     '.jsms-detail-row',
     /* StudyGPT */
     '.studygpt-detail-row',
+    /* Issue Tracker */
+    '.issuetracker-detail-row',
+    /* Mediarift */
+    '.mediarift-detail-row',
   ];
 
   const CONTENT_SELECTORS = [
@@ -46,6 +50,8 @@
     '.sentinel-content-block',
     '.jsms-content-block',
     '.studygpt-content-block',
+    '.issuetracker-content-block',
+    '.mediarift-content-block',
   ];
 
   const CARD_SELECTORS = [
@@ -54,6 +60,8 @@
     '.sentinel-sticky-card',
     '.jsms-sticky-card',
     '.studygpt-sticky-card',
+    '.issuetracker-sticky-card',
+    '.mediarift-sticky-card',
   ];
 
   /* ── IntersectionObserver ─────────────────────────────────────── */

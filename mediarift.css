@@ -1,0 +1,282 @@
+/* 
+   OSCAR REGO PORTFOLIO 2026
+   MEDIARIFT CASE STUDY STYLESHEET
+*/
+
+@font-face {
+    font-family: 'AltmannGrotesk-Regular';
+    src: url('fonts/AltmannGrotesk-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AltmannGrotesk-Bold';
+    src: url('fonts/AltmannGrotesk-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+/* 1. LAYOUT & GLOBAL */
+body {
+    /* Background inherited from style.css */
+}
+
+.mediarift-case-study {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding-top: 0;
+    padding-bottom: 120px;
+}
+
+/* 2. HERO SECTION */
+.mediarift-hero {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.mediarift-main-placeholder {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #121212 0%, #0a0c10 100%);
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* Cinematic Gradient Overlay */
+.mediarift-main-placeholder::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 5;
+    width: 100%;
+    height: 80%;
+    pointer-events: none;
+    background: linear-gradient(to top, 
+        rgba(11, 11, 11, 1) 0%, 
+        rgba(11, 11, 11, 0.9) 25%, 
+        rgba(11, 11, 11, 0.5) 50%, 
+        transparent 100%);
+}
+
+.mediarift-main-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.22); /* Enhanced cinematic zoom */
+}
+
+.mediarift-hero-content {
+    position: absolute;
+    bottom: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 84%;
+    max-width: 1000px;
+    text-align: center;
+}
+
+.mediarift-title {
+    margin: 0;
+    color: #fff;
+    font-family: 'PixelOperator', monospace;
+    font-size: 100px;
+    line-height: 1;
+    letter-spacing: -2px;
+}
+
+.mediarift-meta {
+    color: #e86a33;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.mediarift-intro-text {
+    margin: 0;
+    max-width: 800px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+/* 3. DETAILS GRID SECTION */
+.mediarift-details {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+    max-width: 1600px;
+    margin: 80px auto 100px;
+    padding: 0 7%;
+}
+
+.mediarift-detail-row {
+    display: grid;
+    grid-template-columns: 1fr minmax(min(720px, 100%), 720px);
+    gap: 60px;
+    align-items: flex-start;
+}
+
+/* Content Blocks */
+.mediarift-content-block {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding-bottom: 20px;
+}
+
+.mediarift-content-block h2 {
+    margin: 0;
+    color: #f86222;
+    font-family: 'AltmannGrotesk-Bold', sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    text-transform: none;
+    letter-spacing: 0.5px;
+}
+
+.mediarift-content-block p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.717);
+    font-family: 'AltmannGrotesk-Regular', sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 1.45;
+    text-align: left;
+}
+
+/* Sticky Image Cards */
+.mediarift-sticky-card {
+    position: sticky;
+    top: 160px;
+    display: flex;
+    width: min(720px, 100%);
+    aspect-ratio: 720 / 386;
+    height: auto;
+}
+
+.mediarift-sticky-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1px;
+}
+
+/* 4. CAROUSEL COMPONENTS */
+.mediarift-carousel-wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 720 / 386;
+    background: #0f0f0f;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.7);
+}
+
+.mediarift-carousel-wrapper .mediarift-sticky-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mediarift-carousel-wrapper .mediarift-sticky-image.active {
+    z-index: 2;
+    opacity: 1;
+}
+
+/* Carousel Navigation */
+.carousel-nav {
+    position: absolute;
+    bottom: 15px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: rgb(247, 247, 247);
+    font-family: 'PixelOperator', monospace;
+    font-size: 32px;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-nav:hover {
+    color: #fff;
+    background: rgba(0, 0, 0, 0.6);
+    filter: brightness(1.2);
+    transform: scale(1.08);
+}
+
+.carousel-nav.prev {
+    right: 84px;
+}
+
+.carousel-nav.next {
+    right: 24px;
+}
+
+.carousel-nav span {
+    display: inline-block;
+    line-height: 1;
+    transform: translateY(-4px);
+}
+
+/* 5. RESPONSIVE DESIGN */
+/* Mobile styles have been moved to mediarift-mobile.css */
+
+.mediarift-carousel-wrapper::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+    background:
+        linear-gradient(to top, rgba(0,0,0,0.40), transparent 25%),
+        linear-gradient(to bottom, rgba(0,0,0,0.40), transparent 25%),
+        linear-gradient(to left, rgba(0,0,0,0.30), transparent 18%),
+        linear-gradient(to right, rgba(0,0,0,0.30), transparent 18%);
+}
+
+.section-counter {
+    color: #8e8e8e;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: -10px;
+}
