@@ -119,7 +119,7 @@
         <section class="mediarift-hero">
             <div class="mediarift-main-placeholder" role="button" tabindex="0">
                 <video src="videos/mediarift.mp4" autoplay loop muted playsinline class="mediarift-main-image orbit-hero-video"></video>
-                <img src="images/Mediarift/media_fetcher.png" alt="Mediarift Showcase" class="mediarift-main-image orbit-hero-fallback" style="opacity: 0; pointer-events: none;">
+                <img src="images/Mediarift/download_manager1.png" alt="Mediarift Showcase" class="mediarift-main-image orbit-hero-fallback" style="opacity: 0; pointer-events: none;">
                 
                 <!-- Video Controls -->
                 <button class="video-control-btn" aria-label="Pause Video">
@@ -150,13 +150,14 @@
             <div class="mediarift-detail-row">
                 <div class="mediarift-content-block">
                     <span class="section-counter">1 /</span>
-                    <h2>Media Acquisition &amp; Fetcher</h2>
-                    <p>Enter any URL or online resource path to parse and retrieve video, audio, or metadata. The application manages parallel download jobs using a dedicated queue manager, letting users pause, resume, and track speed metrics in real-time.</p>
+                    <h2>Media Downloader</h2>
+                    <p>Download high-quality videos, audio tracks, and thumbnails from popular platforms such as YouTube, Reddit, Twitter (X), Instagram, and more. Features multi-thread downloading, progress tracking, and speed metrics.</p>
                 </div>
                 <div class="mediarift-sticky-card">
                     <div class="mediarift-carousel-wrapper">
-                        <img src="images/Mediarift/media_fetcher.png" alt="Media URL Fetcher" class="mediarift-sticky-image active">
-                        <img src="images/Mediarift/download_manager.png" alt="Parallel Download Queue Manager" class="mediarift-sticky-image">
+                        <img src="images/Mediarift/download_manager1.png" alt="Download Manager Queue" class="mediarift-sticky-image active">
+                        <img src="images/Mediarift/download_manager2.png" alt="Download Manager Speed Graph" class="mediarift-sticky-image">
+                        <img src="images/Mediarift/download_manager3.png" alt="Download Manager Stats" class="mediarift-sticky-image">
                         <button class="carousel-nav prev"><span>&lt;</span></button>
                         <button class="carousel-nav next"><span>&gt;</span></button>
                     </div>
@@ -167,13 +168,13 @@
             <div class="mediarift-detail-row">
                 <div class="mediarift-content-block">
                     <span class="section-counter">2 /</span>
-                    <h2>File Transcoding &amp; Compression</h2>
-                    <p>Convert video and audio files into standard formats (like MP4, WebM, MP3) and compress file sizes to save storage without sacrificing output quality. Features simple slider adjustments for compression ratio and bitrate overrides.</p>
+                    <h2>Media URL Fetcher</h2>
+                    <p>Extract streamable video, audio, and metadata by parsing online resource URLs. Supports custom URL processing and automatic format discovery.</p>
                 </div>
                 <div class="mediarift-sticky-card">
                     <div class="mediarift-carousel-wrapper">
-                        <img src="images/Mediarift/file_convetor.png" alt="File Format Converter" class="mediarift-sticky-image active">
-                        <img src="images/Mediarift/media_compressor.png" alt="Video & Audio Compressor" class="mediarift-sticky-image">
+                        <img src="images/Mediarift/media_fetcher1.png" alt="Media URL Fetcher Main" class="mediarift-sticky-image active">
+                        <img src="images/Mediarift/media_fetcher2.png" alt="Media URL Fetcher Output" class="mediarift-sticky-image">
                         <button class="carousel-nav prev"><span>&lt;</span></button>
                         <button class="carousel-nav next"><span>&gt;</span></button>
                     </div>
@@ -184,16 +185,30 @@
             <div class="mediarift-detail-row">
                 <div class="mediarift-content-block">
                     <span class="section-counter">3 /</span>
-                    <h2>Advanced Settings &amp; Customization</h2>
-                    <p>Customize output file paths, connection limits, and hardware acceleration defaults inside detailed tabbed panels. Settings cover standard downloads, proxy configurations, and system behaviors.</p>
+                    <h2>File Format Converter</h2>
+                    <p>Convert audio and video assets into standard distribution formats like MP4, WebM, or MP3. Select target containers and resolution profiles with simple dropdown options.</p>
                 </div>
                 <div class="mediarift-sticky-card">
                     <div class="mediarift-carousel-wrapper">
-                        <img src="images/Mediarift/preferences1.png" alt="General Download Settings" class="mediarift-sticky-image active">
-                        <img src="images/Mediarift/preferences2.png" alt="Proxy & Network Preferences" class="mediarift-sticky-image">
-                        <img src="images/Mediarift/preferences3.png" alt="Advanced Acceleration Settings" class="mediarift-sticky-image">
+                        <img src="images/Mediarift/convetor1.png" alt="File Format Converter Tab" class="mediarift-sticky-image active">
+                        <img src="images/Mediarift/convetor2.png" alt="Format Presets" class="mediarift-sticky-image">
+                        <img src="images/Mediarift/convetor3.png" alt="Conversion Progress" class="mediarift-sticky-image">
                         <button class="carousel-nav prev"><span>&lt;</span></button>
                         <button class="carousel-nav next"><span>&gt;</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 4 -->
+            <div class="mediarift-detail-row">
+                <div class="mediarift-content-block">
+                    <span class="section-counter">4 /</span>
+                    <h2>Video &amp; Image Compressor</h2>
+                    <p>Compress video and image files to save storage and optimize sharing compatibility. Simple sliders allow users to balance file size against output quality with automatic preview calculations.</p>
+                </div>
+                <div class="mediarift-sticky-card">
+                    <div class="mediarift-carousel-wrapper">
+                        <img src="images/Mediarift/media_compressor.png" alt="Video & Image Compressor" class="mediarift-sticky-image active">
                     </div>
                 </div>
             </div>
@@ -213,10 +228,11 @@
                 <div class="footer-col footer-col-links">
                     <span class="footer-col-label">/Quick links</span>
                     <nav class="footer-pills" aria-label="Footer navigation">
-                        <a href="index.html" class="footer-pill" data-text="Home"><span>Home</span></a>
-                        <a href="index.html#work" class="footer-pill" data-text="Works"><span>Works</span></a>
-                        <a href="index.html#experience" class="footer-pill" data-text="Experience"><span>Experience</span></a>
-                        <a href="index.html#footer" class="footer-pill" data-text="Contact"><span>Contact</span></a>
+                        <a href="orbit.html" class="footer-pill" data-text="Orbit"><span>Orbit</span></a>
+                        <a href="sentinel.html" class="footer-pill" data-text="Sentinel"><span>Sentinel</span></a>
+                        <a href="issuetracker.html" class="footer-pill" data-text="Issue Tracker"><span>Issue Tracker</span></a>
+                        <a href="studygpt.html" class="footer-pill" data-text="StudyGPT"><span>StudyGPT</span></a>
+                        <a href="jsms.html" class="footer-pill" data-text="JSMS"><span>JSMS</span></a>
                     </nav>
                 </div>
                 <div class="footer-col">
