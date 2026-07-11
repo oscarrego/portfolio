@@ -224,11 +224,167 @@
     });
   }
 
+  /* ── Custom cursor for project images ──────────────────────────────────── */
+  function initProjectImageCursor() {
+    const cursor = document.createElement('div');
+    cursor.className = 'pd-image-cursor';
+    cursor.textContent = 'View';
+    document.body.appendChild(cursor);
+
+    const imageSelectors = [
+      '.orbit-sticky-image.active',
+      '.orbit-mobile-sticky-image.active',
+      '.sentinel-sticky-image.active',
+      '.jsms-sticky-image.active',
+      '.studygpt-sticky-image.active',
+      '.issuetracker-sticky-image.active',
+      '.mediarift-sticky-image.active',
+      '.orbit-main-placeholder',
+      '.sentinel-main-placeholder',
+      '.jsms-main-placeholder',
+      '.studygpt-main-placeholder',
+    ];
+
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+    let rafId = null;
+
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+
+    function animate() {
+      cursorX = lerp(cursorX, mouseX, 0.35);
+      cursorY = lerp(cursorY, mouseY, 0.35);
+      cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
+      rafId = requestAnimationFrame(animate);
+    }
+
+    function startLoop() {
+      if (!rafId) animate();
+    }
+
+    function stopLoop() {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    }
+
+    function bindImage(el) {
+      el.addEventListener('mouseenter', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorX = mouseX;
+        cursorY = mouseY;
+        cursor.classList.add('active');
+        el.classList.add('pd-cursor-active');
+        startLoop();
+      });
+
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('active');
+        el.classList.remove('pd-cursor-active');
+        stopLoop();
+      });
+
+      el.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+    }
+
+    function observeImages() {
+      imageSelectors.forEach(sel => {
+        document.querySelectorAll(sel).forEach(el => {
+          bindImage(el);
+        });
+      });
+    }
+
+    observeImages();
+
+    // Re-bind when carousel slides change (active class moves)
+    const carouselWrappers = document.querySelectorAll('.orbit-carousel-wrapper, .sentinel-carousel-wrapper, .jsms-carousel-wrapper, .studygpt-carousel-wrapper, .issuetracker-carousel-wrapper, .mediarift-carousel-wrapper, .orbit-mobile-carousel-wrapper');
+    carouselWrappers.forEach(wrapper => {
+      const observer = new MutationObserver(() => {
+        imageSelectors.forEach(sel => {
+          wrapper.querySelectorAll(sel).forEach(el => {
+            if (!el.dataset.cursorBound) {
+              bindImage(el);
+              el.dataset.cursorBound = 'true';
+            }
+          });
+        });
+      });
+      observer.observe(wrapper, { attributes: true, subtree: true, attributeFilter: ['class'] });
+    });
+  }
+
+  /* ── Lightbox for project images ────────────────────────────────────────── */
+  function initProjectLightbox() {
+    const overlay = document.createElement('div');
+    overlay.className = 'pd-lightbox';
+    overlay.innerHTML = `
+      <div class="pd-lightbox-backdrop"></div>
+      <div class="pd-lightbox-content">
+        <img class="pd-lightbox-img" src="" alt="">
+        <button class="pd-lightbox-close" aria-label="Close">&times;</button>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    const lightboxImg = overlay.querySelector('.pd-lightbox-img');
+    const backdrop = overlay.querySelector('.pd-lightbox-backdrop');
+    const closeBtn = overlay.querySelector('.pd-lightbox-close');
+
+    function openLightbox(src, alt) {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || '';
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    backdrop.addEventListener('click', closeLightbox);
+    closeBtn.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    // Bind click on all carousel images
+    const imageSelectors = [
+      '.orbit-sticky-image',
+      '.orbit-mobile-sticky-image',
+      '.sentinel-sticky-image',
+      '.jsms-sticky-image',
+      '.studygpt-sticky-image',
+      '.issuetracker-sticky-image',
+      '.mediarift-sticky-image',
+    ];
+
+    imageSelectors.forEach(sel => {
+      document.querySelectorAll(sel).forEach(img => {
+        img.addEventListener('click', () => {
+          if (img.classList.contains('active')) {
+            openLightbox(img.src, img.alt);
+          }
+        });
+      });
+    });
+  }
+
   /* ── Init ─────────────────────────────────────────────────────── */
   function initAll() {
     initReveal();
     initVideoControls();
     initOrbitHeroToggle();
+    initProjectImageCursor();
+    initProjectLightbox();
   }
 
   if (document.readyState === 'loading') {

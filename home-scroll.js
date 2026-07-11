@@ -342,7 +342,6 @@
     const cards = document.querySelectorAll('.sw-card[data-href]');
     let mouseX = 0, mouseY = 0;
     let cursorX = 0, cursorY = 0;
-    let active = false;
     let rafId = null;
 
     function lerp(a, b, t) {
@@ -350,32 +349,43 @@
     }
 
     function animate() {
-      cursorX = lerp(cursorX, mouseX, 0.15);
-      cursorY = lerp(cursorY, mouseY, 0.15);
-      cursor.style.transform = `translate(${cursorX + 8}px, ${cursorY - 50}%)`;
+      cursorX = lerp(cursorX, mouseX, 0.35);
+      cursorY = lerp(cursorY, mouseY, 0.35);
+      cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
       rafId = requestAnimationFrame(animate);
     }
 
+    function startLoop() {
+      if (!rafId) animate();
+    }
+
+    function stopLoop() {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    }
+
     cards.forEach(card => {
-      card.addEventListener('mouseenter', () => {
-        active = true;
+      card.addEventListener('mouseenter', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorX = mouseX;
+        cursorY = mouseY;
         cursor.classList.add('active');
+        startLoop();
       });
 
       card.addEventListener('mouseleave', () => {
-        active = false;
         cursor.classList.remove('active');
+        stopLoop();
       });
 
       card.addEventListener('mousemove', (e) => {
-        if (active) {
-          mouseX = e.clientX;
-          mouseY = e.clientY;
-        }
+        mouseX = e.clientX;
+        mouseY = e.clientY;
       });
     });
-
-    animate();
   }
 
   /* ── Scroll-to utility for nav links ────────────────────────────────────── */
