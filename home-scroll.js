@@ -332,6 +332,52 @@
     });
   }
 
+  /* ── Custom cursor on project cards ────────────────────────────────────── */
+  function initCustomCursor() {
+    const cursor = document.createElement('div');
+    cursor.className = 'sw-cursor';
+    cursor.textContent = 'View Project';
+    document.body.appendChild(cursor);
+
+    const cards = document.querySelectorAll('.sw-card[data-href]');
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+    let active = false;
+    let rafId = null;
+
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+
+    function animate() {
+      cursorX = lerp(cursorX, mouseX, 0.15);
+      cursorY = lerp(cursorY, mouseY, 0.15);
+      cursor.style.transform = `translate(${cursorX + 8}px, ${cursorY - 50}%)`;
+      rafId = requestAnimationFrame(animate);
+    }
+
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        active = true;
+        cursor.classList.add('active');
+      });
+
+      card.addEventListener('mouseleave', () => {
+        active = false;
+        cursor.classList.remove('active');
+      });
+
+      card.addEventListener('mousemove', (e) => {
+        if (active) {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+        }
+      });
+    });
+
+    animate();
+  }
+
   /* ── Scroll-to utility for nav links ────────────────────────────────────── */
   function initNavLinks() {
     // Select all local anchors EXCEPT those inside the menu card (handled by menu logic)
@@ -529,6 +575,26 @@
     updateNarrativeScroll();
   }
 
+  /* ── Pause videos outside viewport ──────────────────────────────────────── */
+  function initVideoObserver() {
+    const cards = document.querySelectorAll('.sw-card[data-href]');
+    if (!cards.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const video = entry.target.querySelector('.sw-card-video');
+        if (!video) return;
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    cards.forEach(card => observer.observe(card));
+  }
+
   /* ── Init ───────────────────────────────────────────────────────────────── */
   function init() {
     initLenis();
@@ -538,6 +604,8 @@
     initActiveNav();
     initOrbitToggle();
     initCardNav();
+    initCustomCursor();
+    initVideoObserver();
 
     waitForGSAP(() => {
       gsap.registerPlugin(ScrollTrigger);
