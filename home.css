@@ -972,6 +972,190 @@ a { text-decoration: none; color: inherit; }
 
 
 
+/* ═══════════════════════════════════════════════════════
+   § 4 — TECH STACK
+═══════════════════════════════════════════════════════ */
+
+.section-techstack {
+  background: var(--project-bg);
+  color: #0a0a0a;
+  padding: 60px 0 140px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ts-header {
+  padding: 0 var(--pad-x);
+  margin-bottom: 40px;
+}
+
+.ts-title {
+  font-family: var(--font-display);
+  font-size: clamp(42px, 6vw, 88px);
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: #0a0a0a;
+}
+
+/* ─── Marquee Wrapper ────────────────────────────────── */
+.ts-marquee-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ─── Marquee Container ──────────────────────────────── */
+.ts-marquee-container {
+  overflow: hidden;
+  width: 100%;
+}
+
+.ts-row-bottom {
+  margin-top: 14px;
+}
+
+/* ─── Marquee Content (the scrolling track) ──────────── */
+.ts-marquee-content {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  padding: 7px 0;
+}
+
+.ts-row-top .ts-marquee-content {
+  animation: tsScrollLeft 35s linear infinite;
+}
+
+.ts-row-bottom .ts-marquee-content {
+  animation: tsScrollRight 35s linear infinite;
+}
+
+@keyframes tsScrollLeft {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes tsScrollRight {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* Pause on hover */
+.ts-marquee-container:hover .ts-marquee-content {
+  animation-play-state: paused;
+}
+
+/* ─── Individual Card ────────────────────────────────── */
+.ts-marquee-container .ts-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px 20px;
+  background: #ffffff;
+  border: 1px solid rgba(10, 10, 10, 0.07);
+  border-radius: 12px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+  flex-shrink: 0;
+  width: 110px;
+}
+
+.ts-marquee-container .ts-card:hover {
+  transform: scale(1.12);
+  background: #1a1a1a;
+}
+
+.ts-marquee-container .ts-card img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.ts-marquee-container .ts-card span {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: rgba(10, 10, 10, 0.55);
+  text-align: center;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.ts-marquee-container .ts-card:hover span {
+  color: #ffffff;
+}
+
+/* ─── Fade Edges ─────────────────────────────────────── */
+.ts-marquee-fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ts-fade-left {
+  left: 0;
+  background: linear-gradient(to right, var(--project-bg) 0%, transparent 100%);
+}
+
+.ts-fade-right {
+  right: 0;
+  background: linear-gradient(to left, var(--project-bg) 0%, transparent 100%);
+}
+
+/* ─── Responsive ─────────────────────────────────────── */
+@media (max-width: 900px) {
+  .ts-marquee-container .ts-card {
+    width: 95px;
+    padding: 20px 16px;
+    gap: 8px;
+  }
+
+  .ts-marquee-container .ts-card img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .ts-marquee-fade {
+    width: 60px;
+  }
+}
+
+@media (max-width: 600px) {
+  .section-techstack {
+    padding: 40px 0 100px;
+  }
+
+  .ts-marquee-container .ts-card {
+    width: 82px;
+    padding: 18px 12px;
+    border-radius: 10px;
+  }
+
+  .ts-marquee-container .ts-card img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .ts-marquee-container .ts-card span {
+    font-size: 10px;
+  }
+
+  .ts-marquee-fade {
+    width: 40px;
+  }
+}
+
+
+
 /* — Volume Toggle (Fixed) — */
 
 .vol-toggle {

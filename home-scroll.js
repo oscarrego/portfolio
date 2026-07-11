@@ -177,6 +177,31 @@
       });
     }
 
+    // Tech Stack title
+    const tsTitle = document.querySelector('.ts-title');
+    if (tsTitle) {
+      gsap.from(tsTitle, {
+        scrollTrigger: { trigger: tsTitle, start: 'top 85%', once: true },
+        opacity: 0,
+        filter: 'blur(12px)',
+        x: -32,
+        duration: 1.1,
+        ease: 'power2.out',
+      });
+    }
+
+    // Tech Stack marquee rows: fade up
+    const tsMarquees = document.querySelectorAll('.ts-marquee-wrapper');
+    tsMarquees.forEach((wrapper) => {
+      gsap.from(wrapper, {
+        scrollTrigger: { trigger: wrapper, start: 'top 90%', once: true },
+        opacity: 0,
+        y: 24,
+        duration: 1,
+        ease: 'power2.out',
+      });
+    });
+
     // Footer sig
     const footerSig = document.querySelector('.home-footer-sig');
     if (footerSig) {

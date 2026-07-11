@@ -9,7 +9,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        about: resolve(__dirname, 'about.html'),
+        
         aboutIntro: resolve(__dirname, 'about-intro.html'),
         orbit: resolve(__dirname, 'orbit.html'),
         sentinel: resolve(__dirname, 'sentinel.html'),
