@@ -239,10 +239,6 @@
       '.studygpt-sticky-image.active',
       '.issuetracker-sticky-image.active',
       '.mediarift-sticky-image.active',
-      '.orbit-main-placeholder',
-      '.sentinel-main-placeholder',
-      '.jsms-main-placeholder',
-      '.studygpt-main-placeholder',
     ];
 
     let mouseX = 0, mouseY = 0;
