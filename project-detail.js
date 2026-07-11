@@ -321,14 +321,16 @@
     });
   }
 
-  /* ── Lightbox for project images ────────────────────────────────────────── */
+/* ── Lightbox for project images ────────────────────────────────────────── */
   function initProjectLightbox() {
     const overlay = document.createElement('div');
     overlay.className = 'pd-lightbox';
     overlay.innerHTML = `
       <div class="pd-lightbox-backdrop"></div>
       <div class="pd-lightbox-content">
+        <button class="pd-lightbox-nav pd-lightbox-prev" aria-label="Previous"><</button>
         <img class="pd-lightbox-img" src="" alt="">
+        <button class="pd-lightbox-nav pd-lightbox-next" aria-label="Next">></button>
         <button class="pd-lightbox-close" aria-label="Close">&times;</button>
       </div>
     `;
@@ -337,12 +339,20 @@
     const lightboxImg = overlay.querySelector('.pd-lightbox-img');
     const backdrop = overlay.querySelector('.pd-lightbox-backdrop');
     const closeBtn = overlay.querySelector('.pd-lightbox-close');
+    const prevBtn = overlay.querySelector('.pd-lightbox-prev');
+    const nextBtn = overlay.querySelector('.pd-lightbox-next');
 
-    function openLightbox(src, alt) {
+    let currentImages = [];
+    let currentIndex = 0;
+
+    function openLightbox(src, alt, images, index) {
+      currentImages = images;
+      currentIndex = index;
       lightboxImg.src = src;
       lightboxImg.alt = alt || '';
       overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
+      updateNavVisibility();
     }
 
     function closeLightbox() {
@@ -350,10 +360,37 @@
       document.body.style.overflow = '';
     }
 
+    function updateNavVisibility() {
+      const showNav = currentImages.length > 1;
+      prevBtn.style.display = showNav ? 'flex' : 'none';
+      nextBtn.style.display = showNav ? 'flex' : 'none';
+    }
+
+    function navigate(direction) {
+      if (currentImages.length <= 1) return;
+      currentIndex = (currentIndex + direction + currentImages.length) % currentImages.length;
+      const img = currentImages[currentIndex];
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt || '';
+    }
+
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navigate(-1);
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navigate(1);
+    });
+
     backdrop.addEventListener('click', closeLightbox);
     closeBtn.addEventListener('click', closeLightbox);
     document.addEventListener('keydown', (e) => {
+      if (!overlay.classList.contains('active')) return;
       if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
     });
 
     // Bind click on all carousel images
@@ -371,7 +408,14 @@
       document.querySelectorAll(sel).forEach(img => {
         img.addEventListener('click', () => {
           if (img.classList.contains('active')) {
-            openLightbox(img.src, img.alt);
+            const wrapper = img.closest('.orbit-carousel-wrapper, .orbit-mobile-carousel-wrapper, .sentinel-carousel-wrapper, .jsms-carousel-wrapper, .studygpt-carousel-wrapper, .issuetracker-carousel-wrapper, .mediarift-carousel-wrapper');
+            if (wrapper) {
+              const allImages = Array.from(wrapper.querySelectorAll('img'));
+              const index = allImages.indexOf(img);
+              openLightbox(img.src, img.alt, allImages, index);
+            } else {
+              openLightbox(img.src, img.alt, [img], 0);
+            }
           }
         });
       });

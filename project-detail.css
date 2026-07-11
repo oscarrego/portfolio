@@ -726,6 +726,7 @@ html.project-detail-page body::before {
   max-height: 85vh;
   transform: scale(0.92);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: visible;
 }
 
 .pd-lightbox.active .pd-lightbox-content {
@@ -765,6 +766,60 @@ html.project-detail-page body::before {
   transform: scale(1.1);
 }
 
+/* Lightbox navigation buttons */
+.pd-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: #0a0a0a;
+  border: none;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: background 0.25s, transform 0.25s;
+  z-index: 10;
+}
+
+.pd-lightbox-prev {
+  left: -72px;
+}
+
+.pd-lightbox-next {
+  right: -72px;
+}
+
+.pd-lightbox-nav:hover {
+  background: #ffffff;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.pd-lightbox-nav:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+@media (max-width: 900px) {
+  .pd-lightbox-prev {
+    left: -60px;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  .pd-lightbox-next {
+    right: -60px;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+}
+
 @media (max-width: 600px) {
   .pd-lightbox-img {
     max-width: 95vw;
@@ -775,6 +830,19 @@ html.project-detail-page body::before {
   .pd-lightbox-content {
     max-width: 95vw;
     max-height: 95vh;
+  }
+
+  .pd-lightbox-prev {
+    left: -52px;
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+  .pd-lightbox-next {
+    right: -52px;
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
   }
 }
 
