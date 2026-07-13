@@ -1,0 +1,78 @@
+/* 
+ * OSCAR REGO PORTFOLIO 2026
+ * TRANSITION-ANIMATION.CSS — Premium Circular clip-path transition wipe
+ */
+
+.transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    z-index: 999999;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Circular mask starts collapsed at clicked coordinates (or screen center default) */
+    clip-path: circle(0% at var(--click-x, 50%) var(--click-y, 50%));
+    transition: clip-path 1.1s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: clip-path;
+}
+
+/* Expanded state covering the entire viewport */
+.transition-overlay.active {
+    clip-path: circle(150% at var(--click-x, 50%) var(--click-y, 50%));
+    pointer-events: auto;
+}
+
+/* Theme variations matching source/target pages */
+.transition-overlay.theme-dark {
+    background-color: #050505;
+}
+
+.transition-overlay.theme-light {
+    background-color: #F5F2EC;
+}
+
+/* Project title display inside overlay */
+.transition-title {
+    font-family: 'Bebas Neue', 'Inter', sans-serif;
+    font-size: clamp(48px, 9vw, 130px);
+    letter-spacing: 0.08em;
+    font-weight: 400;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.38s ease, transform 0.38s cubic-bezier(0.25, 1, 0.5, 1);
+    user-select: none;
+    pointer-events: none;
+    text-transform: uppercase;
+}
+
+/* Dynamic colors for titles based on theme */
+.transition-overlay.theme-dark .transition-title {
+    color: #F5F2EC;
+    text-shadow: 0 4px 20px rgba(255, 255, 255, 0.03);
+}
+
+.transition-overlay.theme-light .transition-title {
+    color: #050505;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+/* Slide in title when overlay is active */
+.transition-overlay.active .transition-title {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.4s;
+}
+
+/* Ensure background transitions are smooth */
+body.page-leaving {
+    opacity: 1 !important; /* Prevent legacy simple opacity fade interfering */
+}
+
+/* Smooth fade-in overlay reveal on next page load */
+body.page-transitioning {
+    overflow: hidden !important;
+}

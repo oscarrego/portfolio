@@ -988,7 +988,7 @@ if (isTouchDevice) {
         // Initialize Lenis on subpages if Lenis library is loaded and not yet initialized
         if (window.Lenis && !window._lenis) {
             const lenis = new Lenis({
-                duration: 1.3,
+                duration: 0.9,
                 easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
                 smoothWheel: true,
             });

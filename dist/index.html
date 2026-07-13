@@ -28,20 +28,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Local fonts (PixelOperator, Mynor) -->
-  <link rel="preload" href="/portfolio-hosting/assets/MynorBookCondensed-6UZgmHZS.ttf" as="font" type="font/truetype" crossorigin>
-  <link rel="preload" href="/portfolio-hosting/assets/PixelOperator-BzBUv460.ttf" as="font" type="font/truetype" crossorigin>
-
   <!-- GSAP + ScrollTrigger -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <!-- Lenis smooth scroll -->
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 
-  <!-- Stylesheets -->
-  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/main-6Ksj3vHa.css">
-  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/loader-DJfVCuiN.css">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/main-DsM1-xlv.css">
+  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/transition-animation-OJLRydG9.css">
 </head>
 
 <body>
@@ -210,7 +206,7 @@
               id="orbit-video"
               class="sw-card-video"
               src="/portfolio-hosting/assets/orbit_demo-W4Jf8NoQ.mp4"
-              autoplay
+              preload="metadata"
               muted
               loop
               playsinline
@@ -236,7 +232,7 @@
             <video
               class="sw-card-video"
               src="/portfolio-hosting/assets/sentinal_demo-oSfstjI_.mp4"
-              autoplay
+              preload="none"
               muted
               loop
               playsinline
@@ -257,7 +253,7 @@
             <video
               class="sw-card-video"
               src="/portfolio-hosting/assets/IssueTrackerSystem-CjKYE2d5.mp4"
-              autoplay
+              preload="none"
               muted
               loop
               playsinline
@@ -278,7 +274,7 @@
             <video
               class="sw-card-video"
               src="/portfolio-hosting/assets/mediarift-BWFcK3xA.mp4"
-              autoplay
+              preload="none"
               muted
               loop
               playsinline
@@ -299,7 +295,7 @@
             <video
               class="sw-card-video"
               src="/portfolio-hosting/assets/studygpt_demo-CyjxnTGv.mp4"
-              autoplay
+              preload="none"
               muted
               loop
               playsinline
@@ -320,7 +316,7 @@
             <video
               class="sw-card-video"
               src="/portfolio-hosting/assets/jsms_demo-zT6odmDV.mp4"
-              autoplay
+              preload="none"
               muted
               loop
               playsinline
@@ -589,10 +585,11 @@
 
   <!-- ═══════════════════════════ SCRIPTS ═════════════════════════════════ -->
   <script src="loader-universal.js"></script>
-  <script src="analytics.js"></script>
-  <script src="grain.js"></script>
-  <script src="sounds.js"></script>
-  <script src="home-scroll.js"></script>
+  <script defer src="analytics.js"></script>
+  <script defer src="grain.js"></script>
+  <script defer src="sounds.js"></script>
+  <script src="transition-animation.js"></script>
+  <script defer src="home-scroll.js"></script>
 
 </body>
 </html>

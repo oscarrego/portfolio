@@ -6,6 +6,7 @@
  * instead of regenerating on every frame.
  */
 
+/*
 (function () {
     'use strict';
 
@@ -117,3 +118,4 @@
     }
 
 })();
+*/

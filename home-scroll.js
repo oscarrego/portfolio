@@ -16,7 +16,7 @@
   function initLenis() {
     if (!window.Lenis) return;
     const lenis = new Lenis({
-      duration: 1.3,
+      duration: 0.9,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     });
@@ -115,10 +115,11 @@
           scrollTrigger: { trigger: swSection, start: 'top 82%', once: true },
           opacity: 0,
           filter: 'blur(12px)',
-          x: -32,
-          duration: 1.1,
-          ease: 'power2.out',
-          delay: i * 0.1, // 100ms stagger
+          x: -48,
+          duration: 0.8,
+          ease: 'power3.out',
+          force3D: true,
+          delay: i * 0.06, // 60ms stagger
         });
       });
 
@@ -130,9 +131,10 @@
           opacity: 0,
           filter: 'blur(12px)',
           x: -32,
-          duration: 0.9,
-          ease: 'power2.out',
-          delay: 0.2,
+          duration: 0.7,
+          ease: 'power3.out',
+          force3D: true,
+          delay: 0.12,
         });
       }
 
@@ -142,10 +144,11 @@
         gsap.from(card, {
           scrollTrigger: { trigger: card, start: 'top 88%', once: true },
           opacity: 0,
-          y: 40,
-          duration: 1.2,
-          ease: 'power2.out',
-          delay: i * 0.1, // 100ms stagger per card
+          y: 60,
+          duration: 0.85,
+          ease: 'power3.out',
+          force3D: true,
+          delay: i * 0.06, // 60ms stagger per card
         });
       });
     }
@@ -158,9 +161,9 @@
         opacity: 0,
         filter: 'blur(12px)',
         x: -32,
-        duration: 1.3,
+        duration: 0.6,
         ease: 'power2.out',
-        delay: i * 0.1, // 100ms stagger
+        delay: i * 0.05, // 50ms stagger
       });
     });
 
@@ -172,7 +175,7 @@
         opacity: 0,
         filter: 'blur(12px)',
         x: -32,
-        duration: 1.1,
+        duration: 0.6,
         ease: 'power2.out',
       });
     }
@@ -301,12 +304,16 @@
   function initCardNav() {
     document.querySelectorAll('.sw-card[data-href]').forEach((card) => {
       // Set click listener on card
-      card.addEventListener('click', () => {
+      card.addEventListener('click', (e) => {
         sessionStorage.setItem('fromProjectCard', 'true');
-        document.body.classList.add('page-leaving');
-        setTimeout(() => {
-          window.location.href = card.dataset.href;
-        }, 300);
+        if (window.TransitionAnimation) {
+          window.TransitionAnimation.transitionTo(card.dataset.href, e.clientX, e.clientY);
+        } else {
+          document.body.classList.add('page-leaving');
+          setTimeout(() => {
+            window.location.href = card.dataset.href;
+          }, 300);
+        }
       });
 
       // Set click listener on any links inside the card (like CTA) to set the flag too
@@ -323,10 +330,14 @@
           if (typeof window.playTone === 'function') {
             window.playTone('nav-confirm');
           }
-          document.body.classList.add('page-leaving');
-          setTimeout(() => {
-            window.location.href = card.dataset.href;
-          }, 300);
+          if (window.TransitionAnimation) {
+            window.TransitionAnimation.transitionTo(card.dataset.href);
+          } else {
+            document.body.classList.add('page-leaving');
+            setTimeout(() => {
+              window.location.href = card.dataset.href;
+            }, 300);
+          }
         }
       });
     });
@@ -534,6 +545,7 @@
     });
 
     let ticking = false;
+    let autoScrolledDown = false;
 
     function updateNarrativeScroll() {
       const rect = section.getBoundingClientRect();
@@ -547,7 +559,7 @@
       // Progress: 0.0 when section top touches viewport top,
       //           1.0 when section bottom touches viewport bottom
       const top = rect.top;
-      let progress = (-top / travelLimit) * 1.45; // Increased highlight speed by 45% so words light up quicker in the scroll range
+      let progress = (-top / travelLimit) * 3 ; 
       progress = Math.max(0, Math.min(1, progress));
 
       // Highlight each word based on progress
@@ -565,6 +577,27 @@
         const eased = easeInOutCubic(wordProgress);
         word.style.opacity = (FADED + (ACTIVE - FADED) * eased).toFixed(3);
       });
+
+      // Auto scroll down to next section once highlighted
+      if (progress >= 0.99) {
+        if (!autoScrolledDown) {
+          autoScrolledDown = true;
+          const nextSection = document.getElementById('work');
+          if (nextSection) {
+            if (window._lenis) {
+              window._lenis.scrollTo(nextSection, { 
+                duration: 1.4, 
+                easing: (t) => 1 - Math.pow(1 - t, 4) 
+              });
+            } else {
+              nextSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        }
+      } else if (progress < 0.85) {
+        // Reset scroll lock release when user scrolls back up
+        autoScrolledDown = false;
+      }
     }
 
     // High performance rAF batching scroll handler
