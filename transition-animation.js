@@ -6,7 +6,7 @@
 (function () {
     'use strict';
 
-    const TRANSITION_DURATION = 1100; // ms (must match CSS transition speed)
+    const TRANSITION_DURATION = 1800; // ms (must match CSS transition speed)
     let overlay, titleEl;
 
     // Helper to extract project name from URL to display on transition curtain
@@ -49,6 +49,21 @@
 
     function getThemeClass(bgColor) {
         return bgColor === '#F5F2EC' ? 'theme-light' : 'theme-dark';
+    }
+
+    // Helper to check if current page is a project detail page
+    function isCurrentPageProject() {
+        try {
+            const path = window.location.pathname.toLowerCase();
+            return path.includes('orbit.html') || 
+                   path.includes('sentinel.html') || 
+                   path.includes('jsms.html') || 
+                   path.includes('studygpt.html') || 
+                   path.includes('issuetracker.html') || 
+                   path.includes('mediarift.html');
+        } catch (e) {
+            return false;
+        }
     }
 
     // Helper to verify if link is internal
@@ -141,14 +156,22 @@
         const isActive = sessionStorage.getItem('transition-active');
         if (!isActive) {
             overlay.style.display = 'none';
+            document.documentElement.classList.remove('transition-active-pre');
             return;
         }
 
         // Consume and clean up transition state
         sessionStorage.removeItem('transition-active');
 
-        const x = sessionStorage.getItem('transition-click-x') || window.innerWidth / 2;
-        const y = sessionStorage.getItem('transition-click-y') || window.innerHeight / 2;
+        let x = sessionStorage.getItem('transition-click-x') || window.innerWidth / 2;
+        let y = sessionStorage.getItem('transition-click-y') || window.innerHeight / 2;
+
+        // Force transition to end at the center for all project pages
+        if (isCurrentPageProject()) {
+            x = window.innerWidth / 2;
+            y = window.innerHeight / 2;
+        }
+
         const bgColor = sessionStorage.getItem('transition-bg-color') || '#050505';
         const theme = sessionStorage.getItem('transition-theme') || 'theme-dark';
         const name = sessionStorage.getItem('transition-name') || 'Oscar';
@@ -166,7 +189,10 @@
         // Force browser layout repaint
         overlay.offsetHeight;
 
-        // Collapse the circular mask back to the click point, revealing target page
+        // Remove the pre-transition class now that overlay is active and covering the viewport
+        document.documentElement.classList.remove('transition-active-pre');
+
+        // Collapse the circular mask back to the center (or click point), revealing target page
         setTimeout(() => {
             overlay.style.clipPath = `circle(0% at ${x}px ${y}px)`;
             overlay.classList.remove('active');
