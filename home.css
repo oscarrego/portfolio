@@ -970,137 +970,135 @@ a { text-decoration: none; color: inherit; }
 .section-techstack {
   background: var(--project-bg);
   color: #0a0a0a;
-  padding: 80px 0;
+  padding: 100px 0 140px;
   position: relative;
   overflow: hidden;
-  /* Two-column layout: title left, hex icons right */
   display: flex;
   align-items: center;
-  gap: 0;
-  min-height: 560px;
+  justify-content: space-between;
+  gap: 40px;
+  min-height: 600px;
 }
 
 /* Left: title column */
 .ts-header {
   flex-shrink: 0;
-  width: clamp(200px, 28vw, 380px);
+  width: clamp(280px, 32vw, 420px);
   padding: 0 0 0 var(--pad-x);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 2;
 }
 
 .ts-title {
-  font-family: var(--font-display);
-  font-size: clamp(42px, 6vw, 88px);
-  line-height: 1;
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(32px, 4vw, 46px);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   color: #0a0a0a;
+  text-transform: none; /* Sentence case! */
 }
 
 .ts-subtitle {
   margin-top: 16px;
-  font-family: var(--font-body, 'Inter', sans-serif);
-  font-size: clamp(13px, 1.1vw, 15px);
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(14px, 1.1vw, 16px);
   font-weight: 400;
-  color: rgba(10, 10, 10, 0.45);
+  color: rgba(10, 10, 10, 0.6);
   line-height: 1.6;
-  max-width: 260px;
+  max-width: 320px;
   letter-spacing: 0.01em;
 }
 
-/* ═══════════════════════════════════════════════════════
-   TECH STACK — Vertical scrolling columns
-═══════════════════════════════════════════════════════ */
+/* Call-to-action button */
+.ts-btn {
+  margin-top: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+  color: #ffffff;
+  border: none;
+  border-radius: 100px;
+  padding: 12px 28px;
+  font-family: var(--font-body), sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+}
 
-/* Right: hexagonal icon cluster */
+.ts-btn:hover {
+  background: #222222;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* ─── Hexagonal icon cluster (staggered & masked) ─── */
 .ts-vertical-wrapper {
   position: relative;
   display: flex;
-  gap: 16px;
-  height: 480px;
+  gap: 12px; /* Horizontal gap between columns */
+  height: 520px;
   width: auto;
   flex-shrink: 0;
   padding: 0 var(--pad-x) 0 0;
-  /* Overflow must be visible for the mask to work cleanly */
-  overflow: hidden;
+  overflow: visible;
   margin-left: auto;
+  align-items: center; /* Centering staggers even/odd vertical layouts */
+  z-index: 1;
 
-  /* ── Hexagonal radial mask ──────────────────────────────
-     This fades the outer edges so the icon cluster
-     forms a soft hexagonal silhouette rather than a
-     hard rectangular box.
-  ─────────────────────────────────────────────────────── */
-  -webkit-mask-image:
-    radial-gradient(
-      ellipse 82% 78% at 50% 50%,
-      black   0%,
-      black   38%,
-      rgba(0,0,0,0.75) 54%,
-      rgba(0,0,0,0.30) 68%,
-      transparent 82%
-    );
-  mask-image:
-    radial-gradient(
-      ellipse 82% 78% at 50% 50%,
-      black   0%,
-      black   38%,
-      rgba(0,0,0,0.75) 54%,
-      rgba(0,0,0,0.30) 68%,
-      transparent 82%
-    );
+  /* Radial mask makes the outer edges fade into a soft hexagon */
+  -webkit-mask-image: radial-gradient(
+    circle at 50% 50%,
+    black 0%,
+    black 40%,
+    rgba(0, 0, 0, 0.65) 65%,
+    rgba(0, 0, 0, 0.3) 80%,
+    transparent 96%
+  );
+  mask-image: radial-gradient(
+    circle at 50% 50%,
+    black 0%,
+    black 40%,
+    rgba(0, 0, 0, 0.65) 65%,
+    rgba(0, 0, 0, 0.3) 80%,
+    transparent 96%
+  );
 }
 
-/* Old top/bottom fades — replaced by radial mask on wrapper */
-.ts-v-fade,
-.ts-v-fade-top,
-.ts-v-fade-bottom { display: none; }
-
-
-/* ─── Each column ────────────────────────────────── */
+/* Column styles */
 .ts-vcol {
-  width: 72px;
+  width: 52px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Vertical gap between icons */
   flex-shrink: 0;
-  overflow: visible; /* mask on parent handles clipping */
   position: relative;
 }
 
-/* ── Honeycomb stagger: even columns offset down by half a cell ── */
-.ts-vcol:nth-child(2n) {
-  margin-top: 32px;
-}
+/* Staggered Floating animations */
+.ts-vcol-1 { animation: tsFloatCol1 6.5s ease-in-out infinite alternate; }
+.ts-vcol-2 { animation: tsFloatCol2 7.5s ease-in-out infinite alternate; }
+.ts-vcol-3 { animation: tsFloatCol3 7.0s ease-in-out infinite alternate; }
+.ts-vcol-4 { animation: tsFloatCol4 8.0s ease-in-out infinite alternate; }
+.ts-vcol-5 { animation: tsFloatCol5 7.2s ease-in-out infinite alternate; }
+.ts-vcol-6 { animation: tsFloatCol6 7.8s ease-in-out infinite alternate; }
+.ts-vcol-7 { animation: tsFloatCol7 6.8s ease-in-out infinite alternate; }
 
-/* The scrolling inner strip */
-.ts-vcol-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  will-change: transform;
-  align-items: center;
-}
+@keyframes tsFloatCol1 { 0% { transform: translateY(0); } 100% { transform: translateY(-12px); } }
+@keyframes tsFloatCol2 { 0% { transform: translateY(-6px); } 100% { transform: translateY(6px); } }
+@keyframes tsFloatCol3 { 0% { transform: translateY(0); } 100% { transform: translateY(-15px); } }
+@keyframes tsFloatCol4 { 0% { transform: translateY(-8px); } 100% { transform: translateY(8px); } }
+@keyframes tsFloatCol5 { 0% { transform: translateY(0); } 100% { transform: translateY(-14px); } }
+@keyframes tsFloatCol6 { 0% { transform: translateY(-5px); } 100% { transform: translateY(7px); } }
+@keyframes tsFloatCol7 { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
 
-/* Column direction animations */
-.ts-vcol-up .ts-vcol-inner {
-  animation: tsScrollUp 22s linear infinite;
-}
-
-.ts-vcol-down .ts-vcol-inner {
-  /* Negative delay staggers the start position so columns feel offset */
-  animation: tsScrollDown 22s linear infinite;
-  animation-delay: -8s;
-}
-
-/* Animation continues on hover — no pause */
-
-@keyframes tsScrollUp {
-  0%   { transform: translateY(0); }
-  100% { transform: translateY(-50%); }
-}
-
-@keyframes tsScrollDown {
-  0%   { transform: translateY(-50%); }
-  100% { transform: translateY(0); }
-}
-
-/* ─── Individual icon (bare logo, no box) ────────────── */
+/* Individual icon cards */
 .ts-vcard {
   display: flex;
   align-items: center;
@@ -1110,40 +1108,38 @@ a { text-decoration: none; color: inherit; }
   padding: 4px 0;
   flex-shrink: 0;
   width: 100%;
-}
-
-.ts-vcard:hover img {
-  opacity: 1;
-  transform: scale(1.1);
+  cursor: pointer;
 }
 
 .ts-vcard img {
-  width: 38px;
-  height: 38px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
   display: block;
-  opacity: 0.60;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  opacity: 0.45;
+  filter: grayscale(100%);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .ts-vcard:hover img {
   opacity: 1;
-  transform: scale(1.1);
+  filter: grayscale(0%) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.12));
+  transform: scale(1.18);
 }
 
-/* Labels hidden — icons only, like reference image */
+/* Hide labels */
 .ts-vcard span {
   display: none;
 }
 
-/* ─── Hex blur orbs (decorative depth) ──────────────── */
+/* Decorate Orbs */
 .ts-hex-orb {
   position: absolute;
   border-radius: 50%;
   filter: blur(60px);
   pointer-events: none;
   z-index: 0;
-  opacity: 0.4;
+  opacity: 0.35;
 }
 
 .ts-hex-orb-1 {
@@ -1189,35 +1185,57 @@ a { text-decoration: none; color: inherit; }
   50%       { transform: translateY(-18px); }
 }
 
-
 /* ─── Responsive ─────────────────────────────────────── */
-@media (max-width: 768px) {
-  .ts-vertical-wrapper {
-    height: 420px;
-    gap: 10px;
-    padding: 0 4%;
+@media (max-width: 992px) {
+  .section-techstack {
+    flex-direction: column;
+    padding: 80px 0 100px;
+    gap: 60px;
+    align-items: flex-start;
   }
 
-  .ts-vcard {
-    padding: 12px 8px;
-    min-height: 76px;
+  .ts-header {
+    width: 100%;
+    padding: 0 var(--pad-x);
+  }
+
+  .ts-subtitle {
+    max-width: 480px;
+  }
+
+  .ts-vertical-wrapper {
+    margin-left: 0;
+    align-self: center;
+    padding: 0 var(--pad-x);
+  }
+}
+
+@media (max-width: 768px) {
+  .ts-vertical-wrapper {
+    height: 440px;
+    gap: 8px;
+  }
+
+  .ts-vcol {
+    width: 38px;
+    gap: 12px;
   }
 
   .ts-vcard img {
-    width: 32px;
-    height: 32px;
-  }
-
-  .ts-vcard span {
-    font-size: 10px;
+    width: 36px;
+    height: 36px;
   }
 }
 
 @media (max-width: 480px) {
-  /* Only show 2 columns on very small screens */
-  .ts-vcol:nth-child(4),
-  .ts-vcol:nth-child(5) {
+  /* Hide the outermost columns on small screens to fit cleanly */
+  .ts-vcol-1,
+  .ts-vcol-7 {
     display: none;
+  }
+  
+  .ts-vertical-wrapper {
+    height: 380px;
   }
 }
 
