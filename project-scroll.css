@@ -1,0 +1,258 @@
+/*
+  OSCAR REGO PORTFOLIO 2026
+  PROJECT-SCROLL.CSS — Scroll-driven full-page section system
+*/
+
+/* ─── SCROLL CONTAINER ───────────────────────────────────── */
+
+/* The case study wraps all detail rows */
+.pd-scroll-outer {
+  position: relative;
+}
+
+/* Sticky viewport frame that holds the visible panel */
+.pd-sticky-frame {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: var(--pd-bg, #F5F2EC);
+  z-index: 1;
+}
+
+/* Panel: left content + right image side by side */
+.pd-panel {
+  display: grid;
+  grid-template-columns: 1fr minmax(min(680px, 100%), 680px);
+  gap: 60px;
+  align-items: center;
+  width: 100%;
+  max-width: 1600px;
+  padding: 0 7%;
+  margin: 0 auto;
+  pointer-events: none;
+}
+
+/* ─── LEFT CONTENT ───────────────────────────────────────── */
+
+.pd-panel-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+}
+
+/* Content text slot — wraps counter + h2 + p */
+.pd-text-slot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transform: translateX(-28px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.pd-text-slot.pd-active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.pd-text-slot.pd-exiting-up {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition:
+    opacity 0.4s cubic-bezier(0.4, 0, 1, 1),
+    transform 0.4s cubic-bezier(0.4, 0, 1, 1);
+}
+
+.pd-text-slot.pd-exiting-down {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.4s cubic-bezier(0.4, 0, 1, 1),
+    transform 0.4s cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* ─── RIGHT IMAGE CARD ───────────────────────────────────── */
+
+.pd-panel-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--pd-bg-card, #EDEAE4);
+  box-shadow:
+    0 4px 16px rgba(0,0,0,0.07),
+    0 1px 4px rgba(0,0,0,0.04);
+  pointer-events: auto;
+}
+
+/* Image slot inside card */
+.pd-img-slot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.01s;
+  border-radius: 12px;
+}
+
+.pd-img-slot.pd-img-active {
+  opacity: 1;
+}
+
+/* Curtain that wipes over the card to reveal next image */
+.pd-curtain {
+  position: absolute;
+  inset: 0;
+  background: #080808;
+  z-index: 10;
+  /* transform-origin set by JS */
+  transform: scaleY(0);
+  will-change: transform;
+  border-radius: 12px;
+}
+
+/* Curtain enters (covers card) */
+.pd-curtain.curtain-entering {
+  animation: curtainEnter 0.45s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+/* Curtain exits (reveals new image) */
+.pd-curtain.curtain-exiting {
+  animation: curtainExit 0.45s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+/* Scroll DOWN: curtain enters from top, exits to bottom */
+.pd-curtain.dir-down.curtain-entering {
+  transform-origin: top;
+  animation-name: curtainEnterDown;
+}
+.pd-curtain.dir-down.curtain-exiting {
+  transform-origin: bottom;
+  animation-name: curtainExitDown;
+}
+
+/* Scroll UP: curtain enters from bottom, exits to top */
+.pd-curtain.dir-up.curtain-entering {
+  transform-origin: bottom;
+  animation-name: curtainEnterUp;
+}
+.pd-curtain.dir-up.curtain-exiting {
+  transform-origin: top;
+  animation-name: curtainExitUp;
+}
+
+@keyframes curtainEnterDown {
+  from { transform: scaleY(0); transform-origin: top; }
+  to   { transform: scaleY(1); transform-origin: top; }
+}
+@keyframes curtainExitDown {
+  from { transform: scaleY(1); transform-origin: bottom; }
+  to   { transform: scaleY(0); transform-origin: bottom; }
+}
+@keyframes curtainEnterUp {
+  from { transform: scaleY(0); transform-origin: bottom; }
+  to   { transform: scaleY(1); transform-origin: bottom; }
+}
+@keyframes curtainExitUp {
+  from { transform: scaleY(1); transform-origin: top; }
+  to   { transform: scaleY(0); transform-origin: top; }
+}
+
+/* ─── CAROUSEL NAV inside panel card ─────────────────────── */
+.pd-panel-card .carousel-nav {
+  z-index: 20;
+}
+
+/* ─── SECTION PROGRESS INDICATORS ───────────────────────── */
+
+.pd-progress-dots {
+  position: fixed;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 200;
+}
+
+.pd-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(10, 10, 10, 0.2);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.pd-dot.active {
+  background: rgba(10, 10, 10, 0.8);
+  transform: scale(1.5);
+}
+
+/* Mobile card: narrower aspect ratio for phone images */
+.pd-panel-card.mobile-card {
+  aspect-ratio: 9 / 19.5;
+  width: 280px;
+  margin: 0 auto;
+}
+
+/* ─── SCROLL SPACER PER SECTION ─────────────────────────── */
+
+.pd-section-spacer {
+  height: 100vh; /* each section gets 100vh of scroll room */
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+/* The scroll driver: tall box behind sticky frame */
+.pd-scroll-driver {
+  /* Height set by JS: count * 100vh */
+}
+
+/* Footer only appears after all sections */
+.pd-footer-revealer {
+  position: relative;
+  z-index: 2;
+}
+
+
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .pd-panel {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: 32px;
+    padding: 0 5%;
+    align-items: flex-start;
+  }
+
+  .pd-sticky-frame {
+    align-items: flex-start;
+    padding-top: 80px;
+  }
+
+  .pd-panel-card {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+
+  .pd-progress-dots {
+    right: 14px;
+  }
+}

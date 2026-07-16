@@ -83,3 +83,22 @@ html.transition-active-pre body {
     opacity: 0 !important;
 }
 
+/* ── Per-project font matching for transition overlay title ── */
+
+.transition-overlay.target-orbit .transition-title,
+.transition-overlay.target-sentinel .transition-title {
+  font-family: 'PixelOperator', 'Bebas Neue', monospace;
+  letter-spacing: -2px;
+}
+
+.transition-overlay.target-jsms .transition-title {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.06em;
+}
+
+.transition-overlay.target-studygpt .transition-title,
+.transition-overlay.target-issuetracker .transition-title,
+.transition-overlay.target-mediarift .transition-title {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.05em;
+}

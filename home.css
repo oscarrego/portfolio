@@ -970,14 +970,21 @@ a { text-decoration: none; color: inherit; }
 .section-techstack {
   background: var(--project-bg);
   color: #0a0a0a;
-  padding: 60px 0 140px;
+  padding: 80px 0;
   position: relative;
   overflow: hidden;
+  /* Two-column layout: title left, hex icons right */
+  display: flex;
+  align-items: center;
+  gap: 0;
+  min-height: 560px;
 }
 
+/* Left: title column */
 .ts-header {
-  padding: 0 var(--pad-x);
-  margin-bottom: 40px;
+  flex-shrink: 0;
+  width: clamp(200px, 28vw, 380px);
+  padding: 0 0 0 var(--pad-x);
 }
 
 .ts-title {
@@ -989,159 +996,228 @@ a { text-decoration: none; color: inherit; }
   color: #0a0a0a;
 }
 
-/* ─── Marquee Wrapper ────────────────────────────────── */
-.ts-marquee-wrapper {
+.ts-subtitle {
+  margin-top: 16px;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: clamp(13px, 1.1vw, 15px);
+  font-weight: 400;
+  color: rgba(10, 10, 10, 0.45);
+  line-height: 1.6;
+  max-width: 260px;
+  letter-spacing: 0.01em;
+}
+
+/* ═══════════════════════════════════════════════════════
+   TECH STACK — Vertical scrolling columns
+═══════════════════════════════════════════════════════ */
+
+/* Right: hexagonal icon cluster */
+.ts-vertical-wrapper {
   position: relative;
-  width: 100%;
-  overflow: hidden;
-}
-
-/* ─── Marquee Container ──────────────────────────────── */
-.ts-marquee-container {
-  overflow: hidden;
-  width: 100%;
-}
-
-.ts-row-bottom {
-  margin-top: 14px;
-}
-
-/* ─── Marquee Content (the scrolling track) ──────────── */
-.ts-marquee-content {
   display: flex;
-  gap: 14px;
-  width: max-content;
-  padding: 7px 0;
+  gap: 16px;
+  height: 480px;
+  width: auto;
+  flex-shrink: 0;
+  padding: 0 var(--pad-x) 0 0;
+  /* Overflow must be visible for the mask to work cleanly */
+  overflow: hidden;
+  margin-left: auto;
+
+  /* ── Hexagonal radial mask ──────────────────────────────
+     This fades the outer edges so the icon cluster
+     forms a soft hexagonal silhouette rather than a
+     hard rectangular box.
+  ─────────────────────────────────────────────────────── */
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse 82% 78% at 50% 50%,
+      black   0%,
+      black   38%,
+      rgba(0,0,0,0.75) 54%,
+      rgba(0,0,0,0.30) 68%,
+      transparent 82%
+    );
+  mask-image:
+    radial-gradient(
+      ellipse 82% 78% at 50% 50%,
+      black   0%,
+      black   38%,
+      rgba(0,0,0,0.75) 54%,
+      rgba(0,0,0,0.30) 68%,
+      transparent 82%
+    );
 }
 
-.ts-row-top .ts-marquee-content {
-  animation: tsScrollLeft 35s linear infinite;
+/* Old top/bottom fades — replaced by radial mask on wrapper */
+.ts-v-fade,
+.ts-v-fade-top,
+.ts-v-fade-bottom { display: none; }
+
+
+/* ─── Each column ────────────────────────────────── */
+.ts-vcol {
+  width: 72px;
+  flex-shrink: 0;
+  overflow: visible; /* mask on parent handles clipping */
+  position: relative;
 }
 
-.ts-row-bottom .ts-marquee-content {
-  animation: tsScrollRight 35s linear infinite;
+/* ── Honeycomb stagger: even columns offset down by half a cell ── */
+.ts-vcol:nth-child(2n) {
+  margin-top: 32px;
 }
 
-@keyframes tsScrollLeft {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes tsScrollRight {
-  0%   { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
-}
-
-/* Pause on hover */
-.ts-marquee-container:hover .ts-marquee-content {
-  animation-play-state: paused;
-}
-
-/* ─── Individual Card ────────────────────────────────── */
-.ts-marquee-container .ts-card {
+/* The scrolling inner strip */
+.ts-vcol-inner {
   display: flex;
   flex-direction: column;
+  gap: 12px;
+  will-change: transform;
+  align-items: center;
+}
+
+/* Column direction animations */
+.ts-vcol-up .ts-vcol-inner {
+  animation: tsScrollUp 22s linear infinite;
+}
+
+.ts-vcol-down .ts-vcol-inner {
+  /* Negative delay staggers the start position so columns feel offset */
+  animation: tsScrollDown 22s linear infinite;
+  animation-delay: -8s;
+}
+
+/* Animation continues on hover — no pause */
+
+@keyframes tsScrollUp {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes tsScrollDown {
+  0%   { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+}
+
+/* ─── Individual icon (bare logo, no box) ────────────── */
+.ts-vcard {
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 24px 20px;
-  background: #ffffff;
-  border: 1px solid rgba(10, 10, 10, 0.07);
-  border-radius: 12px;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              background 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  cursor: default;
+  background: none;
+  border: none;
+  padding: 4px 0;
   flex-shrink: 0;
-  width: 110px;
+  width: 100%;
 }
 
-.ts-marquee-container .ts-card:hover {
-  transform: scale(1.12);
-  background: #1a1a1a;
+.ts-vcard:hover img {
+  opacity: 1;
+  transform: scale(1.1);
 }
 
-.ts-marquee-container .ts-card img {
-  width: 32px;
-  height: 32px;
+.ts-vcard img {
+  width: 38px;
+  height: 38px;
   object-fit: contain;
+  display: block;
+  opacity: 0.60;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-.ts-marquee-container .ts-card span {
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: rgba(10, 10, 10, 0.55);
-  text-align: center;
-  white-space: nowrap;
-  transition: color 0.3s ease;
+.ts-vcard:hover img {
+  opacity: 1;
+  transform: scale(1.1);
 }
 
-.ts-marquee-container .ts-card:hover span {
-  color: #ffffff;
+/* Labels hidden — icons only, like reference image */
+.ts-vcard span {
+  display: none;
 }
 
-/* ─── Fade Edges ─────────────────────────────────────── */
-.ts-marquee-fade {
+/* ─── Hex blur orbs (decorative depth) ──────────────── */
+.ts-hex-orb {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 120px;
-  z-index: 2;
+  border-radius: 50%;
+  filter: blur(60px);
   pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
 }
 
-.ts-fade-left {
-  left: 0;
-  background: linear-gradient(to right, var(--project-bg) 0%, transparent 100%);
+.ts-hex-orb-1 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(215, 255, 63, 0.35) 0%, transparent 70%);
+  top: 10%;
+  left: 5%;
+  animation: hexFloat1 8s ease-in-out infinite;
 }
 
-.ts-fade-right {
-  right: 0;
-  background: linear-gradient(to left, var(--project-bg) 0%, transparent 100%);
+.ts-hex-orb-2 {
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(100, 180, 255, 0.25) 0%, transparent 70%);
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: hexFloat2 10s ease-in-out infinite;
 }
+
+.ts-hex-orb-3 {
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(255, 150, 100, 0.20) 0%, transparent 70%);
+  bottom: 10%;
+  right: 5%;
+  animation: hexFloat3 9s ease-in-out infinite;
+}
+
+@keyframes hexFloat1 {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50%       { transform: translateY(-20px) scale(1.05); }
+}
+
+@keyframes hexFloat2 {
+  0%, 100% { transform: translateX(-50%) translateY(0px); }
+  50%       { transform: translateX(-50%) translateY(15px); }
+}
+
+@keyframes hexFloat3 {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-18px); }
+}
+
 
 /* ─── Responsive ─────────────────────────────────────── */
-@media (max-width: 900px) {
-  .ts-marquee-container .ts-card {
-    width: 95px;
-    padding: 20px 16px;
-    gap: 8px;
+@media (max-width: 768px) {
+  .ts-vertical-wrapper {
+    height: 420px;
+    gap: 10px;
+    padding: 0 4%;
   }
 
-  .ts-marquee-container .ts-card img {
-    width: 28px;
-    height: 28px;
+  .ts-vcard {
+    padding: 12px 8px;
+    min-height: 76px;
   }
 
-  .ts-marquee-fade {
-    width: 60px;
+  .ts-vcard img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .ts-vcard span {
+    font-size: 10px;
   }
 }
 
-@media (max-width: 600px) {
-  .section-techstack {
-    padding: 40px 0 100px;
-  }
-
-  .ts-marquee-container .ts-card {
-    width: 82px;
-    padding: 18px 12px;
-    border-radius: 10px;
-  }
-
-  .ts-marquee-container .ts-card img {
-    width: 24px;
-    height: 24px;
-  }
-
-  .ts-marquee-container .ts-card span {
-    font-size: 10px;
-  }
-
-  .ts-marquee-fade {
-    width: 40px;
+@media (max-width: 480px) {
+  /* Only show 2 columns on very small screens */
+  .ts-vcol:nth-child(4),
+  .ts-vcol:nth-child(5) {
+    display: none;
   }
 }
 

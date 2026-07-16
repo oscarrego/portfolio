@@ -101,6 +101,23 @@
         transitionIn();
     }
 
+    // Helper to map target URL to a CSS class for per-project font matching
+    function getTargetProjectClass(urlStr) {
+        try {
+            const url = new URL(urlStr, window.location.origin);
+            const path = url.pathname.toLowerCase();
+            if (path.includes('orbit')) return 'target-orbit';
+            if (path.includes('sentinel')) return 'target-sentinel';
+            if (path.includes('jsms')) return 'target-jsms';
+            if (path.includes('studygpt')) return 'target-studygpt';
+            if (path.includes('issuetracker')) return 'target-issuetracker';
+            if (path.includes('mediarift')) return 'target-mediarift';
+            return 'target-home';
+        } catch (e) {
+            return 'target-home';
+        }
+    }
+
     // Handles transitioning OUT (to a new page)
     function transitionTo(targetHref, clickX, clickY) {
         // Fallback to center of screen if coordinates are missing
@@ -118,6 +135,7 @@
         sessionStorage.setItem('transition-theme', theme);
         sessionStorage.setItem('transition-name', name);
         sessionStorage.setItem('transition-active', 'true');
+        sessionStorage.setItem('transition-target-class', getTargetProjectClass(targetHref));
 
         // Close menu if open (on home page or case study pages)
         document.body.classList.remove('menu-open');
@@ -128,7 +146,8 @@
 
         // Apply stashed style settings to overlay
         overlay.style.backgroundColor = bgColor;
-        overlay.className = `transition-overlay ${theme}`;
+        const targetClass = getTargetProjectClass(targetHref);
+        overlay.className = `transition-overlay ${theme} ${targetClass}`;
         titleEl.textContent = name.toUpperCase();
 
         overlay.style.setProperty('--click-x', `${x}px`);
@@ -178,7 +197,8 @@
 
         // Apply visual properties
         overlay.style.backgroundColor = bgColor;
-        overlay.className = `transition-overlay ${theme} active`;
+        const storedTarget = sessionStorage.getItem('transition-target-class') || 'target-home';
+        overlay.className = `transition-overlay ${theme} active ${storedTarget}`;
         titleEl.textContent = name.toUpperCase();
         overlay.style.setProperty('--click-x', `${x}px`);
         overlay.style.setProperty('--click-y', `${y}px`);
