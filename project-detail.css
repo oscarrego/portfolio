@@ -202,8 +202,26 @@ html.project-detail-page {
 
 /* ─── CONTENT BLOCKS — shared typography overrides ──────── */
 
+/* Dynamic text slot layouts (desktop scroll-driven panels) */
+.pd-text-slot {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+}
+
+.pd-text-slot h2,
+.pd-text-slot p,
+.pd-text-slot .section-counter {
+  margin: 0 !important;
+}
+
+.pd-text-slot .section-counter {
+  margin-bottom: -6px !important; /* Move counter up closer to the heading */
+}
+
 /* Section counter (e.g. "1 /") */
-.section-counter {
+.section-counter,
+.pd-text-slot .section-counter {
   color: var(--pd-faint) !important;
   font-family: 'Inter', sans-serif;
   font-size: 11px;
@@ -218,7 +236,8 @@ html.project-detail-page {
 .jsms-content-block h2,
 .studygpt-content-block h2,
 .issuetracker-content-block h2,
-.mediarift-content-block h2 {
+.mediarift-content-block h2,
+.pd-text-slot h2 {
   color: var(--pd-text) !important;
   font-family: 'Inter', 'AltmannGrotesk-Bold', sans-serif;
   font-size: clamp(22px, 2.5vw, 30px);
@@ -232,7 +251,8 @@ html.project-detail-page {
 .jsms-content-block p,
 .studygpt-content-block p,
 .issuetracker-content-block p,
-.mediarift-content-block p {
+.mediarift-content-block p,
+.pd-text-slot p {
   color: var(--pd-muted) !important;
   font-family: 'Inter', 'AltmannGrotesk-Regular', sans-serif;
   font-size: 15px;

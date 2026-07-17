@@ -28,7 +28,7 @@
   display: grid;
   grid-template-columns: 1fr minmax(min(680px, 100%), 680px);
   gap: 60px;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
   max-width: 1600px;
   padding: 0 7%;

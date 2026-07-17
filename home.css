@@ -992,13 +992,13 @@ a { text-decoration: none; color: inherit; }
 }
 
 .ts-title {
-  font-family: var(--font-body), sans-serif;
-  font-size: clamp(32px, 4vw, 46px);
-  line-height: 1.2;
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-size: clamp(42px, 6vw, 88px);
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: -0.01em;
   color: #0a0a0a;
-  text-transform: none; /* Sentence case! */
+  text-transform: uppercase;
 }
 
 .ts-subtitle {
