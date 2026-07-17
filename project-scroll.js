@@ -1,9 +1,9 @@
-﻿/*
+/*
   OSCAR REGO PORTFOLIO 2026
   PROJECT-SCROLL.JS — Scroll-driven full-page section engine
 
   Works by:
-  1. Building a tall scroll driver div with N * 150vh height
+  1. Building a tall scroll driver div with N * 60vh height
   2. A sticky frame sits on top, showing the current section
   3. On scroll, we calculate which section is active
   4. When section changes: curtain wipes (top->down or bottom->up)
@@ -116,10 +116,10 @@
     scrollOuter.className = 'pd-scroll-outer';
 
     // Scroll driver (tall div to provide scroll space)
-    // Each section gets 150vh so transitions feel unhurried
+    // Each section gets 60vh of scroll room so scrolling feels ultra-fast
     const scrollDriver = document.createElement('div');
     scrollDriver.className = 'pd-scroll-driver';
-    scrollDriver.style.height = (sectionCount * 150) + 'vh';
+    scrollDriver.style.height = (sectionCount * 60) + 'vh';
     scrollOuter.appendChild(scrollDriver);
 
     // Sticky frame — lives *inside* scrollDriver so it sticks within it
