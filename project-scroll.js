@@ -3,7 +3,7 @@
   PROJECT-SCROLL.JS — Scroll-driven full-page section engine
 
   Works by:
-  1. Building a tall scroll driver div with N * 60vh height
+  1. Building a tall scroll driver div with (N * 60 + 100)vh height
   2. A sticky frame sits on top, showing the current section
   3. On scroll, we calculate which section is active
   4. When section changes: curtain wipes (top->down or bottom->up)
@@ -116,10 +116,10 @@
     scrollOuter.className = 'pd-scroll-outer';
 
     // Scroll driver (tall div to provide scroll space)
-    // Each section gets 60vh of scroll room so scrolling feels ultra-fast
+    // Each section gets 60vh of scroll room, plus 100vh for the sticky viewport
     const scrollDriver = document.createElement('div');
     scrollDriver.className = 'pd-scroll-driver';
-    scrollDriver.style.height = (sectionCount * 60) + 'vh';
+    scrollDriver.style.height = (sectionCount * 60 + 100) + 'vh';
     scrollOuter.appendChild(scrollDriver);
 
     // Sticky frame — lives *inside* scrollDriver so it sticks within it
@@ -248,7 +248,7 @@
     function jumpToSection(targetIdx) {
       const driverRect = scrollDriver.getBoundingClientRect();
       const driverTop = window.scrollY + driverRect.top;
-      const sectionH = scrollDriver.offsetHeight / sectionCount;
+      const sectionH = (scrollDriver.offsetHeight - window.innerHeight) / sectionCount;
       const targetScroll = driverTop + targetIdx * sectionH + 10;
       window.scrollTo({ top: targetScroll, behavior: 'smooth' });
     }
@@ -352,7 +352,7 @@
       const driverRect = scrollDriver.getBoundingClientRect();
       const driverTop = window.scrollY + driverRect.top;
       const driverHeight = scrollDriver.offsetHeight;
-      const sectionH = driverHeight / sectionCount;
+      const sectionH = (driverHeight - window.innerHeight) / sectionCount;
 
       const scrollIntoDriver = Math.max(0, scrollY - driverTop);
       const rawIdx = Math.floor(scrollIntoDriver / sectionH);
