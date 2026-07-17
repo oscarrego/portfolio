@@ -148,7 +148,7 @@
         overlay.style.backgroundColor = bgColor;
         const targetClass = getTargetProjectClass(targetHref);
         overlay.className = `transition-overlay ${theme} ${targetClass}`;
-        titleEl.textContent = name.toUpperCase();
+        titleEl.textContent = name;
 
         overlay.style.setProperty('--click-x', `${x}px`);
         overlay.style.setProperty('--click-y', `${y}px`);
@@ -199,7 +199,7 @@
         overlay.style.backgroundColor = bgColor;
         const storedTarget = sessionStorage.getItem('transition-target-class') || 'target-home';
         overlay.className = `transition-overlay ${theme} active ${storedTarget}`;
-        titleEl.textContent = name.toUpperCase();
+        titleEl.textContent = name;
         overlay.style.setProperty('--click-x', `${x}px`);
         overlay.style.setProperty('--click-y', `${y}px`);
         overlay.style.clipPath = `circle(150% at ${x}px ${y}px)`;

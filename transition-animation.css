@@ -46,7 +46,6 @@
     transition: opacity 1.8s cubic-bezier(0.76, 0, 0.24, 1), transform 1.8s cubic-bezier(0.76, 0, 0.24, 1);
     user-select: none;
     pointer-events: none;
-    text-transform: uppercase;
 }
 
 /* Dynamic colors for titles based on theme */
