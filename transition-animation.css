@@ -94,19 +94,11 @@ html.transition-active-pre body {
     opacity: 0 !important;
 }
 
-/* ── Per-project font matching for transition overlay title ── */
-
 .transition-overlay.target-orbit .transition-title,
-.transition-overlay.target-sentinel .transition-title {
-  font-family: 'PixelOperator', 'Bebas Neue', monospace;
-}
-
-.transition-overlay.target-jsms .transition-title {
-  font-family: 'Bebas Neue', sans-serif;
-}
-
+.transition-overlay.target-sentinel .transition-title,
+.transition-overlay.target-jsms .transition-title,
 .transition-overlay.target-studygpt .transition-title,
 .transition-overlay.target-issuetracker .transition-title,
 .transition-overlay.target-mediarift .transition-title {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'PixelOperator', 'Bebas Neue', monospace;
 }
