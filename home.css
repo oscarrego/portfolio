@@ -1733,7 +1733,7 @@ a { text-decoration: none; color: inherit; }
 
 /* Cream palette tokens for narrative — matches .sw-section exactly */
 .narrative-section {
-  height: 300vh; /* Spacer track for scrolling */
+  height: 180vh; /* Spacer track for scrolling */
   position: relative;
   background-color: var(--project-bg);
   margin: 0;

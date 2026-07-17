@@ -545,7 +545,6 @@
     });
 
     let ticking = false;
-    let autoScrolledDown = false;
 
     function updateNarrativeScroll() {
       const rect = section.getBoundingClientRect();
@@ -559,7 +558,7 @@
       // Progress: 0.0 when section top touches viewport top,
       //           1.0 when section bottom touches viewport bottom
       const top = rect.top;
-      let progress = (-top / travelLimit) * 3 ; 
+      let progress = -top / travelLimit; 
       progress = Math.max(0, Math.min(1, progress));
 
       // Highlight each word based on progress
@@ -577,27 +576,6 @@
         const eased = easeInOutCubic(wordProgress);
         word.style.opacity = (FADED + (ACTIVE - FADED) * eased).toFixed(3);
       });
-
-      // Auto scroll down to next section once highlighted
-      if (progress >= 0.99) {
-        if (!autoScrolledDown) {
-          autoScrolledDown = true;
-          const nextSection = document.getElementById('work');
-          if (nextSection) {
-            if (window._lenis) {
-              window._lenis.scrollTo(nextSection, { 
-                duration: 1.4, 
-                easing: (t) => 1 - Math.pow(1 - t, 4) 
-              });
-            } else {
-              nextSection.scrollIntoView({ behavior: 'smooth' });
-            }
-          }
-        }
-      } else if (progress < 0.85) {
-        // Reset scroll lock release when user scrolls back up
-        autoScrolledDown = false;
-      }
     }
 
     // High performance rAF batching scroll handler
