@@ -168,9 +168,8 @@
     });
 
     // ── Right: image card ─────────────────────────────────────
-    const isMobilePage = sections.some(s => s.isMobile);
     const card = document.createElement('div');
-    card.className = 'pd-panel-card' + (isMobilePage ? ' mobile-card' : '');
+    card.className = 'pd-panel-card' + (sections[0].isMobile ? ' mobile-card' : '');
     panel.appendChild(card);
 
     // One img element per section (shows first image of that section)
@@ -269,6 +268,13 @@
       curtain.className = 'pd-curtain dir-' + dir + ' curtain-entering';
 
       setTimeout(() => {
+        // Toggle mobile-card class based on the new section's mobile status
+        if (sections[newIdx].isMobile) {
+          card.classList.add('mobile-card');
+        } else {
+          card.classList.remove('mobile-card');
+        }
+
         // Swap active image
         imgEls.forEach(x => x.el.classList.remove('pd-img-active'));
         const newEntry = imgEls.find(x => x.section === newIdx);
