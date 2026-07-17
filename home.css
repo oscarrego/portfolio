@@ -1101,6 +1101,7 @@ a { text-decoration: none; color: inherit; }
   flex-direction: column;
   gap: 16px; /* Vertical gap between icons */
   width: 100%;
+  will-change: transform;
 }
 
 .ts-vcol-1 .ts-vscroll { animation: tsScrollDown 22s linear infinite; }
@@ -1112,13 +1113,13 @@ a { text-decoration: none; color: inherit; }
 .ts-vcol-7 .ts-vscroll { animation: tsScrollDown 21s linear infinite; }
 
 @keyframes tsScrollUp {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-33.3333%); }
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(0, -33.3333%, 0); }
 }
 
 @keyframes tsScrollDown {
-  0% { transform: translateY(-33.3333%); }
-  100% { transform: translateY(0); }
+  0% { transform: translate3d(0, -33.3333%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 
 /* Individual icon cards */
@@ -1139,12 +1140,18 @@ a { text-decoration: none; color: inherit; }
   height: 48px;
   object-fit: contain;
   display: block;
-  opacity: 0.45;
-  filter: grayscale(100%);
+  opacity: 0.38;
+  filter: grayscale(100%) brightness(0.7);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.ts-vcard:hover img {
+.theme-light .ts-vcard img {
+  opacity: 0.5;
+  filter: grayscale(100%) brightness(0.45);
+}
+
+.ts-vcard:hover img,
+.theme-light .ts-vcard:hover img {
   opacity: 1;
   filter: grayscale(0%) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.12));
 }
