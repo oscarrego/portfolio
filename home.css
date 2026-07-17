@@ -1050,6 +1050,7 @@ a { text-decoration: none; color: inherit; }
   overflow: visible;
   margin-left: auto;
   align-items: center; /* Centering staggers even/odd vertical layouts */
+  transform: translateY(30px);
   z-index: 1;
 
   /* Radial mask makes the outer edges fade into a soft hexagon */
@@ -1076,27 +1077,49 @@ a { text-decoration: none; color: inherit; }
   width: 52px;
   display: flex;
   flex-direction: column;
-  gap: 16px; /* Vertical gap between icons */
   flex-shrink: 0;
   position: relative;
+  overflow: hidden; /* Clips scrolling icons at the boundaries */
+
+  /* Vertical fade mask for a "foggy" entering/leaving effect */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
 }
 
-/* Staggered Floating animations */
-.ts-vcol-1 { animation: tsFloatCol1 6.5s ease-in-out infinite alternate; }
-.ts-vcol-2 { animation: tsFloatCol2 7.5s ease-in-out infinite alternate; }
-.ts-vcol-3 { animation: tsFloatCol3 7.0s ease-in-out infinite alternate; }
-.ts-vcol-4 { animation: tsFloatCol4 8.0s ease-in-out infinite alternate; }
-.ts-vcol-5 { animation: tsFloatCol5 7.2s ease-in-out infinite alternate; }
-.ts-vcol-6 { animation: tsFloatCol6 7.8s ease-in-out infinite alternate; }
-.ts-vcol-7 { animation: tsFloatCol7 6.8s ease-in-out infinite alternate; }
+/* Staggered static height layout to form a hexagon shape */
+.ts-vcol-1 { height: 232px; } /* 2 blocks shorter from top & bottom (520 - 288) */
+.ts-vcol-2 { height: 376px; } /* 1 block shorter from top & bottom (520 - 144) */
+.ts-vcol-3 { height: 520px; }
+.ts-vcol-4 { height: 520px; }
+.ts-vcol-5 { height: 520px; }
+.ts-vcol-6 { height: 376px; } /* 1 block shorter from top & bottom (520 - 144) */
+.ts-vcol-7 { height: 232px; } /* 2 blocks shorter from top & bottom (520 - 288) */
 
-@keyframes tsFloatCol1 { 0% { transform: translateY(0); } 100% { transform: translateY(-12px); } }
-@keyframes tsFloatCol2 { 0% { transform: translateY(-6px); } 100% { transform: translateY(6px); } }
-@keyframes tsFloatCol3 { 0% { transform: translateY(0); } 100% { transform: translateY(-15px); } }
-@keyframes tsFloatCol4 { 0% { transform: translateY(-8px); } 100% { transform: translateY(8px); } }
-@keyframes tsFloatCol5 { 0% { transform: translateY(0); } 100% { transform: translateY(-14px); } }
-@keyframes tsFloatCol6 { 0% { transform: translateY(-5px); } 100% { transform: translateY(7px); } }
-@keyframes tsFloatCol7 { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
+/* Scroll containers inside the columns */
+.ts-vscroll {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Vertical gap between icons */
+  width: 100%;
+}
+
+.ts-vcol-1 .ts-vscroll { animation: tsScrollDown 22s linear infinite; }
+.ts-vcol-2 .ts-vscroll { animation: tsScrollUp 25s linear infinite; }
+.ts-vcol-3 .ts-vscroll { animation: tsScrollDown 24s linear infinite; }
+.ts-vcol-4 .ts-vscroll { animation: tsScrollUp 28s linear infinite; }
+.ts-vcol-5 .ts-vscroll { animation: tsScrollDown 26s linear infinite; }
+.ts-vcol-6 .ts-vscroll { animation: tsScrollUp 23s linear infinite; }
+.ts-vcol-7 .ts-vscroll { animation: tsScrollDown 21s linear infinite; }
+
+@keyframes tsScrollUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-33.3333%); }
+}
+
+@keyframes tsScrollDown {
+  0% { transform: translateY(-33.3333%); }
+  100% { transform: translateY(0); }
+}
 
 /* Individual icon cards */
 .ts-vcard {
@@ -1124,7 +1147,6 @@ a { text-decoration: none; color: inherit; }
 .ts-vcard:hover img {
   opacity: 1;
   filter: grayscale(0%) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.12));
-  transform: scale(1.18);
 }
 
 /* Hide labels */
