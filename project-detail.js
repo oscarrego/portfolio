@@ -239,6 +239,7 @@
       '.studygpt-sticky-image.active',
       '.issuetracker-sticky-image.active',
       '.mediarift-sticky-image.active',
+      '.pd-panel-card',
     ];
 
     let mouseX = 0, mouseY = 0;
@@ -269,6 +270,7 @@
 
     function bindImage(el) {
       el.addEventListener('mouseenter', (e) => {
+        if (e.target.closest('.carousel-nav')) return;
         mouseX = e.clientX;
         mouseY = e.clientY;
         cursorX = mouseX;
@@ -287,6 +289,14 @@
       el.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
+
+        if (e.target.closest('.carousel-nav')) {
+          cursor.classList.remove('active');
+          el.classList.remove('pd-cursor-active');
+        } else {
+          cursor.classList.add('active');
+          el.classList.add('pd-cursor-active');
+        }
       });
     }
 
@@ -350,6 +360,7 @@
       document.body.style.overflow = 'hidden';
       updateNavVisibility();
     }
+    window.openProjectLightbox = openLightbox;
 
     function closeLightbox() {
       overlay.classList.remove('active');

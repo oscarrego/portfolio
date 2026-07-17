@@ -373,13 +373,22 @@
       const activeEntry = imgEls.find(x => x.section === currentSection);
       if (!activeEntry) return;
 
-      // Use existing lightbox if present in the page
-      const lightbox = document.querySelector('.pd-lightbox');
-      if (lightbox) {
-        const lbImg = lightbox.querySelector('.pd-lightbox-img');
-        if (lbImg) lbImg.src = activeEntry.el.src;
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
+      if (typeof window.openProjectLightbox === 'function') {
+        window.openProjectLightbox(
+          activeEntry.el.src,
+          activeEntry.el.alt,
+          sec.imgs,
+          carouselState[currentSection].index
+        );
+      } else {
+        // Fallback: Use existing lightbox if present in the page
+        const lightbox = document.querySelector('.pd-lightbox');
+        if (lightbox) {
+          const lbImg = lightbox.querySelector('.pd-lightbox-img');
+          if (lbImg) lbImg.src = activeEntry.el.src;
+          lightbox.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
       }
     });
 

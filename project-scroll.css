@@ -26,12 +26,12 @@
 /* Panel: left content + right image side by side */
 .pd-panel {
   display: grid;
-  grid-template-columns: 1fr minmax(min(680px, 100%), 680px);
-  gap: 60px;
+  grid-template-columns: 0.7fr 1.3fr;
+  gap: 80px;
   align-items: flex-start;
   width: 100%;
   max-width: 1600px;
-  padding: 0 7%;
+  padding: 0 5%;
   margin: 0 auto;
   pointer-events: none;
 }
