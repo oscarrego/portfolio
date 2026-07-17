@@ -249,7 +249,7 @@ a { text-decoration: none; color: inherit; }
   letter-spacing: -0.035em;
   color: rgba(255, 255, 255, 0.4); /* Inactive: muted gray */
   text-decoration: none;
-  text-transform: lowercase;
+  text-transform: capitalize;
   transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
