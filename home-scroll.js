@@ -139,7 +139,7 @@
       }
 
       // Cards: fade + slide up with stagger
-      const swCards = swSection.querySelectorAll('.sw-card');
+      const swCards = swSection.querySelectorAll('.sw-grid:not(.sw-grid--extra) .sw-card');
       swCards.forEach((card, i) => {
         gsap.from(card, {
           scrollTrigger: { trigger: card, start: 'top 88%', once: true },
@@ -616,6 +616,89 @@
     cards.forEach(card => observer.observe(card));
   }
 
+  /* ── Load More Projects ─────────────────────────────────────────────────── */
+  function initLoadMore() {
+    const btn = document.getElementById('sw-load-more-btn');
+    if (!btn) return;
+
+    btn.addEventListener('click', () => {
+      const wrapper = document.querySelector('.sw-extra-grid-wrapper');
+      if (!wrapper) return;
+      const extraCards = wrapper.querySelectorAll('.sw-card');
+      if (!extraCards.length) return;
+
+      const isExpanded = btn.classList.contains('is-expanded');
+
+      if (!isExpanded) {
+        // Expand
+        btn.classList.add('is-expanded');
+
+        // Measure natural height
+        wrapper.style.height = 'auto';
+        const targetHeight = wrapper.scrollHeight;
+        wrapper.style.height = '0px';
+
+        if (window.gsap) {
+          // Height transition
+          gsap.to(wrapper, {
+            height: targetHeight,
+            duration: 0.8,
+            ease: 'power3.inOut',
+            onComplete: () => {
+              wrapper.style.height = 'auto'; // allow responsiveness
+              ScrollTrigger.refresh();
+            }
+          });
+
+          // Cards fade/slide up transition
+          gsap.fromTo(extraCards,
+            { opacity: 0, y: 40 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              ease: 'power3.out',
+              stagger: 0.1,
+              force3D: true
+            }
+          );
+        } else {
+          wrapper.style.height = 'auto';
+        }
+      } else {
+        // Collapse
+        btn.classList.remove('is-expanded');
+
+        if (window.gsap) {
+          // Animate cards fading out
+          gsap.to(extraCards, {
+            opacity: 0,
+            y: 30,
+            duration: 0.4,
+            ease: 'power3.in',
+            stagger: 0.05,
+            force3D: true
+          });
+
+          // Collapse height transition
+          gsap.to(wrapper, {
+            height: 0,
+            duration: 0.7,
+            ease: 'power3.inOut',
+            onComplete: () => {
+              ScrollTrigger.refresh();
+              if (window._lenis) {
+                window._lenis.scrollTo('#work', { duration: 0.8 });
+              }
+            }
+          });
+        } else {
+          wrapper.style.height = '0px';
+        }
+      }
+    });
+  }
+
   /* ── Init ───────────────────────────────────────────────────────────────── */
   function init() {
     initLenis();
@@ -627,6 +710,7 @@
     initCardNav();
     initCustomCursor();
     initVideoObserver();
+    initLoadMore();
 
     waitForGSAP(() => {
       gsap.registerPlugin(ScrollTrigger);

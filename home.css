@@ -554,7 +554,7 @@ a { text-decoration: none; color: inherit; }
 .sw-section {
   background: var(--project-bg);
   color: #0a0a0a;
-  padding: 30px 0 140px;
+  padding: 30px 0 60px; /* Reduced bottom padding from 140px to 60px */
   position: relative;
   overflow: hidden;
 }
@@ -875,8 +875,7 @@ a { text-decoration: none; color: inherit; }
 .section-experience {
   background: var(--project-bg);
   color: #0a0a0a;
-  padding: 120px var(--pad-x);
-  border-top: 1px solid rgba(10, 10, 10, 0.08);
+  padding: 60px var(--pad-x) 80px; /* Increased bottom padding to 80px */
   /* Override variables locally for cream theme */
   --bg: var(--project-bg);
   --surface: #EBE8E2;
@@ -970,7 +969,7 @@ a { text-decoration: none; color: inherit; }
 .section-techstack {
   background: var(--project-bg);
   color: #0a0a0a;
-  padding: 100px 0 140px;
+  padding: 60px 0 140px; /* Increased top padding to 60px */
   position: relative;
   overflow: hidden;
   display: flex;
@@ -983,7 +982,7 @@ a { text-decoration: none; color: inherit; }
 /* Left: title column */
 .ts-header {
   flex-shrink: 0;
-  width: clamp(280px, 32vw, 420px);
+  width: clamp(450px, 48vw, 680px); /* Increased width to accommodate full first line */
   padding: 0 0 0 var(--pad-x);
   display: flex;
   flex-direction: column;
@@ -1008,7 +1007,7 @@ a { text-decoration: none; color: inherit; }
   font-weight: 400;
   color: rgba(10, 10, 10, 0.6);
   line-height: 1.6;
-  max-width: 320px;
+  max-width: 640px; /* Increased max-width to let first line finish with AI/ML */
   letter-spacing: 0.01em;
 }
 
@@ -1218,7 +1217,7 @@ a { text-decoration: none; color: inherit; }
 @media (max-width: 992px) {
   .section-techstack {
     flex-direction: column;
-    padding: 80px 0 100px;
+    padding: 30px 0 100px; /* Reduced top padding from 80px to 30px */
     gap: 60px;
     align-items: flex-start;
   }
@@ -1868,3 +1867,89 @@ a { text-decoration: none; color: inherit; }
 .sw-card[data-href] * {
   cursor: none;
 }
+
+/* Extra Project Cards Height Wrapper */
+.sw-extra-grid-wrapper {
+  height: 0;
+  overflow: hidden;
+}
+
+.sw-extra-grid-wrapper .sw-grid--extra {
+  padding-top: clamp(28px, 3.2vw, 44px);
+}
+
+/* Load More Button Wrapper */
+.sw-load-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+/* Load More Button styling - Minimal chevron matching the website design language */
+.sw-load-more-btn {
+  background: transparent;
+  border: none;
+  width: auto;
+  height: auto;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #0a0a0a; /* Matches the site's text color in this section */
+  position: relative;
+  outline: none;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sw-load-more-btn:hover {
+  transform: scale(1.15);
+}
+
+.sw-load-more-btn:active {
+  transform: scale(0.95);
+}
+
+/* Animated wrapper for bobbing/floating loop effect */
+.sw-arrow-anim-wrap {
+  display: block;
+  animation: swArrowFloat 2.4s ease-in-out infinite;
+}
+
+.sw-load-more-btn:hover .sw-arrow-anim-wrap {
+  animation-play-state: paused;
+}
+
+@keyframes swArrowFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+/* Hover micro-interaction: translate down, or up if expanded */
+.sw-load-more-btn .sw-load-more-icon {
+  width: 42px; /* Make the arrow wider and larger as requested */
+  height: 42px;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
+}
+
+.sw-load-more-btn:hover .sw-load-more-icon {
+  transform: translateY(4px);
+}
+
+.sw-load-more-btn.is-expanded .sw-load-more-icon {
+  transform: rotate(180deg);
+}
+
+.sw-load-more-btn.is-expanded:hover .sw-load-more-icon {
+  transform: rotate(180deg) translateY(4px);
+}
+
+
+
+
+

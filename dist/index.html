@@ -46,7 +46,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 
   <!-- Stylesheets -->  
-  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/main-CTMH6CUR.css">
+  <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/main-C-CvWmQf.css">
   <link rel="stylesheet" crossorigin href="/portfolio-hosting/assets/transition-animation-BMvxbx9D.css">
 </head>
 
@@ -299,49 +299,67 @@
           </div>
         </div>
 
-        <!-- ── StudyGPT ──────────────────────────────────────── -->
-        <div class="sw-card sw-card--studygpt sw-reveal-up" data-href="studygpt.html" role="link" tabindex="0" aria-label="View StudyGPT project">
-          <div class="sw-card-media">
-            <video
-              class="sw-card-video"
-              src="/portfolio-hosting/assets/studygpt_demo-CyjxnTGv.mp4"
-              preload="none"
-              muted
-              loop
-              playsinline
-            ></video>
-          </div>
-          <div class="sw-card-info">
-            <div class="sw-card-text">
-              <p class="sw-card-title">StudyGPT</p>
-              <p class="sw-card-category">AI-Powered Study Assistant</p>
-            </div>
-            <a href="studygpt.html" class="sw-card-cta" tabindex="-1" aria-hidden="true">View Project ↗</a>
-          </div>
-        </div>
-
-        <!-- ── JSMS ─────────────────────────────────────────── -->
-        <div class="sw-card sw-card--jsms sw-reveal-up" data-href="jsms.html" role="link" tabindex="0" aria-label="View JSMS project">
-          <div class="sw-card-media">
-            <video
-              class="sw-card-video"
-              src="/portfolio-hosting/assets/jsms_demo-zT6odmDV.mp4"
-              preload="none"
-              muted
-              loop
-              playsinline
-            ></video>
-          </div>
-          <div class="sw-card-info">
-            <div class="sw-card-text">
-              <p class="sw-card-title">Jewellery Store Management System</p>
-              <p class="sw-card-category">Full Stack Web Application</p>
-            </div>
-            <a href="jsms.html" class="sw-card-cta" tabindex="-1" aria-hidden="true">View Project ↗</a>
-          </div>
-        </div>
-
       </div><!-- /.sw-grid -->
+
+      <!-- Extra Grid Wrapper (Animate height on this) -->
+      <div class="sw-extra-grid-wrapper">
+        <div class="sw-grid sw-grid--extra">
+
+          <!-- ── StudyGPT ──────────────────────────────────────── -->
+          <div class="sw-card sw-card--studygpt sw-reveal-up" data-href="studygpt.html" role="link" tabindex="0" aria-label="View StudyGPT project">
+            <div class="sw-card-media">
+              <video
+                class="sw-card-video"
+                src="/portfolio-hosting/assets/studygpt_demo-CyjxnTGv.mp4"
+                preload="none"
+                muted
+                loop
+                playsinline
+              ></video>
+            </div>
+            <div class="sw-card-info">
+              <div class="sw-card-text">
+                <p class="sw-card-title">StudyGPT</p>
+                <p class="sw-card-category">AI-Powered Study Assistant</p>
+              </div>
+              <a href="studygpt.html" class="sw-card-cta" tabindex="-1" aria-hidden="true">View Project ↗</a>
+            </div>
+          </div>
+
+          <!-- ── JSMS ─────────────────────────────────────────── -->
+          <div class="sw-card sw-card--jsms sw-reveal-up" data-href="jsms.html" role="link" tabindex="0" aria-label="View JSMS project">
+            <div class="sw-card-media">
+              <video
+                class="sw-card-video"
+                src="/portfolio-hosting/assets/jsms_demo-zT6odmDV.mp4"
+                preload="none"
+                muted
+                loop
+                playsinline
+              ></video>
+            </div>
+            <div class="sw-card-info">
+              <div class="sw-card-text">
+                <p class="sw-card-title">Jewellery Store Management System</p>
+                <p class="sw-card-category">Full Stack Web Application</p>
+              </div>
+              <a href="jsms.html" class="sw-card-cta" tabindex="-1" aria-hidden="true">View Project ↗</a>
+            </div>
+          </div>
+
+        </div><!-- /.sw-grid -->
+      </div><!-- /.sw-extra-grid-wrapper -->
+
+      <!-- Show More Arrow Button -->
+      <div class="sw-load-more-wrap">
+        <button id="sw-load-more-btn" class="sw-load-more-btn" aria-label="Show more projects">
+          <span class="sw-arrow-anim-wrap">
+            <svg class="sw-load-more-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M2 7l10 10L22 7v5L12 22 2 12z" />
+            </svg>
+          </span>
+        </button>
+      </div>
 
     </div><!-- /.sw-container -->
   </section>
