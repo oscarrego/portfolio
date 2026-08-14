@@ -247,16 +247,17 @@ a { text-decoration: none; color: inherit; }
   font-size: clamp(32px, 4vw, 42px);
   font-weight: 600;
   letter-spacing: -0.035em;
-  color: rgba(255, 255, 255, 0.4); /* Inactive: muted gray */
+  color: rgba(255, 255, 255, 0.25); /* Inactive: dark grey */
   text-decoration: none;
   text-transform: capitalize;
   transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              font-size 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               filter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-block;
   width: fit-content;
-  
+
   /* Initial state for opening animation */
   opacity: 0;
   transform: translateY(15px);
@@ -269,17 +270,16 @@ a { text-decoration: none; color: inherit; }
   filter: blur(0);
 }
 
-.pill-nav.open .menu-link.active,
-.pill-nav.open .menu-link:hover {
-  color: #ffffff; /* Hover & Active: bright pure white */
+/* Active section link: white + larger */
+.pill-nav.open .menu-link.active {
+  color: #ffffff;
+  font-size: clamp(38px, 4.8vw, 50px);
 }
 
+/* Hover: white + slide right (but no size change) */
 .pill-nav.open .menu-link:hover {
+  color: #ffffff;
   transform: translateX(8px);
-}
-
-.menu-card-links:hover .menu-link:not(:hover):not(.active) {
-  color: rgba(255, 255, 255, 0.2);
 }
 
 /* Stagger delays for premium dropdown reveal */
@@ -372,9 +372,9 @@ a { text-decoration: none; color: inherit; }
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   z-index: 999;
-  background: rgba(10, 10, 10, 0.4);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(10, 10, 10, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
