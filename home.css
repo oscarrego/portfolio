@@ -1882,74 +1882,106 @@ a { text-decoration: none; color: inherit; }
 .sw-load-more-wrap {
   display: flex;
   justify-content: center;
-  margin-top: 60px;
+  margin-top: 56px;
 }
 
-/* Load More Button styling - Minimal chevron matching the website design language */
+/* ── Pill button ──────────────────────────────────────────────────────────── */
 .sw-load-more-btn {
-  background: transparent;
-  border: none;
-  width: auto;
-  height: auto;
-  padding: 16px;
-  display: flex;
+  position: relative;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  background: transparent;
+  border: 1.5px solid rgba(10,10,10,0.22);
+  border-radius: 100px;
+  padding: 0;
+  height: 46px;
+  min-width: 210px;
   cursor: pointer;
-  color: #0a0a0a; /* Matches the site's text color in this section */
-  position: relative;
+  color: #0a0a0a;
   outline: none;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  transition:
+    border-color 0.35s cubic-bezier(0.16,1,0.3,1),
+    background   0.35s cubic-bezier(0.16,1,0.3,1),
+    box-shadow   0.35s cubic-bezier(0.16,1,0.3,1),
+    transform    0.35s cubic-bezier(0.16,1,0.3,1);
+}
+
+.sw-load-more-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 100px;
+  background: #0a0a0a;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: 0;
+}
+
+.sw-load-more-btn:hover::before {
+  transform: scaleX(1);
 }
 
 .sw-load-more-btn:hover {
-  transform: scale(1.15);
+  color: #fff;
+  border-color: #0a0a0a;
+  box-shadow: 0 4px 20px rgba(10,10,10,0.12);
 }
 
 .sw-load-more-btn:active {
-  transform: scale(0.95);
+  transform: scale(0.97);
 }
 
-/* Animated wrapper for bobbing/floating loop effect */
-.sw-arrow-anim-wrap {
-  display: block;
-  animation: swArrowFloat 2.4s ease-in-out infinite;
+/* Label spans – stack in same position, crossfade between states */
+.sw-lm-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  z-index: 1;
+  transition:
+    opacity   0.3s cubic-bezier(0.16,1,0.3,1),
+    transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  pointer-events: none;
 }
 
-.sw-load-more-btn:hover .sw-arrow-anim-wrap {
-  animation-play-state: paused;
+.sw-lm-plus-icon,
+.sw-lm-minus-icon {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
 }
 
-@keyframes swArrowFloat {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(6px);
-  }
+/* Default: show expand, hide collapse */
+.sw-lm-label--expand {
+  opacity: 1;
+  transform: translateY(0);
+}
+.sw-lm-label--collapse {
+  opacity: 0;
+  transform: translateY(10px);
 }
 
-/* Hover micro-interaction: translate down, or up if expanded */
-.sw-load-more-btn .sw-load-more-icon {
-  width: 42px; /* Make the arrow wider and larger as requested */
-  height: 42px;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  display: block;
+/* Expanded state: swap labels */
+.sw-load-more-btn.is-expanded .sw-lm-label--expand {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+.sw-load-more-btn.is-expanded .sw-lm-label--collapse {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.sw-load-more-btn:hover .sw-load-more-icon {
-  transform: translateY(4px);
+/* Hover inverts text colour via the fill overlay */
+.sw-load-more-btn:hover .sw-lm-label {
+  color: #fff;
 }
-
-.sw-load-more-btn.is-expanded .sw-load-more-icon {
-  transform: rotate(180deg);
-}
-
-.sw-load-more-btn.is-expanded:hover .sw-load-more-icon {
-  transform: rotate(180deg) translateY(4px);
-}
-
-
-
-
-
