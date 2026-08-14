@@ -1,5 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap');
 
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('fonts/jetbrains/variable/JetBrainsMono[wght].ttf') format('truetype');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('fonts/jetbrains/variable/JetBrainsMono-Italic[wght].ttf') format('truetype');
+  font-weight: 100 800;
+  font-style: italic;
+  font-display: swap;
+}
+
 /* 
    OSCAR REGO PORTFOLIO 2026
    MASTER STYLESHEET 
@@ -29,7 +45,7 @@
     --pad-x: clamp(24px, 6vw, 100px);
     --pad-x-sm: clamp(16px, 4vw, 60px);
     --font-display: 'Bebas Neue', sans-serif;
-    --font-body: 'Inter', 'Mynor', sans-serif;
+    --font-body: 'JetBrains Mono', 'Inter', monospace;
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 

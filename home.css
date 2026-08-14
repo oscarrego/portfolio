@@ -8,6 +8,22 @@
 
 /* ─── IMPORTS ─────────────────────────────────────────── */
 
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('fonts/jetbrains/variable/JetBrainsMono[wght].ttf') format('truetype');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('fonts/jetbrains/variable/JetBrainsMono-Italic[wght].ttf') format('truetype');
+  font-weight: 100 800;
+  font-style: italic;
+  font-display: swap;
+}
+
 /* ─── RESET & TOKENS ──────────────────────────────────── */
 
 :root {
@@ -19,7 +35,7 @@
   --accent:     #d7ff3f;
   --rule:       rgba(255,255,255,0.10);
   --font-display: 'Bebas Neue', sans-serif;
-  --font-body:    'Inter', 'Mynor', sans-serif;
+  --font-body:    'JetBrains Mono', 'Inter', monospace;
   --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --pad-x: clamp(24px, 6vw, 100px);
@@ -1859,14 +1875,7 @@ a { text-decoration: none; color: inherit; }
   transform: translate(-50%, -50%) scale(1);
 }
 
-/* Hide default cursor on project cards */
-.sw-card[data-href] {
-  cursor: none;
-}
-
-.sw-card[data-href] * {
-  cursor: none;
-}
+/* Cursor is managed by JS — default cursor visible at edges, hidden only in inner zone */
 
 /* Extra Project Cards Height Wrapper */
 .sw-extra-grid-wrapper {

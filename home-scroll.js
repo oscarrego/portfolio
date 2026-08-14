@@ -388,6 +388,7 @@
 
       card.addEventListener('mouseleave', () => {
         cursor.classList.remove('active');
+        card.style.cursor = '';
         stopLoop();
       });
 
@@ -395,14 +396,15 @@
         mouseX = e.clientX;
         mouseY = e.clientY;
 
-        // Hide cursor if hovering a toggle button or any interactive child
+        // Restore default cursor if hovering a toggle button or any interactive child
         const overInteractive = e.target.closest('.sw-toggle-btn, .sw-orbit-toggle, button, a');
         if (overInteractive) {
           cursor.classList.remove('active');
+          card.style.cursor = 'default';
           return;
         }
 
-        // Only show cursor when mouse is in the inner zone (20% inset from each edge)
+        // Only show custom cursor when mouse is in the inner zone (20% inset from each edge)
         const rect = card.getBoundingClientRect();
         const insetX = rect.width * 0.20;
         const insetY = rect.height * 0.20;
@@ -414,8 +416,10 @@
 
         if (inInnerZone) {
           cursor.classList.add('active');
+          card.style.cursor = 'none'; // hide native cursor only in centre
         } else {
           cursor.classList.remove('active');
+          card.style.cursor = 'default'; // restore native cursor at edges
         }
       });
     });
