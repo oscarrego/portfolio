@@ -383,7 +383,6 @@
         mouseY = e.clientY;
         cursorX = mouseX;
         cursorY = mouseY;
-        cursor.classList.add('active');
         startLoop();
       });
 
@@ -395,6 +394,29 @@
       card.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
+
+        // Hide cursor if hovering a toggle button or any interactive child
+        const overInteractive = e.target.closest('.sw-toggle-btn, .sw-orbit-toggle, button, a');
+        if (overInteractive) {
+          cursor.classList.remove('active');
+          return;
+        }
+
+        // Only show cursor when mouse is in the inner zone (20% inset from each edge)
+        const rect = card.getBoundingClientRect();
+        const insetX = rect.width * 0.20;
+        const insetY = rect.height * 0.20;
+        const inInnerZone =
+          e.clientX > rect.left + insetX &&
+          e.clientX < rect.right - insetX &&
+          e.clientY > rect.top + insetY &&
+          e.clientY < rect.bottom - insetY;
+
+        if (inInnerZone) {
+          cursor.classList.add('active');
+        } else {
+          cursor.classList.remove('active');
+        }
       });
     });
   }
